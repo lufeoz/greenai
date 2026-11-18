@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>서비스 기획 · PM · UX/UI 1:1 클래스 — 그린 AI Lab</title>
+  <meta name="description" content="비전공자도 시작하는 서비스 기획·PM·UX/UI 1:1 클래스. 문제 정의부터 기획 문서, 피그마, 비즈니스 전략까지 실습과 피드백으로.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="서비스 기획 · PM · UX/UI 1:1 클래스 — 그린 AI Lab">
+  <meta property="og:description" content="문제 정의부터 기획 문서, 피그마, 비즈니스 전략까지. 실습과 피드백으로 배우는 1:1 클래스.">
+  <meta property="og:image" content="https://greenai-205.pages.dev/og.png">
+  <meta property="og:url" content="https://greenai-205.pages.dev/class">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };</script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="/assets/guide.css">
+  <style>
+    .page{padding-bottom:84px}
+    .hero{padding-bottom:30px}
+    .hero .price-hint{margin-top:14px;font-size:13px;color:#9a9a9a;position:relative}
+    .hero .price-hint b{color:var(--green)}
+
+    /* 패키지 */
+    .plans{margin-top:14px;display:grid;gap:10px}
+    .plan{position:relative;background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:20px 18px 18px}
+    .plan.best{border-color:var(--green);box-shadow:0 8px 24px rgba(62,154,88,.12)}
+    .plan .tag-best{position:absolute;top:-11px;left:18px;background:var(--green);color:#000;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:999px}
+    .plan-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+    .plan-name{font-size:12.5px;font-weight:800;letter-spacing:.08em;color:var(--green-deep)}
+    .plan h3{margin-top:2px;font-size:17px;font-weight:800}
+    .plan .price{font-size:24px;font-weight:900;letter-spacing:-.02em;white-space:nowrap}
+    .plan .price small{font-size:13px;font-weight:600;color:var(--gray)}
+    .plan .meta{margin-top:6px;font-size:13px;color:var(--gray)}
+    .plan ul{margin-top:12px;list-style:none;display:grid;gap:6px}
+    .plan li{position:relative;padding-left:22px;font-size:14px;color:var(--ink2)}
+    .plan li::before{content:"✓";position:absolute;left:0;color:var(--green-deep);font-weight:800}
+    .plan .btn{margin-top:16px;height:48px;font-size:14.5px}
+
+    /* 커리큘럼 */
+    .part{margin-top:22px}
+    .part-label{display:inline-block;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--black);color:var(--green)}
+    .acc .no{display:inline-grid;place-items:center;width:26px;height:26px;margin-right:8px;border-radius:8px;background:var(--green-soft);color:var(--green-deep);font-size:12.5px;font-weight:900;vertical-align:middle}
+    .deliv{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+    .deliv span{font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--green-soft);color:var(--green-deep)}
+
+    /* 진행 절차 */
+    .flow{margin-top:14px;list-style:none;display:grid;gap:8px;counter-reset:f}
+    .flow li{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+    .flow li::before{counter-increment:f;content:counter(f);flex:none;width:28px;height:28px;border-radius:50%;background:var(--black);color:var(--green);font-weight:800;font-size:13px;display:grid;place-items:center}
+    .flow b{display:block;font-size:15px}
+    .flow span{display:block;font-size:13px;color:var(--gray)}
+
+    /* 강사 */
+    .teacher{margin-top:14px;background:var(--black);color:#fff;border-radius:22px;padding:22px 20px}
+    .t-head{display:flex;align-items:center;gap:14px}
+    .avatar{flex:none;width:56px;height:56px;border-radius:16px;background:var(--green);color:#000;display:grid;place-items:center;font-size:24px;font-weight:900}
+    .teacher h3{font-size:18px;font-weight:800}
+    .teacher small{display:block;font-size:12.5px;color:#9a9a9a}
+    .t-stats{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .t-stats div{background:#141414;border:1px solid #262626;border-radius:14px;padding:12px 6px;text-align:center}
+    .t-stats b{display:block;font-size:17px;font-weight:800;color:var(--green);white-space:nowrap}
+    .t-stats span{font-size:11.5px;color:#9a9a9a}
+    .teacher ul{margin-top:14px;list-style:none;display:grid;gap:7px}
+    .teacher li{position:relative;padding-left:16px;font-size:14px;color:#d6d6d6}
+    .teacher li::before{content:"▸";position:absolute;left:0;color:var(--green)}
+
+    /* 하단 고정 버튼 */
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;transition:opacity .25s,transform .25s}
+    .sticky.hide{opacity:0;transform:translateY(20px);pointer-events:none}
+    .sticky-inner{max-width:480px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:center;
+      background:rgba(246,246,244,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+    .sticky-inner .p{flex:none;font-size:12px;color:var(--gray);line-height:1.3}
+    .sticky-inner .p b{display:block;font-size:16px;color:var(--ink)}
+    .sticky-inner .btn{flex:1;height:50px}
+
+    @media (min-width:768px){
+      .page{padding-bottom:0}
+      .plans{grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
+      .plan{display:flex;flex-direction:column;padding:26px 22px 22px}
+      .plan .price{font-size:28px}
+      .plan-top{flex-direction:column;align-items:flex-start;gap:6px}
+      .plan ul{flex:1}
+      .flow{grid-template-columns:repeat(3,1fr);gap:12px}
+      .teacher{display:grid;grid-template-columns:1fr 1.2fr;column-gap:32px;align-items:center;padding:32px}
+      .teacher ul{margin-top:0;grid-row:1/3;grid-column:2}
+      .curr{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}
+      .sticky{display:none}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav">
+    <a class="brand" href="/"><i>G</i>그린 AI Lab<b>.</b></a>
+    <a class="back" href="/archive">자료실 →</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">1:1 CLASS · 서비스 기획 · PM · UX/UI</p>
+    <h1>취업·이직 포트폴리오까지,<br><em>서비스 기획 · PM 1:1 클래스</em></h1>
+    <p>문제 정의부터 기획 문서, 피그마 화면 설계, 비즈니스 전략까지.<br>내 상황에 맞춘 커리큘럼으로 실습하고 피드백 받아요.</p>
+    <div class="btns">
+      <a href="#" data-kmong class="btn btn-green" target="_blank" rel="noopener">크몽에서 신청하기</a>
+      <a href="#price" class="btn btn-line">패키지 보기</a>
+    </div>
+    <p class="price-hint"><b>30만 원부터</b> · 회당 120분 · 비전공자 환영</p>
+    <div class="badges"><span>1:1 맞춤 커리큘럼</span><span>온라인 Zoom</span><span>오프라인 논현</span><span>실습 + 피드백</span></div>
+  </section>
+
+  <nav class="toc">
+    <a href="#for">추천 대상</a><a href="#learn">배우는 것</a><a href="#curr">커리큘럼</a><a href="#price">패키지</a><a href="#how">진행 방식</a><a href="#teacher">강사</a><a href="#faq">FAQ</a>
+  </nav>
+
+  <section class="block">
+    <div class="note"><b>자료실을 보고 오셨나요?</b> 자료실의 기획서 템플릿, 아이디어 검증 워크북, 포트폴리오 템플릿을 클래스에서 내 프로젝트로 직접 채우고, 피드백까지 받아요.</div>
+  </section>
+
+  <section class="block" id="for">
+    <p class="label">FOR YOU</p>
+    <h2>이런 분께 <em>추천해요</em></h2>
+    <div class="grid2">
+      <div class="mini"><span class="k">취업 · 이직</span><b>기획 · PM 직무를 준비하는 분</b><p>IT·기획·디자인 경험이 없어도 처음부터 시작해요.</p></div>
+      <div class="mini"><span class="k">창업 준비</span><b>앱 · 웹 아이디어를 다듬고 싶은 분</b><p>아이디어를 문제 정의와 기획 문서로 정리해요.</p></div>
+      <div class="mini"><span class="k">현업</span><b>실무에 기획 역량이 필요한 분</b><p>진행 중인 프로젝트 문서를 가져와 피드백 받아요.</p></div>
+      <div class="mini"><span class="k">기업 · 팀</span><b>기획과 UX/UI 협업을 키우려는 팀</b><p>인원·목표에 맞춰 그룹·기업 교육으로 진행해요.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="learn">
+    <p class="label">WHAT YOU LEARN</p>
+    <h2>배우는 것 <em>5가지</em></h2>
+    <div class="card"><ol>
+      <li><b>서비스 기획과 제품 전략</b> — 사용자 문제를 찾고 해결 방향을 정하는 법</li>
+      <li><b>기획 문서와 화면 설계</b> — 요구사항 정의서, 기능명세서, 와이어프레임</li>
+      <li><b>피그마로 UX/UI 연결</b> — 기획을 실제 화면과 프로토타입으로</li>
+      <li><b>프로젝트 관리와 협업</b> — 로드맵, 일정, 스프린트, 개발 전달</li>
+      <li><b>직무 전환과 포트폴리오</b> — 내 경험을 기획·PM 역량으로 정리</li>
+    </ol></div>
+  </section>
+
+  <section class="block" id="curr">
+    <p class="label">CURRICULUM</p>
+    <h2>8회 <em>커리큘럼</em></h2>
+    <p class="lead">회당 120분, 매 회차 <b>실습 결과물</b>이 남아요. 패키지와 목표에 따라 회차를 맞춤 구성해요.</p>
+    <div class="curr">
+      <div class="part"><span class="part-label">PART 1 · 사용자 문제 이해</span>
+        <details class="acc"><summary><div><span class="no">01</span>리서치와 공감</div></summary><div class="acc-body">
+          서비스·제품 디자인의 정의, 사용자 중심 사고, 디자인 프로세스, 데스크 리서치, 인터뷰로 불편 찾기, 페르소나
+          <div class="deliv"><span>리서치 자료</span><span>인터뷰 가이드</span><span>페르소나</span></div></div></details>
+        <details class="acc"><summary><div><span class="no">02</span>문제 정의와 아이디어</div></summary><div class="acc-body">
+          현재 사용자 여정(As-is), 문제 정의(POV · HMW), 아이디어 발상, 프로토타입과 검증, 개선된 여정(To-be)
+          <div class="deliv"><span>문제 정의서</span><span>HMW</span><span>As-is · To-be 여정 지도</span></div></div></details>
+      </div>
+      <div class="part"><span class="part-label">PART 2 · 서비스 구조와 기획</span>
+        <details class="acc"><summary><div><span class="no">03</span>서비스 구조 설계</div></summary><div class="acc-body">
+          애자일과 워터폴, 애자일 프레임워크 기초, 플로우차트, 정보 구조(IA), 메뉴 구조
+          <div class="deliv"><span>플로우차트</span><span>IA</span><span>서비스 구조도</span></div></div></details>
+        <details class="acc"><summary><div><span class="no">04</span>기획 문서와 일정</div></summary><div class="acc-body">
+          요구사항 정의, 기능명세, 로드맵, WBS · 마일스톤 · 출시 계획, 간트 차트, 스프린트 보드, 와이어프레임
+          <div class="deliv"><span>기능명세서</span><span>로드맵</span><span>와이어프레임</span></div></div></details>
+      </div>
+      <div class="part"><span class="part-label">PART 3 · UX/UI 협업과 검증</span>
+        <details class="acc"><summary><div><span class="no">05</span>UX/UI와 피그마 기초</div></summary><div class="acc-body">
+          UX/UI 개념, 디자인 원칙, 디자인 시스템, UI 가이드, 스타일 보드, 피그마 기초
+          <div class="deliv"><span>UI 구조</span><span>디자인 가이드 초안</span></div></div></details>
+        <details class="acc"><summary><div><span class="no">06</span>프로토타입과 사용성 테스트</div></summary><div class="acc-body">
+          사용성 테스트, UX 윤리와 마이크로카피, 개발 전달(핸드오프) 문서, 피그마 플러그인, 프로토타이핑
+          <div class="deliv"><span>프로토타입</span><span>테스트 결과와 개선안</span></div></div></details>
+      </div>
+      <div class="part"><span class="part-label">PART 4 · 시장과 비즈니스 전략</span>
+        <details class="acc"><summary><div><span class="no">07</span>시장 · 경쟁 분석</div></summary><div class="acc-body">
+          시장 중심 제품 전략, TAM · SAM · SOM, 트렌드 분석, 경쟁사 분석, 포지셔닝
+          <div class="deliv"><span>시장 · 경쟁 분석</span><span>포지셔닝</span><span>가치 제안</span></div></div></details>
+        <details class="acc"><summary><div><span class="no">08</span>수익 모델과 지표</div></summary><div class="acc-body">
+          수익 모델, 비즈니스 목표, KPI · OKR, AARRR, 비즈니스 모델 캔버스, 제품 전략
+          <div class="deliv"><span>비즈니스 모델 캔버스</span><span>KPI · OKR</span><span>제품 전략</span></div></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="price">
+    <p class="label">PACKAGES</p>
+    <h2>나에게 맞는 <em>패키지</em></h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-top"><div><p class="plan-name">STANDARD · A코스</p><h3>진단과 방향 잡기</h3></div><p class="price">30<small>만 원</small></p></div>
+        <p class="meta">2회 · 회당 120분</p>
+        <ul><li>고객 문제 정의와 아이디어 구체화</li><li>지금 하는 일·프로젝트 진단</li><li>나에게 맞는 학습 계획</li></ul>
+        <a href="#" data-kmong class="btn btn-white" target="_blank" rel="noopener">A코스 신청하기</a>
+      </div>
+      <div class="plan best">
+        <span class="tag-best">추천</span>
+        <div class="plan-top"><div><p class="plan-name">DELUXE · B코스</p><h3>실무 기획 역량</h3></div><p class="price">50<small>만 원</small></p></div>
+        <p class="meta">4회 · 회당 120분</p>
+        <ul><li>STANDARD 내용 전부</li><li>UX/UI 디자인과 피그마 실습</li><li>기획 문서 작성과 피드백</li></ul>
+        <a href="#" data-kmong class="btn btn-green" target="_blank" rel="noopener">B코스 신청하기</a>
+      </div>
+      <div class="plan">
+        <div class="plan-top"><div><p class="plan-name">PREMIUM · C코스</p><h3>프로젝트 심화</h3></div><p class="price">100<small>만 원</small></p></div>
+        <p class="meta">8회 · 회당 120분</p>
+        <ul><li>DELUXE 내용 전부</li><li>프로덕트 매니지먼트</li><li>시장 분석과 비즈니스 전략</li><li>프로젝트 심화 리뷰</li></ul>
+        <a href="#" data-kmong class="btn btn-white" target="_blank" rel="noopener">C코스 신청하기</a>
+      </div>
+    </div>
+    <div class="note gray">결제는 크몽에서 진행돼요. 크몽 결제 시 수수료(4.5%, 부가세 포함)가 더해져요. 그룹·기업 교육은 인원과 일정에 맞춰 따로 견적을 드려요.</div>
+  </section>
+
+  <section class="block" id="how">
+    <p class="label">HOW IT WORKS</p>
+    <h2>신청부터 수업까지 <em>6단계</em></h2>
+    <ol class="flow">
+      <li><div><b>크몽 메시지로 상담</b><span>목표와 상황을 이야기해요</span></div></li>
+      <li><div><b>패키지 선택 · 결제</b><span>크몽에서 안전하게</span></div></li>
+      <li><div><b>사전 설문</b><span>지금 실력과 고민을 확인해요</span></div></li>
+      <li><div><b>맞춤 커리큘럼 준비</b><span>내 목표에 맞춘 수업 자료</span></div></li>
+      <li><div><b>1:1 수업</b><span>약속한 일정에 실습 중심으로</span></div></li>
+      <li><div><b>결과물 피드백</b><span>다음 단계까지 함께 정리</span></div></li>
+    </ol>
+    <h3 class="sub">수업 형태 · 장소 · 시간</h3>
+    <div class="tbl-wrap"><table class="tbl fit">
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>형태</td><td>개인 레슨 · 그룹 교육 · 기업 강의</td></tr>
+      <tr><td>장소</td><td>온라인(Zoom) 또는 오프라인(논현, 사전 협의)</td></tr>
+      <tr><td>가능 시간</td><td>월~목 06:00~23:00 · 금 06:00~12:00 · 토 06:00~23:00</td></tr>
+      <tr><td>준비물</td><td>PC 또는 노트북, 안정적인 인터넷. 미리 공부하거나 완성된 기획서를 가져올 필요는 없어요.</td></tr>
+    </table></div>
+  </section>
+
+  <section class="block" id="teacher">
+    <p class="label">TEACHER</p>
+    <h2>함께할 <em>강사</em></h2>
+    <div class="teacher">
+      <div>
+        <div class="t-head"><div class="avatar">G</div><div><h3>그린 AI Lab</h3><small>크몽 활동명 · 그리니어링</small></div></div>
+        <div class="t-stats"><div><b>100<small style="font-size:11px">명</small></b><span>수강생</span></div><div><b>1,000<small style="font-size:11px">h+</small></b><span>강의 시간</span></div><div><b>1:1</b><span>맞춤 수업</span></div></div>
+      </div>
+      <ul>
+        <li>UX/UI 디자인 · 서비스 기획 · PM 실무와 강의 경험</li>
+        <li>앱 · 웹 서비스 기획, UX/UI 설계, 프로토타이핑</li>
+        <li>NCS 기반 KDT 과정 운영</li>
+        <li>블로그 「그린 AI Lab」에서 AI 실무 · 디자인 · 기획 콘텐츠 연재</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <p class="label">FAQ</p>
+    <h2>자주 묻는 <em>질문</em></h2>
+    <details class="acc"><summary><div>IT·디자인 경험이 없어도 되나요?</div></summary><div class="acc-body">네, 처음 시작하는 분도 괜찮아요. 쉬운 설명과 실제 사례로 진행해요.</div></details>
+    <details class="acc"><summary><div>다른 직무에서 기획·PM으로 옮길 수 있을까요?</div></summary><div class="acc-body">지금까지의 경험을 기획·PM 역량으로 연결해 정리하는 것부터 함께해요.</div></details>
+    <details class="acc"><summary><div>진행 중인 프로젝트를 봐 주실 수 있나요?</div></summary><div class="acc-body">네. 기획서, 기능명세서, 화면 설계 등 지금 쓰고 있는 문서를 가져오면 피드백해 드려요.</div></details>
+    <details class="acc"><summary><div>패키지는 어떻게 다른가요?</div></summary><div class="acc-body">STANDARD는 진단과 방향, DELUXE는 실무 기획 역량, PREMIUM은 프로젝트 심화 리뷰에 집중해요. 고민되면 상담에서 추천해 드려요.</div></details>
+    <details class="acc"><summary><div>팀이나 회사 단위로도 가능한가요?</div></summary><div class="acc-body">가능해요. 인원, 일정, 장소, 목표에 맞춰 커리큘럼과 견적을 따로 정해요.</div></details>
+    <details class="acc"><summary><div>포트폴리오를 대신 만들어 주나요?</div></summary><div class="acc-body">아니요. 교육 · 실습 · 피드백 수업이라 개발 대행이나 포트폴리오 전체 제작은 포함되지 않아요. 내가 직접 만들 수 있게 이끌어 드려요.</div></details>
+    <details class="acc"><summary><div>환불은 어떻게 되나요?</div></summary><div class="acc-body">수업 시작 전에는 취소·환불이 가능하고, 시작 후에는 진행하지 않은 회차만큼 환불돼요. 자세한 기준은 크몽 상품 페이지의 취소·환불 규정을 따라요.</div></details>
+  </section>
+
+  <section class="cta">
+    <small>START NOW</small>
+    <h2>자료로 익힌 걸<br><em>내 결과물로</em> 만들어 봐요</h2>
+    <p>신청 전에 궁금한 점은 크몽 메시지로 편하게 물어보세요.</p>
+    <a href="#" data-kmong class="btn btn-green" target="_blank" rel="noopener">크몽에서 상담 · 신청하기 →</a>
+  </section>
+
+  <div class="next"><a href="/archive" class="btn btn-black">← 자료실로 돌아가기</a></div>
+
+  <footer>
+    <div class="f-brand">그린 AI Lab<b>.</b></div>
+    © 2026 Green AI Lab · <a href="mailto:greenai.lab3@gmail.com">문의하기</a>
+  </footer>
+</div>
+
+<div class="sticky" id="sticky"><div class="sticky-inner">
+  <div class="p">1:1 클래스<b>30만 원~</b></div>
+  <a href="#" data-kmong class="btn btn-green" target="_blank" rel="noopener">크몽에서 신청하기</a>
+</div></div>
+
+<script>
+/* 신청 링크 — 크몽 상품 페이지 */
+var KMONG_URL = 'https://kmong.com/gig/834250';
+
+document.querySelectorAll('[data-kmong]').forEach(function(a){
+  a.href = KMONG_URL;
+  a.addEventListener('click', function(){ try{ window.va('event', { name:'클래스 신청 클릭', data:{ from: a.textContent.trim() } }); }catch(e){} });
+});
+var sticky = document.getElementById('sticky');
+if ('IntersectionObserver' in window) {
+  var hide = new Set();
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ e.isIntersecting ? hide.add(e.target) : hide.delete(e.target); });
+    sticky.classList.toggle('hide', hide.size > 0);
+  }, { threshold: 0.2 });
+  ['.hero', '#price', '.cta'].forEach(function(s){ var el = document.querySelector(s); if (el) io.observe(el); });
+}
+</script>
+</body>
+</html>
