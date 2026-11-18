@@ -205,13 +205,15 @@ WF = [
  ("댓글 키워드 → 자료 링크 DM","content","초급",["인스타그램 DM 자동화 도구(ManyChat 등)","Make"],"게시물에 '프롬프트' 같은 키워드 댓글이 달리면 자료실 링크를 DM으로 보내요.",
   ["DM 자동화 도구에 인스타 계정 연결","게시물·키워드 규칙 만들기 (예: '프롬프트')","DM 문구: 자료 소개 + 자료실 링크(?from=insta)","플랫폼 자동화 정책을 확인하고 과도한 발송 피하기"],"댓글 응대 자동"),
 ]
-WF += M.WF
-wf_items = [dict(t=t, d=w, cat=c, level=lv, tools=tl, what=w, how=st, use=[f"기대 효과: {eff}"],
-                 rel=[["프롬프트: n8n 워크플로 설계","/prompts#n8n"]]) for t,c,lv,tl,w,st,eff in WF]
+import wf_data
+PF = {"n8n":"n8n","Make":"Make","기타":"기타 도구"}
+wf_items = [dict(t=w["t"], d=w["what"][:58]+("…" if len(w["what"])>58 else ""), cat=w["cat"], pf=w["pf"], level=w["lv"], tools=w["tools"], what=w["what"],
+                 prep=w["prep"], how=w["how"], prompt=w["prompt"] or None, tips=w["tips"], next=w["next"], use=[f"기대 효과: {w['eff']}", f"만드는 시간: 약 {w['time']}"],
+                 rel=[["프롬프트: n8n 워크플로 설계","/prompts#n8n"],["프롬프트: Make 시나리오 설계","/prompts#Make"]]) for w in wf_data.W]
 page("workflows", "WORKFLOW LAB", "Make, n8n으로 만드는 업무 자동화 워크플로. 사례, 단계별 실행 방법, 연결 도구.",
      "04 · WORKFLOW LAB", "반복 업무를 맡기는<br><em>자동화 워크플로</em>", "Make·n8n으로 바로 따라 만들 수 있는 자동화 사례예요.<br>카드를 누르면 단계별 실행 방법과 연결 도구가 나와요.",
-     lab=dict(items=wf_items, facets=[dict(key="cat",label="분야",values=WCAT)], whatLabel="무엇을 자동화하나요?", useLabel="효과", howLabel="단계별 실행", toolsLabel="연결 도구",
-              note="개인정보가 오가는 자동화는 저장 위치와 권한을 꼭 확인하세요. 자동 발송보다 '초안 만들기 → 사람이 확인'을 권해요.", src="그린 AI Lab 자체 설계"),
+     lab=dict(items=wf_items, facets=[dict(key="cat",label="분야",values=WCAT),dict(key="pf",label="플랫폼",values=PF)], whatLabel="무엇을 자동화하나요?", useLabel="효과 · 시간", howLabel="노드 · 모듈 단계", toolsLabel="연결 도구", promptLabel="AI 노드에 넣을 프롬프트",
+              note="노드·모듈 이름은 버전에 따라 조금 다를 수 있어요. 개인정보가 오가는 자동화는 저장 위치와 권한을 꼭 확인하세요. 자동 발송보다 '초안 만들기 → 사람이 확인'을 권해요.", src="그린 AI Lab 자체 설계"),
      placeholder="예) 블로그, 회의록, 메일, n8n")
 
 # ───────────────────────── 6. LEARNING LAB ─────────────────────────
