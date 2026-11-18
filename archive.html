@@ -162,7 +162,7 @@
     .sheet-body{position:relative;width:100%;max-width:520px;max-height:88dvh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;
       padding:24px 20px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease-out}
     @keyframes up{from{transform:translateY(30px);opacity:0}}
-    .sheet-close{position:absolute;top:14px;right:16px;border:0;background:none;font-size:24px;color:#999;cursor:pointer}
+    .sheet-close{z-index:3;position:absolute;top:14px;right:16px;border:0;background:none;font-size:24px;color:#999;cursor:pointer}
     .q-step{font-size:12.5px;font-weight:800;color:var(--green-deep)}
     .sheet h3{margin-top:4px;font-size:20px;font-weight:800;line-height:1.4}
     .opts{margin-top:16px;display:grid;gap:8px}
@@ -179,6 +179,32 @@
     .rec h4{font-size:14.5px;font-weight:800;line-height:1.4}
     .rec p{font-size:12.5px;color:var(--gray)}
     .again{margin-top:14px;width:100%;height:48px;border-radius:999px;border:0;background:var(--black);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+
+    /* ───── 검색 ───── */
+    .qwrap{padding:14px 20px 0}
+    .qsearch{display:flex;align-items:center;gap:8px;height:48px;padding:0 16px;background:#fff;border:1.5px solid var(--line);border-radius:999px}
+    .qsearch:focus-within{border-color:var(--green)}
+    .qsearch input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:15px}
+    .item{cursor:pointer;text-align:left;font:inherit;color:inherit}
+    .item .tl{margin-top:8px;font-size:11.5px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    /* ───── 자료 상세 시트 ───── */
+    .dt .thumb{margin:0 0 14px;aspect-ratio:21/8}
+    .dt .cover b{font-size:40px}
+    .dt-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .dt-meta span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--bg);color:var(--ink2)}
+    .dt h3{margin-top:10px}
+    .dt-sec{margin-top:16px}
+    .dt-sec h4{font-size:13px;font-weight:800;color:var(--green-deep);letter-spacing:.02em}
+    .dt-sec p,.dt-sec li{margin-top:4px;font-size:14.5px;color:var(--ink2);line-height:1.6}
+    .dt-sec ul,.dt-sec ol{padding-left:20px;margin-top:4px}
+    .dt-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+    .dt-tools span{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--black);color:var(--green)}
+    .dt-trust{margin-top:16px;background:var(--bg);border-radius:14px;padding:12px 14px;font-size:12.5px;color:var(--ink2);line-height:1.6}
+    .dt-trust b{color:var(--ink)}
+    .dt-btns{position:sticky;bottom:-20px;margin:18px -20px -20px;padding:12px 20px calc(16px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);display:grid;gap:8px}
+    .dt-btns a{display:flex;align-items:center;justify-content:center;height:50px;border-radius:999px;font-weight:800;text-decoration:none;font-size:15px}
+    .dt-btns .p1{background:var(--black);color:#fff}
+    .dt-btns .p2{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
 
     /* ───── 스크롤 줄이기 (모바일) ───── */
     .hero{padding:26px 20px 30px}
@@ -228,6 +254,7 @@
       .archive-head h2{font-size:40px;line-height:1.2}
       .archive-head p{font-size:16px;margin:0 0 6px}
       .tags{flex-basis:100%;order:5}
+      .qwrap{padding:18px var(--gut) 0}
       .finder{max-width:420px;margin-top:0;flex-basis:auto;margin-left:auto}
       .popular h3{padding:0 var(--gut);font-size:18px}
       .pop-row{padding:0 var(--gut) 4px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible}
@@ -289,7 +316,7 @@
       <p>총 <b id="totalCount">10</b>개 자료 — 전부 무료예요.</p>
       <div class="tags"><span>가이드</span><span>프롬프트</span><span>템플릿</span><span>체크리스트</span><span>워크북</span><span>AI실무</span><span>UXUI</span><span>서비스기획</span><span>전부무료</span></div>
       <button class="finder" id="finderOpen" type="button">
-        <div><b>나에게 맞는 자료 찾기</b><span>질문 2개면 딱 맞는 자료를 골라 드려요</span></div><i>→</i>
+        <div><b>나에게 맞는 자료 찾기</b><span>직무와 고민을 고르면 맞는 자료를 골라 드려요</span></div><i>→</i>
       </button>
     </div>
 
@@ -298,6 +325,7 @@
       <div class="pop-row" id="popRow"></div>
     </div>
 
+    <div class="qwrap"><label class="qsearch"><span>🔎</span><input type="search" id="q" placeholder="제목, 툴 이름, 업무로 검색 (예: 피그마, 회의록, 광고)"></label></div>
     <nav class="filters" id="filters" aria-label="자료 종류"></nav>
 
     <div class="list" id="list"></div>
@@ -336,17 +364,79 @@
    자료 목록 — 여기만 수정하면 돼요 (맨 위가 최신, 번호는 자동)
    ============================================================ */
 var ITEMS = [
-  { cat:'ai', type:'가이드',     date:'2026.11.18', popular:true, title:'Kling AI 광고 영상 제작 A to Z',          desc:'이미지 한 장으로 15초 세로 광고 영상 만들기',        url:'/guides/kling-ai', action:'view', thumb:'' },
-  { cat:'ai', type:'프롬프트',   date:'2026.11.18', popular:true, title:'바로 복사해 쓰는 실무 AI 프롬프트 60',     desc:'기획·디자인·마케팅·글쓰기·업무, 검색하고 복사',      url:'/guides/ai-prompts', action:'view', thumb:'' },
-  { cat:'ai', type:'키트',       date:'2026.11.18', title:'AI 광고 소재 제작 키트',                                desc:'이미지 프롬프트 6종 · 카피 공식 · 사이즈 규격표',    url:'/guides/ad-creative-kit', action:'view', thumb:'' },
-  { cat:'ai', type:'가이드',     date:'2026.11.18', title:'목적별 생성형 AI 툴 가이드',                            desc:'이 작업엔 이 툴, 툴 20개와 작업별 조합',            url:'/guides/ai-tools', action:'view', thumb:'' },
-  { cat:'ux', type:'체크리스트', date:'2026.11.18', popular:true, title:'AI 서비스 UX 상태별 설계 체크리스트',     desc:'입력 전부터 오류·거절까지 9가지 상태, 36개 항목',   url:'/guides/ai-ux-checklist', action:'view', thumb:'' },
-  { cat:'ux', type:'가이드',     date:'2026.11.18', title:'모바일 UI 규격 치트시트',                               desc:'화면·터치·간격·글자·대비·컴포넌트 숫자 한 장',      url:'/guides/mobile-ui-cheatsheet', action:'view', thumb:'' },
-  { cat:'ux', type:'템플릿',     date:'2026.11.18', title:'UX/UI 포트폴리오 케이스 스터디 템플릿',                 desc:'8단계 문장 틀 · 좋은 예 · 정리본 자동 만들기',      url:'/guides/portfolio-case-study', action:'view', thumb:'' },
-  { cat:'pm', type:'템플릿',     date:'2026.11.18', title:'서비스 기획서 · 기능명세서 템플릿',                     desc:'워드·엑셀 템플릿 다운로드와 작성법',                url:'/guides/planning-templates', action:'get', thumb:'' },
-  { cat:'pm', type:'워크북',     date:'2026.11.18', title:'AI로 하는 앱 아이디어 검증 워크북',                     desc:'6단계를 채우면 AI 검토 질문과 정리본이 완성',       url:'/guides/idea-validation-workbook', action:'view', thumb:'' },
-  { cat:'pm', type:'사전',       date:'2026.11.18', title:'출근 즉시 쓰는 PM 실무 용어 사전',                       desc:'용어 70개, 쉬운 뜻과 실제 회의 예문',                url:'/guides/pm-glossary', action:'view', thumb:'' }
+  { cat:'ai', type:'가이드', date:'2026.11.18', popular:true, title:'Kling AI 광고 영상 제작 A to Z', desc:'이미지 한 장으로 15초 세로 광고 영상 만들기', url:'/guides/kling-ai', action:'view', thumb:'',
+    what:'제품 이미지 한 장으로 릴스·쇼츠용 15초 광고 영상을 만드는 실습 가이드예요. 3컷 기획부터 업로드 전 점검까지 순서대로 담았어요.',
+    who:['광고 소재를 직접 만들어야 하는 1인 사업자·마케터','촬영 없이 숏폼을 만들고 싶은 크리에이터'],
+    problem:'촬영·편집 비용 없이 광고 영상을 만들고 싶은데, AI 영상이 매번 이상하게 나와요.',
+    how:['3컷(멈추게 → 제품 → 행동) 기획표 채우기','컷별 기준 이미지를 프롬프트 공식으로 만들기','영상 프롬프트 4단 공식으로 5초씩 생성','CapCut에서 이어 붙이고 자막·음악 넣기'],
+    tools:['Kling AI','ChatGPT','Midjourney','CapCut'], tasks:['광고 영상','숏폼','릴스','쇼츠','이미지 to 영상','카메라 무빙','자막'],
+    roles:['mkt','creator'], goals:['content','ai'], source:'Kling AI 3.0 발표(2026.02) 기준 기능 정리 · 그린 AI Lab 실습', updated:'2026.11.18' },
+  { cat:'ai', type:'프롬프트', date:'2026.11.18', popular:true, title:'바로 복사해 쓰는 실무 AI 프롬프트 60', desc:'기획·디자인·마케팅·글쓰기·업무, 검색하고 복사', url:'/guides/ai-prompts', action:'view', thumb:'',
+    what:'실무 상황별 프롬프트 60개를 검색하고 바로 복사할 수 있게 모은 라이브러리예요. [대괄호]만 내 상황으로 바꾸면 돼요.',
+    who:['AI를 업무에 쓰고 싶은데 뭐라고 물어야 할지 모르는 분','반복 업무를 줄이고 싶은 직장인'],
+    problem:'AI에게 물어보면 뻔한 답만 나와요. 원하는 결과를 얻는 질문법을 모르겠어요.',
+    how:['검색창에 하고 싶은 일(예: 회의록, 오류 문구) 입력','프롬프트 복사 후 [대괄호]를 내 상황으로 바꾸기','ChatGPT·Claude·Gemini에 붙여넣고 이어서 다듬기'],
+    tools:['ChatGPT','Claude','Gemini'], tasks:['프롬프트','회의록','이메일','기획서','카피','블로그','보고서','엑셀','페르소나','오류 문구'],
+    roles:['pm','design','mkt','office'], goals:['ai','doc'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' },
+  { cat:'ai', type:'키트', date:'2026.11.18', title:'AI 광고 소재 제작 키트', desc:'이미지 프롬프트 6종 · 카피 공식 · 사이즈 규격표', url:'/guides/ad-creative-kit', action:'view', thumb:'',
+    what:'광고 이미지 프롬프트 6종, 헤드라인 공식, SNS 광고 사이즈 규격표, 올리기 전 점검표를 한곳에 모은 키트예요.',
+    who:['메타(인스타·페북) 광고를 직접 돌리는 분','상세페이지·배너를 AI로 빠르게 만들고 싶은 분'],
+    problem:'광고 소재를 매번 처음부터 만들고, 사이즈도 헷갈려요.',
+    how:['광고 유형(제품컷·라이프스타일 등)에 맞는 이미지 프롬프트 고르기','헤드라인 공식 6가지로 문구 18개 뽑기','규격표 보고 4:5 · 1:1 · 9:16으로 맞추기','점검표로 마지막 확인'],
+    tools:['ChatGPT','Midjourney','Kling AI','Canva','Figma'], tasks:['광고','배너','상세페이지','카피','헤드라인','사이즈','A/B 테스트','인스타 광고'],
+    roles:['mkt','creator','design'], goals:['content'], source:'Meta 광고 사이즈 가이드 기반 정리(2026.11) · 그린 AI Lab 자체 제작', updated:'2026.11.18' },
+  { cat:'ai', type:'가이드', date:'2026.11.18', title:'목적별 생성형 AI 툴 가이드', desc:'이 작업엔 이 툴, 툴 20개와 작업별 조합', url:'/guides/ai-tools', action:'view', thumb:'',
+    what:'글·이미지·영상·음성·디자인·시제품까지, 하고 싶은 일에 맞는 AI 툴을 고르는 지도와 작업별 툴 조합 레시피예요.',
+    who:['AI 툴이 너무 많아 뭘 써야 할지 모르는 분','팀에 AI 툴을 소개해야 하는 분'],
+    problem:'툴을 이것저것 가입만 하고, 어떤 작업에 뭘 써야 할지 정리가 안 돼요.',
+    how:['고르기 전 3가지 질문으로 목적 좁히기','분야 탭에서 툴 비교','블로그·광고·강의·시제품 레시피 중 하나 따라 하기'],
+    tools:['ChatGPT','Claude','Gemini','Perplexity','NotebookLM','Midjourney','Kling AI','Runway','CapCut','Vrew','Canva','Gamma','Figma','Notion AI','Suno','ElevenLabs'], tasks:['툴 추천','리서치','이미지','영상','음성','슬라이드','시제품','자막'],
+    roles:['office','mkt','creator','pm','design'], goals:['ai'], source:'각 툴 공식 소개 기준 정리(2026.11) · 기능·요금은 변동될 수 있음', updated:'2026.11.18' },
+  { cat:'ux', type:'체크리스트', date:'2026.11.18', popular:true, title:'AI 서비스 UX 상태별 설계 체크리스트', desc:'입력 전부터 오류·거절까지 9가지 상태, 36개 항목', url:'/guides/ai-ux-checklist', action:'view', thumb:'',
+    what:'AI 서비스의 9가지 상태(입력 전·대기·스트리밍·오류·거절 등)를 36개 항목으로 점검하는 체크리스트예요. 체크 내용이 자동 저장돼요.',
+    who:['AI 기능이 들어간 서비스를 설계하는 디자이너·기획자','AI 챗봇·생성 기능 화면을 리뷰하는 분'],
+    problem:'정상 응답 화면만 그리고, 로딩·오류·거절 같은 상태 설계를 자꾸 빠뜨려요.',
+    how:['상태 지도로 9가지 상태 훑기','내 화면을 보며 항목 체크','상태별 문구 예시로 마이크로카피 다듬기','AI 점검 프롬프트로 빠진 부분 찾기'],
+    tools:['Figma','ChatGPT','Claude'], tasks:['AI UX','챗봇','로딩','스트리밍','오류 화면','마이크로카피','UX 라이팅','접근성'],
+    roles:['design','pm'], goals:['ux'], source:'그린 AI Lab 강의 「AI 응답 상태별 UX 설계」 기반 자체 제작', updated:'2026.11.18' },
+  { cat:'ux', type:'가이드', date:'2026.11.18', title:'모바일 UI 규격 치트시트', desc:'화면·터치·간격·글자·대비·컴포넌트 숫자 한 장', url:'/guides/mobile-ui-cheatsheet', action:'view', thumb:'',
+    what:'모바일 화면 크기, 터치 영역, 간격, 글자 크기, 대비, 컴포넌트 높이 등 디자인할 때 자주 찾는 숫자를 한 장에 정리했어요.',
+    who:['모바일 앱을 처음 디자인하는 분','개발 전달 전에 규격을 점검하고 싶은 디자이너'],
+    problem:'버튼 크기, 글자 크기, 간격을 매번 감으로 정하고 있어요.',
+    how:['프레임 크기 정하고 시작','터치 44·48, 간격 4의 배수 규칙 적용','글자 단계표를 텍스트 스타일로 등록','넘기기 전 점검표 체크'],
+    tools:['Figma'], tasks:['모바일 UI','터치 영역','간격','타이포그래피','대비','디자인 시스템','Safe Area','컴포넌트'],
+    roles:['design'], goals:['ux'], source:'Apple HIG, Material Design 3, WCAG 2.2 기준 정리', updated:'2026.11.18' },
+  { cat:'ux', type:'템플릿', date:'2026.11.18', title:'UX/UI 포트폴리오 케이스 스터디 템플릿', desc:'8단계 문장 틀 · 좋은 예 · 정리본 자동 만들기', url:'/guides/portfolio-case-study', action:'view', thumb:'',
+    what:'포트폴리오 케이스 스터디를 8단계 문장 틀로 채우는 템플릿이에요. 칸에 쓰면 정리본과 AI 첨삭 질문으로 한 번에 복사돼요.',
+    who:['UX/UI·기획 직무로 취업·이직을 준비하는 분','비전공자로 첫 포트폴리오를 만드는 분'],
+    problem:'화면은 있는데, 과정을 어떻게 글로 풀어야 할지 모르겠어요.',
+    how:['원칙 3가지와 커버 구성 확인','8단계 문장 틀에 내 프로젝트 쓰기','정리본 만들어 AI 첨삭 받기','셀프 점검표로 마무리'],
+    tools:['Figma','Notion','ChatGPT','Claude'], tasks:['포트폴리오','케이스 스터디','취업','이직','자기소개'],
+    roles:['design','pm'], goals:['career'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' },
+  { cat:'pm', type:'템플릿', date:'2026.11.18', title:'서비스 기획서 · 기능명세서 템플릿', desc:'워드·엑셀 템플릿 다운로드와 작성법', url:'/guides/planning-templates', action:'get', thumb:'',
+    files:[['서비스 기획서 템플릿 (워드)','/files/service-plan-template.docx'],['기능명세서 템플릿 (엑셀)','/files/feature-spec-template.xlsx']],
+    what:'목차와 작성 안내가 들어 있는 서비스 기획서(워드)와 기능명세서(엑셀) 템플릿이에요. 엑셀은 진행현황이 자동으로 계산돼요.',
+    who:['기획 문서를 처음 써야 하는 주니어 기획자·PM','혼자 서비스를 만드는 메이커·창업자'],
+    problem:'빈 문서 앞에서 뭘 어디서부터 써야 할지 막막해요.',
+    how:['문서 구분표로 필요한 문서 고르기','템플릿 다운로드','목차별 작성 포인트 보며 채우기','AI 초안 프롬프트로 빠르게 시작'],
+    tools:['Word','Excel','Google Docs','ChatGPT','Claude'], tasks:['기획서','기능명세서','PRD','요구사항','유저 플로우','화면 목록','MVP'],
+    roles:['pm','office'], goals:['doc'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' },
+  { cat:'pm', type:'워크북', date:'2026.11.18', title:'AI로 하는 앱 아이디어 검증 워크북', desc:'6단계를 채우면 AI 검토 질문과 정리본이 완성', url:'/guides/idea-validation-workbook', action:'view', thumb:'',
+    what:'문제 정의부터 MVP 범위, 성공 기준까지 6단계를 채우며 앱 아이디어를 검증하는 워크북이에요. 단계마다 내 답이 들어간 AI 질문을 복사할 수 있어요.',
+    who:['앱·웹 서비스 아이디어가 있는 예비 창업자','사이드 프로젝트를 시작하려는 분'],
+    problem:'아이디어는 있는데, 만들 가치가 있는지 확신이 없어요.',
+    how:['단계별 칸 채우기(자동 저장)','"AI 질문 복사"로 단계마다 검토 받기','실제 사람 5명과 이야기한 뒤 고쳐 쓰기','정리본으로 공유'],
+    tools:['ChatGPT','Claude'], tasks:['아이디어 검증','창업','MVP','사용자 인터뷰','문제 정의','지표'],
+    roles:['pm','office','creator'], goals:['doc','idea'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' },
+  { cat:'pm', type:'사전', date:'2026.11.18', title:'출근 즉시 쓰는 PM 실무 용어 사전', desc:'용어 70개, 쉬운 뜻과 실제 회의 예문', url:'/guides/pm-glossary', action:'view', thumb:'',
+    what:'기획·애자일·개발 협업·디자인·지표·비즈니스 용어 70개를 쉬운 뜻과 실제 회의 예문으로 정리한 사전이에요.',
+    who:['기획·PM 직무 신입·준비생','개발팀과 처음 협업하는 분'],
+    problem:'회의에서 모르는 용어가 나오면 흐름을 놓쳐요.',
+    how:['검색창에 용어 입력','분야 탭으로 묶어 보기','없는 용어는 AI 질문 프롬프트로'],
+    tools:['ChatGPT','Claude'], tasks:['용어','PRD','스프린트','KPI','리텐션','QA','애자일','회의'],
+    roles:['pm','office'], goals:['career','doc'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' }
 ];
+var LICENSE = '개인·업무용으로 자유롭게 쓸 수 있어요. 자료 자체의 재배포·판매는 안 돼요. 인용할 때는 출처(그린 AI Lab)를 남겨 주세요.';
 /* 항목 설명
    cat     : ai / ux / pm  (썸네일 색과 추천에 쓰여요)
    type    : 가이드 / 프롬프트 / 템플릿 / 키트 (새 종류를 쓰면 탭이 자동으로 생겨요)
@@ -359,6 +449,7 @@ var CLASS_URL = '/class';   /* 클래스 신청 페이지 */
 var NEW_DAYS  = 30;
 
 (function(){
+  var sheet = document.getElementById('sheet'), inner = document.getElementById('sheetInner');
   var CAT = { ai:{label:'AI 실무', mark:'AI'}, ux:{label:'UX/UI', mark:'UX'}, pm:{label:'기획·PM', mark:'PM'} };
   var $ = function(id){ return document.getElementById(id); };
   var list = $('list'), empty = $('empty'), filters = $('filters');
@@ -390,35 +481,65 @@ var NEW_DAYS  = 30;
     return '<button class="chip'+(i===0?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'<em>'+n+'</em></button>';
   }).join('');
 
-  /* 목록 */
-  function render(f){
-    var shown = 0;
-    list.innerHTML = ITEMS.map(function(it){
-      if (f !== '전체' && it.type !== f) return '';
+  /* 목록 · 검색 */
+  var curF = '전체', q = $('q');
+  var ALIAS = { 'Figma':'피그마', 'Canva':'캔바', 'CapCut':'캡컷', 'ChatGPT':'챗GPT 챗지피티 지피티', 'Claude':'클로드', 'Gemini':'제미나이', 'Kling AI':'클링', 'Midjourney':'미드저니', 'Notion':'노션', 'Notion AI':'노션', 'Excel':'엑셀', 'Word':'워드', 'Google Docs':'구글 문서', 'Perplexity':'퍼플렉시티', 'Runway':'런웨이', 'NotebookLM':'노트북LM', 'Gamma':'감마', 'Vrew':'브루', 'Suno':'수노', 'ElevenLabs':'일레븐랩스' };
+  function hay(it){ return [(it.tools||[]).map(function(t){ return ALIAS[t] || ''; }).join(' '), it.title, it.desc, it.type, it.what, it.problem, (it.who||[]).join(' '), (it.tools||[]).join(' '), (it.tasks||[]).join(' ')].join(' ').toLowerCase(); }
+  function render(){
+    var shown = 0, kw = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    list.innerHTML = ITEMS.map(function(it, i){
+      if (curF !== '전체' && it.type !== curF) return '';
+      var h = hay(it); if (kw.some(function(k){ return h.indexOf(k) < 0; })) return '';
       shown++;
-      return '<a class="item" href="'+esc(it.url || '#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'">'
+      return '<div class="item" role="button" tabindex="0" data-i="'+i+'">'
         + thumb(it)
         + '<div class="item-top"><span class="no">'+no(it)+'</span>'
         + '<span class="tag t-'+esc(it.type)+'">'+esc(it.type)+'</span>'
         + (isNew(it) ? '<span class="new">NEW</span>' : '') + '</div>'
-        + '<div class="body"><span class="date">'+esc(String(it.date).slice(0,7))+'</span>'
-        + '<h3>'+esc(it.title)+'</h3><p>'+esc(it.desc)+'</p></div>'
-        + '<div class="go'+(it.action==='get'?' get':'')+'">'+(it.action==='get'?'받으러가기 →':'보러가기 →')+'</div>'
-        + '</a>';
+        + '<div class="body"><span class="date">업데이트 '+esc(it.updated || it.date)+'</span>'
+        + '<h3>'+esc(it.title)+'</h3><p>'+esc(it.desc)+'</p>'
+        + (it.tools ? '<p class="tl">🛠 '+esc(it.tools.slice(0,3).join(' · '))+'</p>' : '') + '</div>'
+        + '<div class="go">자세히 보기 →</div>'
+        + '</div>';
     }).join('');
     empty.style.display = shown ? 'none' : 'block';
+    empty.textContent = kw.length ? '"'+q.value.trim()+'"에 맞는 자료가 없어요. 다른 단어로 찾아보세요.' : '조건에 맞는 자료가 없어요.';
   }
+  var qt; q.addEventListener('input', function(){ render(); clearTimeout(qt); qt = setTimeout(function(){ if (q.value.trim()) track('자료 검색', { q: q.value.trim() }); }, 1200); });
   filters.addEventListener('click', function(e){
     var b = e.target.closest('.chip'); if (!b) return;
     filters.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
-    render(b.dataset.f);
+    curF = b.dataset.f; render();
   });
+
+  /* 자료 상세 */
+  function detail(i){
+    var it = ITEMS[i]; if (!it) return;
+    var main = it.files ? it.files.map(function(f, k){ return '<a class="'+(k?'p2':'p1')+'" href="'+esc(f[1])+'" download data-t="'+esc(it.title)+'">'+esc(f[0])+' ↓</a>'; }).join('') + '<a class="p2" href="'+esc(it.url)+'" data-t="'+esc(it.title)+'">작성법 보기 →</a>'
+                         : '<a class="p1" href="'+esc(it.url)+'"'+ext(it.url)+' data-t="'+esc(it.title)+'">자료 열기 →</a>';
+    inner.innerHTML = '<div class="dt">' + thumb(it)
+      + '<div class="dt-meta"><span>'+esc((CAT[it.cat]||CAT.ai).label)+'</span><span>'+esc(it.type)+'</span>'+(isNew(it)?'<span style="background:var(--green-deep);color:#fff">NEW</span>':'')+'</div>'
+      + '<h3>'+esc(it.title)+'</h3>'
+      + '<div class="dt-sec"><h4>이 자료는 무엇인가요?</h4><p>'+esc(it.what||it.desc)+'</p></div>'
+      + (it.who ? '<div class="dt-sec"><h4>이런 분께 필요해요</h4><ul>'+it.who.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join('')+'</ul></div>' : '')
+      + (it.problem ? '<div class="dt-sec"><h4>이런 문제를 해결해요</h4><p>“'+esc(it.problem)+'”</p></div>' : '')
+      + (it.how ? '<div class="dt-sec"><h4>이렇게 사용해요</h4><ol>'+it.how.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join('')+'</ol></div>' : '')
+      + (it.tools ? '<div class="dt-sec"><h4>관련 AI · 도구</h4><div class="dt-tools">'+it.tools.map(function(t){ return '<span>'+esc(t)+'</span>'; }).join('')+'</div></div>' : '')
+      + '<div class="dt-trust"><b>출처</b> '+esc(it.source||'그린 AI Lab 자체 제작')+'<br><b>업데이트</b> '+esc(it.updated||it.date)+'<br><b>이용 범위</b> '+esc(LICENSE)+'</div>'
+      + '<div class="dt-btns">'+main+'</div></div>';
+    sheet.classList.add('show'); inner.parentElement.scrollTop = 0;
+    track('자료 상세 보기', { title: it.title });
+  }
+  document.addEventListener('click', function(e){
+    var c = e.target.closest('[data-i]'); if (c){ e.preventDefault(); detail(+c.dataset.i); }
+  });
+  list.addEventListener('keydown', function(e){ var c = e.target.closest('[data-i]'); if (c && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); detail(+c.dataset.i); } });
 
   /* 인기 자료 */
   var pops = ITEMS.filter(function(it){ return it.popular; }).slice(0,3);
   if (!pops.length) $('popular').style.display = 'none';
   $('popRow').innerHTML = pops.map(function(it, i){
-    return '<a class="pop" href="'+esc(it.url||'#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'"><span class="rank">'+(i+1)+'</span>'
+    return '<a class="pop" href="'+esc(it.url||'#')+'" data-i="'+ITEMS.indexOf(it)+'"><span class="rank">'+(i+1)+'</span>'
       + thumb(it) + '<h4>'+esc(it.title)+'</h4></a>';
   }).join('');
 
@@ -429,20 +550,22 @@ var NEW_DAYS  = 30;
   });
 
   /* 나에게 맞는 자료 찾기 */
-  var sheet = $('sheet'), inner = $('sheetInner'), ans = {};
+  var ans = {};
   var Q = [
-    { key:'cat', title:'어떤 분야가<br>가장 궁금하세요?', opts:[
-      { v:'ai', e:'🤖', t:'AI 실무 활용', s:'AI 툴·프롬프트·영상 제작' },
-      { v:'ux', e:'🎨', t:'UX/UI 디자인', s:'화면 설계·피그마·포트폴리오' },
-      { v:'pm', e:'🗂️', t:'서비스 기획 · PM', s:'기획 문서·아이디어 검증' },
-      { v:'all', e:'✨', t:'다 궁금해요', s:'골고루 추천해 주세요' } ]},
-    { key:'need', title:'지금 필요한 건<br>어느 쪽에 가까워요?', opts:[
-      { v:'learn', e:'📖', t:'차근차근 배우고 싶어요', s:'따라 하기 쉬운 가이드' },
-      { v:'copy',  e:'📋', t:'바로 복사해서 쓰고 싶어요', s:'프롬프트 · 템플릿' },
-      { v:'file',  e:'🧩', t:'작업 파일이 필요해요', s:'키트 · 문서 양식' } ]}
+    { key:'role', title:'지금 어떤 일을<br>하고 계세요?', opts:[
+      { v:'pm', e:'🗂️', t:'기획자 · PM (준비 중 포함)', s:'서비스 기획, 프로덕트 매니저' },
+      { v:'design', e:'🎨', t:'디자이너', s:'UX/UI, 웹·앱 디자인' },
+      { v:'mkt', e:'📣', t:'마케터 · 1인 사업자', s:'광고, 브랜드, 판매' },
+      { v:'creator', e:'🎬', t:'크리에이터', s:'블로그, 숏폼, SNS' },
+      { v:'office', e:'💼', t:'직장인 · 기타', s:'업무에 AI를 쓰고 싶은 분' } ]},
+    { key:'goal', title:'지금 가장 해결하고 싶은<br>문제는 뭐예요?', opts:[
+      { v:'ai', e:'🤖', t:'AI를 업무에 제대로 쓰고 싶어요', s:'질문법, 툴 선택' },
+      { v:'content', e:'🖼️', t:'광고·콘텐츠를 빨리 만들고 싶어요', s:'이미지, 영상, 카피' },
+      { v:'ux', e:'📱', t:'화면·UX 설계를 잘하고 싶어요', s:'규격, 상태별 설계' },
+      { v:'doc', e:'📝', t:'기획 문서를 잘 쓰고 싶어요', s:'기획서, 명세, 용어' },
+      { v:'idea', e:'💡', t:'내 아이디어를 검증하고 싶어요', s:'창업, 사이드 프로젝트' },
+      { v:'career', e:'🚀', t:'취업·이직을 준비 중이에요', s:'포트폴리오, 직무 용어' } ]}
   ];
-  var NEED = { learn:['가이드','사전'], copy:['프롬프트','키트','템플릿'], file:['템플릿','워크북','체크리스트'] };
-
   function ask(i){
     var q = Q[i];
     inner.innerHTML = '<p class="q-step">질문 '+(i+1)+' / '+Q.length+'</p><h3>'+q.title+'</h3><div class="opts">'
@@ -455,15 +578,15 @@ var NEW_DAYS  = 30;
   function result(){
     var scored = ITEMS.map(function(it, idx){
       var s = 0;
-      if (ans.cat === 'all' || it.cat === ans.cat) s += 2;
-      if (NEED[ans.need].indexOf(it.type) >= 0) s += 1.5;
+      if ((it.goals||[]).indexOf(ans.goal) >= 0) s += 2;
+      if ((it.roles||[]).indexOf(ans.role) >= 0) s += 1.5;
       if (it.popular) s += .3;
       return { it:it, s:s - idx * .01 };
     }).sort(function(a,b){ return b.s - a.s; }).slice(0,3);
-    track('자료 추천', { cat: ans.cat, need: ans.need });
+    track('자료 추천', { role: ans.role, goal: ans.goal });
     inner.innerHTML = '<p class="q-step">추천 결과</p><h3>이 자료부터<br>보시는 걸 추천해요 👇</h3><div class="rec">'
       + scored.map(function(r){ var it = r.it;
-          return '<a href="'+esc(it.url||'#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'">'+thumb(it)
+          return '<a href="'+esc(it.url||'#')+'" data-i="'+ITEMS.indexOf(it)+'">'+thumb(it)
             + '<div><h4>'+esc(it.title)+'</h4><p>'+esc(it.desc)+'</p></div></a>'; }).join('')
       + '</div><button class="again" type="button" id="again">다시 고르기</button>';
     $('again').onclick = function(){ ans = {}; ask(0); };
@@ -471,7 +594,7 @@ var NEW_DAYS  = 30;
   $('finderOpen').onclick = function(){ ans = {}; ask(0); sheet.classList.add('show'); };
   sheet.addEventListener('click', function(e){ if (e.target.closest('[data-close]')) sheet.classList.remove('show'); });
 
-  render('전체');
+  render();
 })();
 </script>
 </body>
