@@ -56,6 +56,9 @@
     .btn:active{transform:scale(.98)}
     .btn-green{background:var(--green);color:#000}
     .btn-black{background:var(--black);color:#fff}
+    .btn-line{background:transparent;color:#fff;border:1.5px solid #4a4a4a}
+    .hero-btns{position:relative;margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .hero-btns .btn{margin-top:0;height:54px;font-size:15.5px}
     .hero .btn{margin-top:28px;position:relative}
     .stats{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:relative}
     .stats div{background:#141414;border:1px solid #262626;border-radius:14px;padding:14px 8px;text-align:center}
@@ -269,7 +272,8 @@
       .badge{margin:40px auto 0}
       .hero h1{font-size:48px;margin-top:18px}
       .hero p{font-size:18px;margin-top:20px}
-      .hero .btn{width:340px;margin:28px auto 0}
+      .hero-btns{max-width:460px;margin:28px auto 0;gap:12px}
+      .hero-btns .btn{width:auto;margin:0}
       .stats{max-width:620px;margin:32px auto 0;gap:12px}
       .stats div{padding:16px 10px}
       .stats b{font-size:26px}
@@ -326,7 +330,10 @@
     <span class="badge">구독하면 바로 열리는 자료실</span>
     <h1>AI 실무부터<br>UX/UI·서비스 기획까지<br><em>그린 AI Lab 자료실</em></h1>
     <p>블로그에서 하나씩 나눠온 자료를 <b>한곳에 모았어요.</b><br>이메일만 입력하면 지금 바로 자료실이 열려요.</p>
-    <a href="#apply" class="btn btn-green">무료로 자료실 받기 →</a>
+    <div class="hero-btns">
+      <a href="#apply" class="btn btn-green">무료 자료실 받기</a>
+      <a href="/class" class="btn btn-line" data-cta="class">1:1 클래스 신청</a>
+    </div>
     <!-- 숫자는 실제 자료 수에 맞게 수정하세요 -->
     <div class="stats">
       <div><b>AI</b><span>실무 활용</span></div>
@@ -528,6 +535,7 @@ var REVIEWS = [];
     }).join('');
   }
 
+  document.querySelectorAll('[data-cta=class]').forEach(function(a){ a.addEventListener('click', function(){ try{ window.va('event', { name:'클래스 클릭', data:{ from:'index' } }); }catch(e){} }); });
   if (new URLSearchParams(location.search).get('from') === 'archive') document.getElementById('gateNote').classList.add('show');
 })();
 </script>
