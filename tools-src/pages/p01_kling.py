@@ -1,0 +1,199 @@
+META = dict(
+    source="Kling AI 3.0 발표(2026.02) 기준 기능 정리 · 그린 AI Lab 실습",
+    slug="kling-ai",
+    title="Kling AI 광고 영상 제작 A to Z",
+    desc="제품 이미지 한 장으로 15초 세로 광고 영상을 만드는 실습 가이드",
+    eyebrow="KLING AI · VIDEO GUIDE",
+    h1="이미지 한 장으로<br><em>15초 광고 영상</em> 만들기",
+    intro="촬영 없이 Kling AI로 릴스·쇼츠용 광고 영상을 만드는 과정을<br>기획부터 업로드 전 점검까지 순서대로 따라 해 보세요.",
+    buttons=[("바로 시작하기", "#plan"), ("프롬프트 공식 보기", "#formula")],
+    badges=["무료 자료", "Kling AI", "9:16 세로 영상", "실습 30분"],
+    toc=[("0. 준비", "ready"), ("1. 기획", "plan"), ("2. 이미지", "image"), ("3. 영상 공식", "formula"), ("4. 설정", "setting"), ("5. 편집", "edit"), ("문제 해결", "fix"), ("점검표", "check")],
+    cta_h2="혼자 해보니 막혔다면<br><em>클래스에서 같이</em> 만들어 봐요",
+    cta_p="AI 영상·광고 제작을 실습하며 내 브랜드 결과물까지 완성하는 그린 AI Lab 클래스예요.",
+    updated="2026.11",
+)
+
+BODY = r'''
+  <section class="block" id="ready">
+    <p class="label">STEP 0</p>
+    <h2>먼저 알아두면 <em>덜 헤매요</em></h2>
+    <div class="card">
+      <div class="card-head"><span class="n">✓</span><h3>이 가이드로 만드는 것</h3></div>
+      <p><b>5초 클립 3개를 이어 붙인 15초 세로(9:16) 광고 영상</b>이에요. 클립 하나를 길게 뽑는 것보다 짧게 3번 뽑아 잇는 쪽이 실패가 적고 수정도 쉬워요.</p>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="n">✓</span><h3>준비물</h3></div>
+      <ul>
+        <li><b>Kling AI 계정</b> — 웹(klingai.com)이나 앱에서 가입해요. 무료 크레딧으로 연습할 수 있어요.</li>
+        <li><b>기준 이미지 1~3장</b> — 제품 사진이 있으면 그대로, 없으면 STEP 2에서 AI로 만들어요.</li>
+        <li><b>편집 앱</b> — CapCut, VLLO 등 자막과 음악을 넣을 수 있는 앱이면 충분해요.</li>
+      </ul>
+    </div>
+    <div class="note"><b>2026년 기준:</b> Kling은 2026년 2월 3.0 모델을 내놓으면서 클립 길이(최대 15초), 음성·효과음을 함께 만드는 기능, 여러 컷 연출이 크게 좋아졌어요. 메뉴 이름과 크레딧 정책은 자주 바뀌니, 화면이 조금 달라도 흐름은 같다고 생각하면 돼요.</div>
+  </section>
+
+  <section class="block" id="plan">
+    <p class="label">STEP 1</p>
+    <h2>3컷으로 <em>먼저 기획</em>해요</h2>
+    <p class="lead">AI 영상은 "뭘 보여줄지" 정하지 않고 뽑기 시작하면 크레딧만 사라져요. 아래 표를 먼저 채워 보세요.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>컷</th><th>역할</th><th>보여줄 장면</th><th>자막 (10자 안팎)</th></tr>
+      <tr><td>1컷 0~5초</td><td>멈추게 하기</td><td>가장 눈길 끄는 움직임 — 물방울, 김, 빛 반사, 클로즈업</td><td>"아침이 달라져요"</td></tr>
+      <tr><td>2컷 5~10초</td><td>제품 보여주기</td><td>제품 전체가 또렷하게, 천천히 돌거나 다가가는 장면</td><td>"하루 한 잔, 30초"</td></tr>
+      <tr><td>3컷 10~15초</td><td>행동 부르기</td><td>사용 장면이나 로고가 놓일 여백이 있는 마무리 장면</td><td>"지금 첫 구매 20%"</td></tr>
+    </table></div>
+    <div class="prompt">
+      <div class="ptitle">3컷 기획을 AI에게 맡기는 프롬프트</div><button class="copy" type="button">복사</button>
+      <pre>[제품명]의 15초 세로 광고 영상을 만들려고 해. 타깃은 [타깃]이고, 가장 강조할 장점은 [장점]이야.
+5초짜리 컷 3개로 나눠서 표로 정리해 줘.
+- 컷마다: 화면에 보이는 장면, 카메라 움직임 1개, 화면 자막(10자 이내)
+- 1컷은 스크롤을 멈추게 하는 장면, 3컷은 구매를 부르는 장면으로
+- AI 영상으로 만들기 쉽게, 사람 얼굴·손이 크게 나오는 장면은 피해 줘</pre>
+    </div>
+  </section>
+
+  <section class="block" id="image">
+    <p class="label">STEP 2</p>
+    <h2>컷마다 <em>기준 이미지</em> 만들기</h2>
+    <p class="lead">이미지→영상 방식은 첫 장면을 내가 정할 수 있어서 결과가 훨씬 안정적이에요. 제품 사진이 있다면 그대로 써도 돼요.</p>
+    <div class="card">
+      <div class="card-head"><span class="n">공식</span><h3>이미지 프롬프트 = 주인공 + 배경 + 빛 + 스타일 + 비율</h3></div>
+      <ul>
+        <li><b>주인공</b> 무엇이, 어떤 모습으로 — "유리병 향수, 병 표면에 물방울"</li>
+        <li><b>배경</b> 어디에 — "베이지 대리석 위, 뒤로 초록 잎사귀 흐림"</li>
+        <li><b>빛</b> 어떤 조명 — "오른쪽 창가 자연광, 부드러운 그림자"</li>
+        <li><b>스타일</b> 어떤 느낌 — "고급 화장품 광고 사진, 미니멀"</li>
+        <li><b>비율</b> 꼭 넣기 — "세로 9:16"</li>
+      </ul>
+    </div>
+    <div class="pgrid">
+      <div class="prompt"><div class="ptitle">1컷 · 멈추게 하는 클로즈업</div><button class="copy" type="button">복사</button>
+<pre>유리병 향수 병 표면에 맺힌 물방울 클로즈업, 베이지 대리석 위, 뒤로 초록 잎사귀가 흐리게 보임, 오른쪽에서 들어오는 부드러운 자연광, 고급 화장품 광고 사진, 미니멀, 세로 9:16</pre></div>
+      <div class="prompt"><div class="ptitle">2컷 · 제품이 또렷한 정면</div><button class="copy" type="button">복사</button>
+<pre>유리병 향수 정면, 화면 가운데, 베이지 대리석 위, 뒤로 초록 잎사귀, 깨끗한 자연광, 제품 라벨이 선명하게 보이는 광고 사진, 미니멀, 세로 9:16</pre></div>
+      <div class="prompt"><div class="ptitle">3컷 · 로고·문구 들어갈 여백</div><button class="copy" type="button">복사</button>
+<pre>유리병 향수가 화면 아래쪽 1/3에 작게 놓임, 위쪽은 비어 있는 베이지 배경, 잔잔한 자연광, 문구를 넣을 넓은 여백, 고급 광고 사진, 세로 9:16</pre></div>
+    </div>
+    <div class="note gray"><b>팁</b> 세 컷 모두 배경·빛·스타일 문장을 똑같이 쓰면 영상을 이었을 때 한 편처럼 자연스러워요.</div>
+  </section>
+
+  <section class="block" id="formula">
+    <p class="label">STEP 3</p>
+    <h2>영상 프롬프트 <em>4단 공식</em></h2>
+    <p class="lead">이미지에 이미 장면이 있으니, 영상 프롬프트에는 <b>"무엇이 어떻게 움직이는지"</b>만 적으면 돼요.</p>
+    <div class="grid2 c4">
+      <div class="mini"><span class="k">① 주체</span><b>누가·무엇이</b><p>향수병, 커피잔, 운동화</p></div>
+      <div class="mini"><span class="k">② 움직임</span><b>딱 하나만</b><p>천천히 회전한다, 김이 피어오른다</p></div>
+      <div class="mini"><span class="k">③ 카메라</span><b>어떻게 찍나</b><p>천천히 다가간다, 오른쪽으로 돈다</p></div>
+      <div class="mini"><span class="k">④ 분위기</span><b>빛·속도·느낌</b><p>부드럽고 고급스러운, 슬로모션</p></div>
+    </div>
+    <h3 class="sub">카메라 움직임 단어장</h3>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>한국어로 쓰기</th><th>영어 표현</th><th>이럴 때 좋아요</th></tr>
+      <tr><td>천천히 다가간다</td><td>slow push in / dolly in</td><td>제품 디테일 강조, 1컷 클로즈업</td></tr>
+      <tr><td>천천히 멀어진다</td><td>pull out / dolly out</td><td>전체 모습을 드러내는 마무리</td></tr>
+      <tr><td>주위를 돈다</td><td>orbit / arc shot</td><td>제품을 입체적으로 보여줄 때</td></tr>
+      <tr><td>옆으로 지나간다</td><td>pan / truck left·right</td><td>여러 제품이 나란히 있을 때</td></tr>
+      <tr><td>아래에서 위로</td><td>tilt up / pedestal up</td><td>키가 큰 병, 의류 전신</td></tr>
+      <tr><td>고정</td><td>static camera</td><td>피사체 움직임만 보여줄 때 (김, 물결)</td></tr>
+    </table></div>
+    <h3 class="sub">바로 쓰는 영상 프롬프트</h3>
+    <div class="pgrid">
+      <div class="prompt light"><div class="ptitle">🧴 화장품 · 1컷</div><button class="copy" type="button">복사</button>
+<pre>물방울이 향수병 표면을 따라 천천히 흘러내린다. 카메라는 고정된 채 아주 천천히 다가간다. 햇빛이 유리에 반사되어 반짝인다. 부드럽고 고급스러운 분위기, 슬로모션.</pre></div>
+      <div class="prompt light"><div class="ptitle">☕ 음료</div><button class="copy" type="button">복사</button>
+<pre>커피잔 위로 김이 천천히 피어오른다. 카메라가 오른쪽으로 부드럽게 반 바퀴 돈다. 따뜻한 아침 햇살, 포근한 분위기.</pre></div>
+      <div class="prompt light"><div class="ptitle">👟 패션 · 잡화</div><button class="copy" type="button">복사</button>
+<pre>운동화가 받침대 위에서 천천히 한 바퀴 회전한다. 카메라는 고정. 배경의 먼지 입자가 빛을 받아 떠다닌다. 세련되고 역동적인 분위기.</pre></div>
+      <div class="prompt light"><div class="ptitle">🍰 음식</div><button class="copy" type="button">복사</button>
+<pre>포크가 케이크를 천천히 자르고 크림이 부드럽게 늘어난다. 카메라가 아주 천천히 다가간다. 클로즈업, 달콤하고 포근한 분위기.</pre></div>
+      <div class="prompt light"><div class="ptitle">📱 전자기기</div><button class="copy" type="button">복사</button>
+<pre>스마트폰 화면이 켜지며 은은한 빛이 퍼진다. 카메라가 아래에서 위로 천천히 올라가며 제품 전체를 보여준다. 깔끔하고 미래적인 분위기, 어두운 배경.</pre></div>
+      <div class="prompt light"><div class="ptitle">🌿 마무리 컷 (3컷)</div><button class="copy" type="button">복사</button>
+<pre>잎사귀 그림자가 배경 위에서 바람에 살짝 흔들린다. 제품은 움직이지 않는다. 카메라는 고정. 잔잔하고 여유로운 분위기.</pre></div>
+    </div>
+  </section>
+
+  <section class="block" id="setting">
+    <p class="label">STEP 4</p>
+    <h2>생성 <em>설정</em>은 이렇게</h2>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>설정</th><th>추천</th><th>이유</th></tr>
+      <tr><td>방식</td><td>이미지 → 영상</td><td>첫 장면을 내가 정할 수 있어 결과가 안정적이에요</td></tr>
+      <tr><td>비율</td><td>9:16</td><td>릴스·쇼츠·스토리 전체 화면에 맞아요</td></tr>
+      <tr><td>길이</td><td>5초</td><td>짧을수록 움직임이 덜 흐트러져요. 3컷을 이어 15초로</td></tr>
+      <tr><td>품질</td><td>연습은 표준, 최종은 고품질(Pro)</td><td>구도·움직임을 표준으로 확인한 뒤 고품질로 한 번 더</td></tr>
+      <tr><td>소리</td><td>끄기 (편집 앱에서 넣기)</td><td>광고는 음악·자막을 편집 단계에서 맞추는 게 수정이 쉬워요</td></tr>
+      <tr><td>생성 개수</td><td>같은 프롬프트로 2~3번</td><td>같은 문장도 결과가 매번 달라요. 고르는 게 실력이에요</td></tr>
+    </table></div>
+    <div class="prompt">
+      <div class="ptitle">네거티브 프롬프트 (넣을 칸이 있을 때)</div><button class="copy" type="button">복사</button>
+      <pre>흐림, 왜곡된 손, 변형된 로고, 깨진 글자, 워터마크, 갑작스러운 장면 전환, 과한 흔들림</pre>
+    </div>
+  </section>
+
+  <section class="block" id="edit">
+    <p class="label">STEP 5</p>
+    <h2>광고 영상으로 <em>마무리</em></h2>
+    <div class="card">
+      <div class="card-head"><span class="n">01</span><h3>편집 앱에서 할 일</h3></div>
+      <ol>
+        <li>클립 3개를 순서대로 놓고, 컷 사이 전환은 없거나 아주 짧게</li>
+        <li>컷마다 자막 1줄 — 소리 없이 보는 사람이 많아서 자막이 메시지예요</li>
+        <li>배경음악은 1컷 시작과 동시에, 3컷에서 살짝 줄이기</li>
+        <li>3컷에 브랜드명 + 행동 문구(구매, 저장, 프로필 링크)</li>
+      </ol>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="n">02</span><h3>자막은 안전 영역 안에</h3></div>
+      <p>릴스·스토리는 위쪽에 계정 이름, 아래쪽에 버튼과 설명이 덮여요. <b>위쪽 약 14%, 아래쪽 약 20%</b>에는 중요한 글자나 로고를 두지 마세요.</p>
+      <div class="phone"><div class="scr" style="background:linear-gradient(#fdecec 0 14%,#fff 14% 80%,#fdecec 80%)">
+        <div style="position:absolute;top:4%;left:0;right:0;text-align:center;color:#b23">계정 이름 영역</div>
+        <div style="position:absolute;top:44%;left:0;right:0;text-align:center;font-weight:800;color:#111;font-size:13px">자막은 여기</div>
+        <div style="position:absolute;bottom:7%;left:0;right:0;text-align:center;color:#b23">버튼 · 설명 영역</div>
+      </div></div>
+    </div>
+    <div class="prompt">
+      <div class="ptitle">자막 3줄 뽑기 프롬프트</div><button class="copy" type="button">복사</button>
+      <pre>[제품명] 15초 세로 광고에 넣을 화면 자막을 써 줘.
+컷 1: [장면] / 컷 2: [장면] / 컷 3: [장면]
+- 컷마다 10자 안팎 한 줄
+- 1컷은 궁금하게, 2컷은 장점 하나, 3컷은 행동을 부르는 문장
+- 서로 다른 톤으로 3세트 만들어 줘 (감성 / 정보 / 유머)</pre>
+    </div>
+  </section>
+
+  <section class="block" id="fix">
+    <p class="label">TROUBLESHOOTING</p>
+    <h2>이럴 땐 <em>이렇게</em> 고쳐요</h2>
+    <details class="acc"><summary><div>제품 로고·글자가 뭉개져요<small>가장 흔한 문제</small></div></summary>
+      <div class="acc-body">AI는 글자를 잘 못 지켜요. 로고가 크게 보이는 장면은 움직임을 줄이고("카메라 고정, 제품은 움직이지 않는다"), 로고와 브랜드명은 편집 앱에서 위에 얹는 게 가장 확실해요.</div></details>
+    <details class="acc"><summary><div>움직임이 너무 과하거나 이상해요</div></summary>
+      <div class="acc-body">움직임을 하나만 남기고 "천천히", "살짝"을 붙여 보세요. 카메라와 피사체가 동시에 크게 움직이면 형태가 무너지기 쉬워요.</div></details>
+    <details class="acc"><summary><div>거의 안 움직이고 사진 같아요</div></summary>
+      <div class="acc-body">움직일 거리가 있는 요소를 넣어 보세요 — 김, 물방울, 머리카락, 천, 잎사귀, 빛. "카메라가 천천히 다가간다"만 넣어도 살아나요.</div></details>
+    <details class="acc"><summary><div>손이나 얼굴이 어색해요</div></summary>
+      <div class="acc-body">광고 컷에서는 손·얼굴을 크게 보여주지 않는 구도로 바꾸는 게 가장 빨라요. 사람이 꼭 필요하면 뒷모습이나 화면 밖으로 살짝 걸친 구도를 추천해요.</div></details>
+    <details class="acc"><summary><div>컷마다 색감이 달라요</div></summary>
+      <div class="acc-body">이미지 프롬프트의 배경·빛·스타일 문장을 세 컷 모두 똑같이 쓰고, 편집 앱에서 같은 필터를 한 번에 적용해 맞춰요.</div></details>
+  </section>
+
+  <section class="block" id="check">
+    <p class="label">CHECKLIST</p>
+    <h2>올리기 전 <em>마지막 점검</em></h2>
+    <div data-checklist="kling">
+      <div class="progress"><div class="progress-top">점검 진행<span data-num>0 / 0</span></div><div class="bar"><i></i></div><button class="reset" type="button">처음부터 다시</button></div>
+      <ul class="checks">
+        <li><label><input type="checkbox" id="k1"><div class="t"><b>첫 1초 안에 눈길 끄는 움직임이 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="k2"><div class="t"><b>제품이 최소 한 컷에서 또렷하게 보인다</b></div></label></li>
+        <li><label><input type="checkbox" id="k3"><div class="t"><b>로고·글자가 깨진 프레임이 없다</b><span>깨졌다면 편집 앱에서 덮어 주기</span></div></label></li>
+        <li><label><input type="checkbox" id="k4"><div class="t"><b>소리 없이 봐도 자막만으로 내용이 이해된다</b></div></label></li>
+        <li><label><input type="checkbox" id="k5"><div class="t"><b>자막·로고가 위 14%, 아래 20% 밖에 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="k6"><div class="t"><b>마지막 컷에 행동 문구가 있다</b><span>구매하기, 저장하기, 프로필 링크 등</span></div></label></li>
+        <li><label><input type="checkbox" id="k7"><div class="t"><b>9:16, 1080×1920 이상으로 내보냈다</b></div></label></li>
+        <li><label><input type="checkbox" id="k8"><div class="t"><b>AI 생성 콘텐츠 표시 규칙을 확인했다</b><span>플랫폼별 AI 라벨 정책을 따라 주세요</span></div></label></li>
+      </ul>
+    </div>
+  </section>
+'''

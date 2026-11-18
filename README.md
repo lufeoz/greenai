@@ -8,6 +8,8 @@
 ## 구조
 ```
 index.html            구독 신청 페이지 (/)
+directory·skills·prompts·workflows·tools·learn.html   LAB 6개 영역 (공개)
+assets/lab.js         LAB 공통 렌더러 (검색·분류·상세 시트)
 archive.html          자료실 목록 (/archive)
 class.html            1:1 클래스 소개·신청 (/class) — 신청은 크몽으로 연결
 guides/*.html         자료 상세 페이지 10종 (/guides/...)
@@ -28,3 +30,6 @@ og.png                공유 미리보기 이미지
 
 ## 방문 통계
 Cloudflare 대시보드 → Pages 프로젝트 → Metrics → Web Analytics를 켜면 방문 수가 집계돼요.
+
+## LAB 6개 영역 수정
+`tools-src/lab_build.py`(생성기)의 데이터로 만들었어요. 직접 고칠 때는 각 HTML 아래쪽 `window.LAB = {...}`의 items 배열을 수정하면 돼요.

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>WORKFLOW LAB — 그린 AI Lab</title>
+  <meta name="description" content="Make, n8n으로 만드는 업무 자동화 워크플로. 사례, 단계별 실행 방법, 연결 도구.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="WORKFLOW LAB — 그린 AI Lab">
+  <meta property="og:description" content="Make, n8n으로 만드는 업무 자동화 워크플로. 사례, 단계별 실행 방법, 연결 도구.">
+  <meta property="og:image" content="https://greenai-205.pages.dev/og.png">
+  <meta property="og:url" content="https://greenai-205.pages.dev/workflows">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="/assets/guide.css">
+  <script src="/assets/lab.js"></script>
+</head>
+<body>
+<div class="page">
+  <header class="nav"><a class="brand" href="/"><i>G</i>그린 AI Lab<b>.</b></a><a class="back" href="/class">1:1 클래스 →</a></header>
+  <nav class="labnav" id="labnav"></nav>
+  <section class="hero">
+    <p class="eyebrow">04 · WORKFLOW LAB</p>
+    <h1>반복 업무를 맡기는<br><em>자동화 워크플로</em></h1>
+    <p>Make·n8n으로 바로 따라 만들 수 있는 자동화 사례예요.<br>카드를 누르면 단계별 실행 방법과 연결 도구가 나와요.</p>
+  </section>
+  <div class="lab-tools">
+    <label class="search"><span>🔎</span><input type="search" id="labq" placeholder="예) 블로그, 회의록, 메일, n8n"></label>
+    <div class="chips" id="facet-cat"></div>
+    <p class="count-msg"><span id="labcount"></span> 보는 중</p>
+  </div>
+  <div class="lgrid" id="lablist"></div>
+  <p class="empty-msg" id="labempty" style="padding:0 20px">찾는 내용이 없어요. 다른 단어로 검색해 보세요.</p>
+  <section class="cta">
+    <small>GREEN AI LAB</small>
+    <h2>자료로 익혔다면<br><em>내 결과물로</em> 만들어 봐요</h2>
+    <p>구독하면 템플릿·체크리스트·워크북이 있는 자료실이 바로 열려요.</p>
+    <a href="/" class="btn btn-green">무료 자료실 받기 →</a>
+  </section>
+  <footer><div class="f-brand">그린 AI Lab<b>.</b></div>© 2026 Green AI Lab · <a href="/class">1:1 클래스</a> · <a href="mailto:greenai.lab3@gmail.com">문의하기</a></footer>
+</div>
+<div class="sheet" id="labsheet" role="dialog" aria-modal="true"><div class="sheet-bg" data-close></div><div class="sheet-body"><button class="sheet-close" type="button" data-close aria-label="닫기">×</button><div id="labsheetin"></div></div></div>
+<script>window.LAB = {"items": [{"t": "블로그 새 글 → SNS 게시물 초안", "d": "블로그에 글을 올리면 AI가 인스타 캡션·스레드 글·뉴스레터 소개문 초안을 만들어 노션에 쌓아요.", "cat": "content", "level": "중급", "tools": ["n8n", "Make", "RSS", "ChatGPT/Claude API", "Notion"], "what": "블로그에 글을 올리면 AI가 인스타 캡션·스레드 글·뉴스레터 소개문 초안을 만들어 노션에 쌓아요.", "how": ["RSS 트리거: 블로그 RSS 주소에서 새 글 감지", "HTTP/RSS 노드: 글 제목·본문 가져오기", "AI 노드: 캡션(300자)·스레드(5줄)·뉴스레터 소개 3종 생성", "Notion 노드: '게시 대기' 데이터베이스에 저장", "검토 후 직접 게시 (자동 게시는 계정 정책 확인 후)"], "use": ["기대 효과: 글 1편당 30분 → 5분"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "구독 신청 → 시트 기록 + 환영 알림", "d": "신청이 들어오면 시트에 쌓고, 나에게 알림을 보내고, 신청자에게 안내 메일을 보내요.", "cat": "sales", "level": "초급", "tools": ["Make", "Google Forms/웹훅", "Google Sheets", "Gmail", "Slack"], "what": "신청이 들어오면 시트에 쌓고, 나에게 알림을 보내고, 신청자에게 안내 메일을 보내요.", "how": ["트리거: 폼 제출 또는 웹훅으로 신청 정보 받기", "Google Sheets: 이름·이메일·유입 경로 한 줄 추가", "Slack/카카오 알림: '새 신청 1건'", "Gmail: 신청자에게 안내 메일 발송", "주간 합계는 시트 수식으로 자동 집계"], "use": ["기대 효과: 신청 관리 수작업 0"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "문의 메일 자동 분류 + 답장 초안", "d": "새 문의 메일을 AI가 '클래스·협업·기타'로 분류하고, 답장 초안을 임시보관함에 만들어요.", "cat": "sales", "level": "중급", "tools": ["n8n", "Gmail", "ChatGPT/Claude API", "Google Sheets"], "what": "새 문의 메일을 AI가 '클래스·협업·기타'로 분류하고, 답장 초안을 임시보관함에 만들어요.", "how": ["Gmail 트리거: 특정 라벨/주소로 온 새 메일", "AI 노드: 분류 + 핵심 요청 요약 + 답장 초안", "Switch 노드: 분류별로 라벨 붙이기", "Gmail: 답장 초안을 임시보관함에 저장 (자동 발송 X)", "Sheets: 문의 기록 남기기"], "use": ["기대 효과: 답장 작성 시간 절반"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "유튜브 영상 → 블로그 글 초안", "d": "새로 올린 영상의 자막을 바탕으로 블로그 글 초안과 SEO 제목 후보를 만들어요.", "cat": "content", "level": "중급", "tools": ["n8n", "YouTube", "자막/전사", "ChatGPT/Claude API", "Google Docs"], "what": "새로 올린 영상의 자막을 바탕으로 블로그 글 초안과 SEO 제목 후보를 만들어요.", "how": ["YouTube/RSS 트리거: 새 영상 감지", "자막 가져오기 (자동 자막 또는 전사 도구)", "AI 노드: 소제목 구조 블로그 글 + 제목 10개", "Google Docs: 초안 문서 생성", "직접 사례·이미지 추가 후 발행"], "use": ["기대 효과: 영상 1개 → 글 1편"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "회의 녹음 → 회의록 → 노션", "d": "회의 녹음 전사본을 '결정 사항 / 할 일 / 미정'으로 정리해 노션 회의록 DB에 저장해요.", "cat": "ops", "level": "초급", "tools": ["클로바노트/전사 도구", "ChatGPT/Claude", "Notion", "Make"], "what": "회의 녹음 전사본을 '결정 사항 / 할 일 / 미정'으로 정리해 노션 회의록 DB에 저장해요.", "how": ["회의 녹음 → 전사본 만들기", "전사본을 폴더에 저장하면 자동화 시작 (Make: Watch files)", "AI: 결정·할 일(담당·기한)·미정 정리", "Notion: 회의록 DB에 페이지 생성", "할 일은 담당자에게 알림"], "use": ["기대 효과: 회의록 작성 20분 → 2분"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "주간 트렌드 뉴스 리포트", "d": "매주 월요일 아침, 관심 분야 뉴스를 모아 AI가 5줄 요약과 인사이트를 붙여 메일로 보내요.", "cat": "report", "level": "중급", "tools": ["n8n", "Schedule", "RSS", "ChatGPT/Claude API", "Gmail"], "what": "매주 월요일 아침, 관심 분야 뉴스를 모아 AI가 5줄 요약과 인사이트를 붙여 메일로 보내요.", "how": ["Schedule 트리거: 매주 월 08:00", "RSS 노드 여러 개: AI·디자인·기획 뉴스 사이트", "Merge + 중복 제거, 최근 7일만 남기기", "AI 노드: 주제별 묶기, 5줄 요약, 콘텐츠 아이디어 3개", "Gmail: 나에게 리포트 발송"], "use": ["기대 효과: 리서치 1시간 → 0"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "클래스 신청 → 일정·사전 설문", "d": "클래스 결제·신청 정보를 받으면 상담 일정 링크와 사전 설문을 자동으로 보내요.", "cat": "sales", "level": "초급", "tools": ["Make", "Google Calendar", "Google Forms", "Gmail"], "what": "클래스 결제·신청 정보를 받으면 상담 일정 링크와 사전 설문을 자동으로 보내요.", "how": ["트리거: 신청 시트에 새 줄 추가", "Gmail: 사전 설문 링크 + 일정 선택 링크 발송", "응답이 오면 Calendar 일정 생성", "수업 전날 리마인드 메일"], "use": ["기대 효과: 신청 응대 자동화"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}, {"t": "댓글 키워드 → 자료 링크 DM", "d": "게시물에 '프롬프트' 같은 키워드 댓글이 달리면 자료실 링크를 DM으로 보내요.", "cat": "content", "level": "초급", "tools": ["인스타그램 DM 자동화 도구(ManyChat 등)", "Make"], "what": "게시물에 '프롬프트' 같은 키워드 댓글이 달리면 자료실 링크를 DM으로 보내요.", "how": ["DM 자동화 도구에 인스타 계정 연결", "게시물·키워드 규칙 만들기 (예: '프롬프트')", "DM 문구: 자료 소개 + 자료실 링크(?from=insta)", "플랫폼 자동화 정책을 확인하고 과도한 발송 피하기"], "use": ["기대 효과: 댓글 응대 자동"], "rel": [["프롬프트: n8n 워크플로 설계", "/prompts#n8n"]]}], "facets": [{"key": "cat", "label": "분야", "values": {"content": "콘텐츠", "sales": "고객·문의", "ops": "업무 정리", "report": "리포트"}}], "whatLabel": "무엇을 자동화하나요?", "useLabel": "효과", "howLabel": "단계별 실행", "toolsLabel": "연결 도구", "note": "개인정보가 오가는 자동화는 저장 위치와 권한을 꼭 확인하세요. 자동 발송보다 '초안 만들기 → 사람이 확인'을 권해요.", "src": "그린 AI Lab 자체 설계"};</script>
+</body>
+</html>

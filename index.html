@@ -256,6 +256,14 @@
     .reviews blockquote{flex:none;width:78%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;font-size:14px;color:var(--ink2)}
     .reviews cite{display:block;margin-top:8px;font-style:normal;font-size:12.5px;color:var(--gray)}
 
+    .labs{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .labs a{display:block;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;text-decoration:none;color:var(--ink)}
+    .labs b{display:block;font-size:12.5px;font-weight:900;letter-spacing:.04em}
+    .labs span{display:block;margin-top:4px;font-size:12.5px;color:var(--gray);line-height:1.4}
+    .labs .lk{grid-column:1/-1;background:var(--black);color:#fff;border-color:#000}
+    .labs .lk b{color:var(--green)}
+    @media (min-width:768px){.labs{grid-template-columns:repeat(3,1fr);gap:12px}.labs a{padding:20px}.labs b{font-size:14px}.labs span{font-size:14px}}
+
     /* ═════════ PC / 태블릿 ═════════ */
     @media (min-width:768px){
       :root{--gut:max(40px,calc((100% - 1040px)/2))}
@@ -354,6 +362,22 @@
       <div class="card"><span class="num">04</span><div><h3>모바일 UI 규격 치트시트</h3><p>터치·간격·글자·대비 숫자 한 장</p></div></div>
       <div class="card"><span class="num">05</span><div><h3>기획서 · 기능명세서 템플릿</h3><p>워드·엑셀로 바로 받는 기획 문서</p></div></div>
       <div class="card plus"><span class="num">+5</span><div><h3>광고 키트, 워크북, 용어 사전…</h3><p>모두 10종, 새 자료는 계속 추가돼요</p></div></div>
+    </div>
+  </section>
+
+
+  <!-- ───── 7개 공간 ───── -->
+  <section class="s-labs">
+    <p class="sec-label">GREEN AI LAB</p>
+    <h2 class="sec-title">구독 없이도 둘러보는<br><em>7가지 공간</em></h2>
+    <div class="labs">
+      <a href="/directory"><b>AI DIRECTORY</b><span>목적별 AI 도구 31개</span></a>
+      <a href="/skills"><b>SKILLS LIBRARY</b><span>Claude 스킬 설치·활용</span></a>
+      <a href="/prompts"><b>PROMPT LIBRARY</b><span>업무·역할·도구별 72개</span></a>
+      <a href="/workflows"><b>WORKFLOW LAB</b><span>Make·n8n 자동화</span></a>
+      <a href="/tools"><b>TOOLS LAB</b><span>바로 쓰는 미니 AI 도구</span></a>
+      <a href="/learn"><b>LEARNING LAB</b><span>초급·중급·고급 실습</span></a>
+      <a href="#apply" class="lk"><b>RESOURCE ARCHIVE 🔒</b><span>템플릿·체크리스트·워크북 — 구독하면 열려요</span></a>
     </div>
   </section>
 

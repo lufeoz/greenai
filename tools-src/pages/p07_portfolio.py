@@ -1,0 +1,139 @@
+STEPS = [
+ ("summary", "한 줄 요약", "읽는 사람이 3초 안에 프로젝트를 이해하게",
+  "[누구]를 위한 [서비스 종류]에서, [문제]를 [내가 한 일]로 해결해 [결과]를 만든 프로젝트",
+  "가계부 앱 리디자인 프로젝트입니다.",
+  "20대 사회초년생을 위한 가계부 앱에서, 기록 3일 만에 그만두는 문제를 '자동 분류 + 하루 1분 기록' 흐름으로 바꿔 7일 유지율을 높인 프로젝트"),
+ ("bg", "배경 · 문제", "왜 이 프로젝트를 했는지",
+  "[서비스]는 [상황]이었다. 그런데 [데이터·관찰]을 보니 [사용자]가 [불편]을 겪고 있었다. 이 문제를 풀지 않으면 [영향]이 생긴다.",
+  "사용자 경험을 개선하고 싶었습니다.",
+  "앱 리뷰 120개를 분류해 보니 38%가 '입력이 귀찮다'는 내용이었고, 가입자 절반 이상이 3일 안에 기록을 멈췄다."),
+ ("role", "내 역할", "팀 프로젝트라면 특히 분명하게",
+  "기간: [기간] / 팀: [구성] / 내 역할: [역할]. 이 중 [내가 직접 한 일 1], [내가 직접 한 일 2]를 맡았다.",
+  "UX/UI 디자인 전반을 담당했습니다.",
+  "4주 / 기획 1·디자인 2·개발 2 / 리서치 설계, 핵심 흐름 3개 와이어프레임, UI 디자인 시스템 제작을 맡았다."),
+ ("research", "리서치", "어떻게 알아냈는지 — 방법과 대상",
+  "[방법]으로 [대상·인원]을 조사했다. 가장 많이 나온 이야기는 [발견 1], [발견 2]였다.",
+  "사용자 인터뷰를 진행했습니다.",
+  "가계부를 그만둔 경험이 있는 20대 6명을 인터뷰했다. 6명 중 5명이 '카드 내역을 일일이 옮겨 적는 게 싫었다'고 말했다."),
+ ("insight", "인사이트", "리서치에서 디자인 방향으로 넘어가는 다리",
+  "사용자는 [겉으로 원하는 것]을 말했지만, 실제로 필요한 건 [진짜 필요]였다. 그래서 [디자인 원칙]을 세웠다.",
+  "사용자는 편리함을 원했습니다.",
+  "사용자는 '예쁜 차트'를 원한다고 했지만 실제로 필요한 건 '생각 없이 끝나는 기록'이었다. 그래서 '입력 3번 이하'를 원칙으로 세웠다."),
+ ("solution", "해결 과정", "결과 화면보다 '왜 이렇게 했는지'가 중요해요",
+  "[시도 1]을 해봤지만 [문제]가 있어서, [시도 2]로 바꿨다. 최종적으로 [핵심 화면·기능]을 설계했다.",
+  "메인 화면, 입력 화면, 통계 화면을 디자인했습니다.",
+  "처음엔 홈에 입력 버튼을 크게 뒀지만, 테스트에서 '뭘 써야 할지 모르겠다'는 반응이 많았다. 그래서 카드 문자를 자동으로 불러와 '맞아요/아니에요'만 누르는 방식으로 바꿨다."),
+ ("result", "결과", "숫자가 있으면 숫자로, 없으면 검증 결과로",
+  "[지표]가 [전]에서 [후]로 바뀌었다. / 사용성 테스트에서 [과제 성공률·소요 시간·반응]이 나왔다.",
+  "사용자들의 반응이 좋았습니다.",
+  "프로토타입 테스트(5명)에서 하루 기록 평균 시간이 2분 10초에서 40초로 줄었고, 5명 모두 도움 없이 과제를 끝냈다."),
+ ("retro", "회고", "다음엔 무엇을 다르게 할지",
+  "잘한 점은 [잘한 점], 아쉬운 점은 [아쉬운 점]이다. 다시 한다면 [다음 행동]을 하겠다.",
+  "많이 배운 프로젝트였습니다.",
+  "리서치를 빨리 시작한 건 좋았지만, 개발자와 자동 분류 정확도를 늦게 논의해 일정이 밀렸다. 다음엔 기술 제약을 첫 주에 확인하겠다."),
+]
+
+blocks = []
+for i, (k, t, why, tpl, bad, good) in enumerate(STEPS, 1):
+    blocks.append(f'''    <details class="acc"{" open" if i == 1 else ""} id="s-{k}"><summary><div>{i:02d} · {t}<small>{why}</small></div></summary><div class="acc-body">
+      <div class="prompt light"><div class="ptitle">문장 틀</div><button class="copy" type="button">복사</button><pre>{tpl}</pre></div>
+      <div class="grid2">
+        <div class="note warn" style="margin-top:0"><b>✕ 아쉬운 예</b><br>{bad}</div>
+        <div class="note" style="margin-top:0"><b>○ 좋은 예</b><br>{good}</div>
+      </div>
+      <div class="field"><label>내 프로젝트로 써 보기<small>입력한 내용은 이 브라우저에 자동 저장돼요</small></label><textarea data-save="pf_{k}" data-pf="{t}" placeholder="여기에 바로 써 보세요"></textarea></div>
+    </div></details>''')
+
+META = dict(
+    slug="portfolio-case-study",
+    title="UX/UI 포트폴리오 케이스 스터디 템플릿",
+    desc="한 줄 요약부터 회고까지 8단계 문장 틀, 좋은 예·아쉬운 예, 셀프 점검표",
+    eyebrow="PORTFOLIO TEMPLATE",
+    h1="채용 담당자가 끝까지 읽는<br><em>케이스 스터디 템플릿</em>",
+    intro="포트폴리오는 예쁜 화면 모음이 아니라 '문제를 푼 과정'이에요.<br>8단계 문장 틀에 내 프로젝트를 채워 보세요.",
+    buttons=[("템플릿 쓰기", "#template"), ("셀프 점검표", "#check")],
+    badges=["무료 자료", "8단계 문장 틀", "자동 저장", "비전공자 추천"],
+    toc=[("구성 원칙", "rule"), ("8단계 템플릿", "template"), ("정리본", "export"), ("점검표", "check")],
+    cta_h2="포트폴리오 한 편,<br><em>피드백 받으며</em> 완성해요",
+    cta_p="케이스 스터디 구성부터 화면 정리까지 함께 만드는 그린 AI Lab UX/UI 클래스예요.",
+)
+
+BODY = r'''
+  <section class="block" id="rule">
+    <p class="label">PRINCIPLES</p>
+    <h2>읽히는 포트폴리오의 <em>원칙 3가지</em></h2>
+    <div class="grid2 c3">
+      <div class="mini"><span class="k">1</span><b>결론을 맨 위에</b><p>담당자는 한 포트폴리오에 몇 분 쓰지 않아요. 첫 화면에 문제·역할·결과를 모두 보여주세요.</p></div>
+      <div class="mini"><span class="k">2</span><b>과정 = 판단의 기록</b><p>"무엇을 했다"보다 "왜 A 대신 B를 골랐는지"가 실력을 보여줘요.</p></div>
+      <div class="mini"><span class="k">3</span><b>프로젝트는 3개면 충분</b><p>얕은 6개보다 깊은 3개. 가장 자신 있는 걸 맨 앞에.</p></div>
+    </div>
+    <h3 class="sub">첫 화면(커버)에 들어갈 것</h3>
+    <div class="card"><ul>
+      <li><b>프로젝트 이름 + 한 줄 요약</b> (아래 01번)</li>
+      <li><b>대표 화면 1장</b> — 가장 잘 나온 결과 화면</li>
+      <li><b>기간 · 팀 구성 · 내 역할 · 사용 툴</b></li>
+      <li><b>결과 숫자 1개</b> — 있다면 커버에 크게</li>
+    </ul></div>
+  </section>
+
+  <section class="block" id="template">
+    <p class="label">TEMPLATE</p>
+    <h2>8단계 <em>문장 틀</em></h2>
+    <p class="lead">각 단계를 열고 <b>문장 틀을 복사</b>하거나, 아래 칸에 바로 써 보세요. 다 쓰면 맨 아래에서 정리본으로 한 번에 복사할 수 있어요.</p>
+''' + "\n".join(blocks) + r'''
+  </section>
+
+  <section class="block" id="export">
+    <p class="label">EXPORT</p>
+    <h2>쓴 내용을 <em>정리본으로</em></h2>
+    <button class="btn btn-black" type="button" id="pfBuild" style="width:100%;margin-top:12px">내가 쓴 내용으로 정리본 만들기</button>
+    <div class="field"><textarea id="pfOut" style="min-height:200px" placeholder="버튼을 누르면 여기에 정리돼요" readonly></textarea></div>
+    <div class="grid2" style="margin-top:8px">
+      <button class="btn btn-white" type="button" id="pfCopy">정리본 복사</button>
+      <button class="btn btn-white" type="button" id="pfAI">AI 첨삭 프롬프트로 복사</button>
+    </div>
+    <div class="note gray">"AI 첨삭 프롬프트로 복사"를 누르면, 정리본과 함께 첨삭 요청 문장이 복사돼요. ChatGPT·Claude에 붙여넣으면 돼요.</div>
+  </section>
+
+  <section class="block" id="check">
+    <p class="label">CHECKLIST</p>
+    <h2>제출 전 <em>셀프 점검표</em></h2>
+    <div data-checklist="portfolio">
+      <div class="progress"><div class="progress-top">점검 진행<span data-num>0 / 0</span></div><div class="bar"><i></i></div><button class="reset" type="button">처음부터 다시</button></div>
+      <ul class="checks">
+        <li><label><input type="checkbox" id="p1"><div class="t"><b>첫 화면만 봐도 문제 · 역할 · 결과를 알 수 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="p2"><div class="t"><b>팀 프로젝트에서 '내가 한 일'이 분명하다</b></div></label></li>
+        <li><label><input type="checkbox" id="p3"><div class="t"><b>리서치 결과가 디자인 결정으로 이어진다</b><span>"그래서 이렇게 디자인했다"가 보이는지</span></div></label></li>
+        <li><label><input type="checkbox" id="p4"><div class="t"><b>버린 시안과 버린 이유가 하나 이상 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="p5"><div class="t"><b>결과에 숫자나 검증 결과가 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="p6"><div class="t"><b>화면마다 무엇을 보는지 짧은 설명이 붙어 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="p7"><div class="t"><b>글이 너무 길지 않다</b><span>문단은 3줄 안팎, 핵심은 굵게</span></div></label></li>
+        <li><label><input type="checkbox" id="p8"><div class="t"><b>오탈자·맞춤법을 확인했다</b></div></label></li>
+        <li><label><input type="checkbox" id="p9"><div class="t"><b>모바일로 열어도 읽힌다</b><span>PDF·노션·웹 링크 모두 확인</span></div></label></li>
+        <li><label><input type="checkbox" id="p10"><div class="t"><b>회사·고객 정보 공개 범위를 확인했다</b></div></label></li>
+      </ul>
+    </div>
+  </section>
+'''
+
+SCRIPT = r'''<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var out = document.getElementById('pfOut');
+  function build(){
+    var parts = [];
+    document.querySelectorAll('[data-pf]').forEach(function(t, i){
+      var v = t.value.trim();
+      parts.push('## ' + String(i+1).padStart(2,'0') + '. ' + t.dataset.pf + '\n' + (v || '(아직 작성 전)'));
+    });
+    out.value = parts.join('\n\n'); return out.value;
+  }
+  document.getElementById('pfBuild').onclick = function(){ build(); GAL.toast('정리본을 만들었어요'); };
+  document.getElementById('pfCopy').onclick = function(){ GAL.copy(build()).then(function(){ GAL.toast('정리본을 복사했어요'); }); };
+  document.getElementById('pfAI').onclick = function(){
+    var p = '아래는 내 UX/UI 포트폴리오 케이스 스터디 초안이야. 채용 담당자 입장에서 첨삭해 줘.\n'
+      + '1) 단계별로 부족한 점과 고친 문장 예시\n2) 문제-리서치-인사이트-해결-결과가 논리적으로 이어지는지\n3) 숫자나 근거가 더 필요한 곳\n4) 첫 화면(커버)에 넣을 한 줄 요약 3안\n\n' + build();
+    GAL.copy(p).then(function(){ GAL.toast('첨삭 프롬프트를 복사했어요'); });
+  };
+});
+</script>
+'''

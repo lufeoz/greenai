@@ -1,0 +1,144 @@
+META = dict(
+    source="Apple HIG, Material Design 3, WCAG 2.2",
+    slug="mobile-ui-cheatsheet",
+    title="모바일 UI 규격 치트시트",
+    desc="화면 크기, 터치 영역, 간격, 글자 크기, 대비, 컴포넌트 높이를 한 장에",
+    eyebrow="MOBILE UI CHEAT SHEET",
+    h1="디자인할 때 옆에 띄워 두는<br><em>모바일 UI 규격 치트시트</em>",
+    intro="iOS·Android 가이드라인과 접근성 기준에서<br>실무에서 자주 찾는 숫자만 골라 정리했어요.",
+    buttons=[("규격 보기", "#screen"), ("디자인 점검표", "#check")],
+    badges=["무료 자료", "iOS · Android", "접근성 기준", "피그마 세팅 팁"],
+    toc=[("화면", "screen"), ("터치", "touch"), ("간격", "space"), ("글자", "type"), ("대비", "color"), ("컴포넌트", "comp"), ("피그마", "figma"), ("점검표", "check")],
+    cta_h2="규격을 알았다면<br><em>실제 앱 화면</em>을 설계해 봐요",
+    cta_p="피그마로 모바일 앱 화면을 처음부터 설계하는 그린 AI Lab UX/UI 클래스예요.",
+)
+
+BODY = r'''
+  <section class="block" id="screen">
+    <p class="label">01 · SCREEN</p>
+    <h2>어떤 크기로 <em>그리기 시작할까</em></h2>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>기준</th><th>프레임 크기</th><th>단위</th><th>메모</th></tr>
+      <tr><td>iPhone 기본</td><td>393 × 852</td><td>pt</td><td>iPhone 15·16 등 — 요즘 가장 무난한 시작점</td></tr>
+      <tr><td>iPhone 작은 화면</td><td>375 × 667</td><td>pt</td><td>SE 계열 — 좁은 화면에서 깨지는지 확인용</td></tr>
+      <tr><td>Android 기본</td><td>360 × 800</td><td>dp</td><td>가장 흔한 폭 — 360에서 잘리면 안 돼요</td></tr>
+      <tr><td>Android 큰 화면</td><td>412 × 915</td><td>dp</td><td>대화면 기기 확인용</td></tr>
+    </table></div>
+    <div class="note"><b>pt·dp는 같은 개념이에요.</b> 기기 해상도와 상관없는 논리 단위라서, 피그마에서 1px = 1pt(1dp)로 그리면 돼요. 내보낼 때만 @2x·@3x로.</div>
+  </section>
+
+  <section class="block" id="touch">
+    <p class="label">02 · TOUCH</p>
+    <h2>터치 영역은 <em>44 · 48</em>만 기억</h2>
+    <div class="grid2 c3">
+      <div class="mini"><span class="k">iOS</span><b>44 × 44 pt 이상</b><p>Apple Human Interface Guidelines의 최소 터치 영역</p></div>
+      <div class="mini"><span class="k">Android</span><b>48 × 48 dp 이상</b><p>Material Design 권장 터치 영역 (실제 약 9mm)</p></div>
+      <div class="mini"><span class="k">웹 접근성</span><b>24 × 24 px 최소</b><p>WCAG 2.2 AA 기준. 44 × 44는 더 높은 AAA 기준</p></div>
+    </div>
+    <div class="card"><ul>
+      <li><b>아이콘은 24로 그려도, 누르는 영역은 44~48로.</b> 보이는 크기와 누르는 크기는 달라도 돼요 — 패딩으로 키우세요.</li>
+      <li><b>버튼 사이는 8 이상 띄우기.</b> 붙어 있으면 옆 버튼을 잘못 누르기 쉬워요.</li>
+      <li><b>자주 누르는 버튼은 화면 아래쪽에.</b> 한 손으로 쓸 때 엄지가 닿는 범위예요.</li>
+    </ul></div>
+  </section>
+
+  <section class="block" id="space">
+    <p class="label">03 · SPACING</p>
+    <h2>간격은 <em>4의 배수</em>로</h2>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>값</th><th>이름 예시</th><th>어디에 쓰나</th></tr>
+      <tr><td>4</td><td>space-1</td><td>아이콘과 글자 사이, 아주 촘촘한 간격</td></tr>
+      <tr><td>8</td><td>space-2</td><td>관련 있는 요소끼리 (라벨 ↔ 입력창)</td></tr>
+      <tr><td>12</td><td>space-3</td><td>카드 안 요소 사이, 리스트 항목 사이</td></tr>
+      <tr><td>16</td><td>space-4</td><td>화면 좌우 여백, 카드 안쪽 여백</td></tr>
+      <tr><td>20 · 24</td><td>space-5 · 6</td><td>화면 좌우 여백(넉넉하게), 묶음 사이</td></tr>
+      <tr><td>32 · 40</td><td>space-8 · 10</td><td>섹션과 섹션 사이</td></tr>
+    </table></div>
+    <div class="note gray"><b>규칙 하나:</b> 가까운 것끼리는 좁게, 다른 묶음끼리는 넓게. 간격만 잘 써도 선과 박스가 거의 필요 없어요.</div>
+  </section>
+
+  <section class="block" id="type">
+    <p class="label">04 · TYPOGRAPHY</p>
+    <h2>글자 크기 <em>단계표</em></h2>
+    <p class="lead">플랫폼 기본 본문은 iOS 17pt, Android(Material 3) 16sp예요. 한글 앱은 본문 15~16을 많이 써요.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>크기</th><th>굵기</th><th>용도</th></tr>
+      <tr><td>28 · 24</td><td>Bold</td><td>화면 제목, 큰 숫자</td></tr>
+      <tr><td>20 · 18</td><td>Bold · SemiBold</td><td>섹션 제목, 카드 제목</td></tr>
+      <tr><td>16 · 15</td><td>Regular · Medium</td><td>본문, 버튼 글자</td></tr>
+      <tr><td>14 · 13</td><td>Regular</td><td>보조 설명, 리스트 부가 정보</td></tr>
+      <tr><td>12</td><td>Regular</td><td>캡션, 날짜 — 이보다 작게는 쓰지 않기</td></tr>
+    </table></div>
+    <div class="card"><ul>
+      <li><b>줄 간격</b> 한글 본문은 글자 크기의 1.4~1.6배</li>
+      <li><b>단계는 5~6개만</b> 크기가 너무 많으면 위계가 흐려져요</li>
+      <li><b>시스템 글자 크기 설정</b> iOS Dynamic Type, Android sp 단위로 사용자가 키워도 깨지지 않게</li>
+    </ul></div>
+  </section>
+
+  <section class="block" id="color">
+    <p class="label">05 · CONTRAST</p>
+    <h2>글자 대비 <em>4.5 : 1</em></h2>
+    <div class="grid2 c3">
+      <div class="mini"><span class="k">본문 글자</span><b>4.5 : 1 이상</b><p>WCAG AA 기준. 회색 글자가 가장 자주 걸려요</p></div>
+      <div class="mini"><span class="k">큰 글자</span><b>3 : 1 이상</b><p>18pt 이상, 또는 14pt 이상 굵은 글자</p></div>
+      <div class="mini"><span class="k">아이콘·테두리</span><b>3 : 1 이상</b><p>입력창 테두리, 아이콘 버튼 등 UI 요소</p></div>
+    </div>
+    <div class="note"><b>색에만 의존하지 않기</b> 오류를 빨간색으로만 보여주면 색을 구분하기 어려운 사람은 못 알아봐요. 아이콘이나 문구를 함께 써 주세요.</div>
+  </section>
+
+  <section class="block" id="comp">
+    <p class="label">06 · COMPONENTS</p>
+    <h2>컴포넌트 <em>기본 높이</em></h2>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>컴포넌트</th><th>iOS</th><th>Android (M3)</th><th>실무 팁</th></tr>
+      <tr><td>상단 내비게이션 바</td><td>44 pt</td><td>64 dp</td><td>상태 표시줄 높이는 기기마다 달라 Safe Area로 처리</td></tr>
+      <tr><td>하단 탭 바</td><td>49 pt</td><td>80 dp</td><td>홈 인디케이터 영역은 별도로 더해져요</td></tr>
+      <tr><td>주요 버튼</td><td colspan="2">48 ~ 56</td><td>화면 하단 고정 버튼은 52~56이 편해요</td></tr>
+      <tr><td>입력창</td><td colspan="2">48 이상</td><td>라벨은 입력창 위에 따로 (안내 문구만으로 대신하지 않기)</td></tr>
+      <tr><td>리스트 한 줄</td><td colspan="2">48 ~ 72</td><td>제목+설명 2줄이면 64~72</td></tr>
+      <tr><td>아이콘</td><td colspan="2">20 · 24</td><td>누르는 영역은 44~48로</td></tr>
+      <tr><td>모서리 둥글기</td><td colspan="2">8 · 12 · 16 · 완전 둥글게</td><td>3~4단계만 정해서 반복</td></tr>
+    </table></div>
+    <div class="note gray">상태 표시줄, 노치·다이내믹 아일랜드, 홈 인디케이터 크기는 기기마다 달라요. 숫자를 외우기보다 피그마에서 기기 프레임의 Safe Area를 켜 두고, 개발에서는 Safe Area 값을 쓰도록 전달해 주세요.</div>
+  </section>
+
+  <section class="block" id="figma">
+    <p class="label">07 · FIGMA SETUP</p>
+    <h2>피그마 <em>첫 세팅</em> 5분</h2>
+    <div class="card"><ol>
+      <li><b>프레임</b> iPhone 393×852 또는 Android 360×800으로 시작</li>
+      <li><b>레이아웃 그리드</b> 4열, 좌우 여백 16~20, 거터 8~16</li>
+      <li><b>변수(Variables)</b> 색·간격·둥글기를 변수로 등록하면 나중에 한 번에 바꿀 수 있어요</li>
+      <li><b>텍스트 스타일</b> 위의 글자 단계표를 그대로 스타일로 등록</li>
+      <li><b>오토 레이아웃</b> 버튼·카드·리스트는 처음부터 오토 레이아웃으로 — 글자가 길어져도 안 깨져요</li>
+    </ol></div>
+    <div class="prompt"><div class="ptitle">AI로 디자인 토큰 초안 만들기</div><button class="copy" type="button">복사</button>
+<pre>[서비스 설명] 모바일 앱의 디자인 토큰 초안을 만들어 줘.
+- 색: primary, secondary, 배경, 표면, 텍스트(진함·보통·연함), 성공·경고·오류 — HEX와 흰 배경 대비값
+- 간격: 4 배수로 8단계
+- 글자: 12~28 사이 6단계, 용도와 굵기
+- 둥글기: 4단계
+피그마 변수 이름 규칙(color/primary 같은 형식)으로 표를 만들어 줘.</pre></div>
+  </section>
+
+  <section class="block" id="check">
+    <p class="label">CHECKLIST</p>
+    <h2>디자인 넘기기 전 <em>점검표</em></h2>
+    <div data-checklist="mobileui">
+      <div class="progress"><div class="progress-top">점검 진행<span data-num>0 / 0</span></div><div class="bar"><i></i></div><button class="reset" type="button">처음부터 다시</button></div>
+      <ul class="checks">
+        <li><label><input type="checkbox" id="m1"><div class="t"><b>누르는 요소는 모두 44pt / 48dp 이상</b></div></label></li>
+        <li><label><input type="checkbox" id="m2"><div class="t"><b>간격은 4의 배수만 썼다</b></div></label></li>
+        <li><label><input type="checkbox" id="m3"><div class="t"><b>글자 크기는 정해 둔 5~6단계 안에서만</b></div></label></li>
+        <li><label><input type="checkbox" id="m4"><div class="t"><b>본문 글자 대비 4.5:1 이상</b><span>연한 회색 글자를 특히 확인</span></div></label></li>
+        <li><label><input type="checkbox" id="m5"><div class="t"><b>360 폭에서도 글자가 잘리지 않는다</b></div></label></li>
+        <li><label><input type="checkbox" id="m6"><div class="t"><b>Safe Area 안쪽에 중요한 요소가 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="m7"><div class="t"><b>빈 화면 · 로딩 · 오류 상태 화면이 있다</b></div></label></li>
+        <li><label><input type="checkbox" id="m8"><div class="t"><b>버튼의 기본 · 눌림 · 비활성 상태를 그렸다</b></div></label></li>
+        <li><label><input type="checkbox" id="m9"><div class="t"><b>색 · 글자 · 간격을 스타일(변수)로 등록했다</b></div></label></li>
+        <li><label><input type="checkbox" id="m10"><div class="t"><b>입력창마다 라벨과 오류 문구 자리가 있다</b></div></label></li>
+      </ul>
+    </div>
+  </section>
+'''

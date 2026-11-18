@@ -127,6 +127,15 @@
     footer nav{margin-top:8px;display:flex;justify-content:center;gap:16px}
     footer nav a{color:#bdbdbd;text-decoration:none;font-weight:600}
 
+    .labnav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:10px 14px;background:#0b0b0b;border-top:1px solid #1f1f1f}
+    .labnav::-webkit-scrollbar{display:none}
+    .labnav a{flex:none;font-size:12px;font-weight:800;letter-spacing:.06em;padding:7px 11px;border-radius:999px;color:#9a9a9a;text-decoration:none}
+    .labnav a.on{background:#6CC284;color:#000}
+    .dt-rel{display:grid;gap:6px;margin-top:6px}
+    .dt-rel a{font-size:14px;font-weight:700;color:var(--ink);text-decoration:none;background:var(--bg);border-radius:12px;padding:10px 12px}
+    .free{font-size:10px;font-weight:800;color:#3E9A58;background:var(--green-soft);border-radius:5px;padding:1px 6px}
+    @media (min-width:768px){.labnav{justify-content:center}.labnav a{font-size:13px;padding:8px 14px}}
+
     /* ───── 썸네일 ───── */
     .thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;margin:-4px -4px 12px;display:block}
     .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -295,9 +304,10 @@
       <li><a href="mailto:greenai.lab3@gmail.com">문의</a></li>
     </ul>
   </header>
+  <nav class="labnav"><a href="/directory">AI DIRECTORY</a><a href="/skills">SKILLS</a><a href="/prompts">PROMPTS</a><a href="/workflows">WORKFLOW</a><a href="/tools">TOOLS</a><a href="/learn">LEARNING</a><a href="/archive" class="on">ARCHIVE</a></nav>
 
   <section class="hero" id="top">
-    <p class="eyebrow">GREEN AI LAB ARCHIVE</p>
+    <p class="eyebrow">07 · RESOURCE ARCHIVE</p>
     <h1>그동안 나눈 자료,<br><em>전부 여기에.</em></h1>
     <p>AI 실무 활용부터 UX/UI 디자인, 서비스 기획까지.<br>블로그에서 나눈 자료를 한곳에 모았어요.</p>
     <a href="#archive" class="btn">자료 받으러 가기 →</a>
@@ -436,6 +446,7 @@ var ITEMS = [
     tools:['ChatGPT','Claude'], tasks:['용어','PRD','스프린트','KPI','리텐션','QA','애자일','회의'],
     roles:['pm','office'], goals:['career','doc'], source:'그린 AI Lab 자체 제작', updated:'2026.11.18' }
 ];
+var REL = { ai:[['PROMPT LIBRARY','/prompts'],['AI DIRECTORY','/directory']], ux:[['LEARNING LAB · UX/UI','/learn#UX'],['프롬프트 · 디자인','/prompts#디자인']], pm:[['LEARNING LAB · 기획','/learn#기획'],['WORKFLOW LAB','/workflows']] };
 var LICENSE = '개인·업무용으로 자유롭게 쓸 수 있어요. 자료 자체의 재배포·판매는 안 돼요. 인용할 때는 출처(그린 AI Lab)를 남겨 주세요.';
 /* 항목 설명
    cat     : ai / ux / pm  (썸네일 색과 추천에 쓰여요)
@@ -495,7 +506,7 @@ var NEW_DAYS  = 30;
         + thumb(it)
         + '<div class="item-top"><span class="no">'+no(it)+'</span>'
         + '<span class="tag t-'+esc(it.type)+'">'+esc(it.type)+'</span>'
-        + (isNew(it) ? '<span class="new">NEW</span>' : '') + '</div>'
+        + (isNew(it) ? '<span class="new">NEW</span>' : '') + '<span class="free">'+esc(it.price||'무료')+'</span></div>'
         + '<div class="body"><span class="date">업데이트 '+esc(it.updated || it.date)+'</span>'
         + '<h3>'+esc(it.title)+'</h3><p>'+esc(it.desc)+'</p>'
         + (it.tools ? '<p class="tl">🛠 '+esc(it.tools.slice(0,3).join(' · '))+'</p>' : '') + '</div>'
@@ -525,7 +536,8 @@ var NEW_DAYS  = 30;
       + (it.problem ? '<div class="dt-sec"><h4>이런 문제를 해결해요</h4><p>“'+esc(it.problem)+'”</p></div>' : '')
       + (it.how ? '<div class="dt-sec"><h4>이렇게 사용해요</h4><ol>'+it.how.map(function(w){ return '<li>'+esc(w)+'</li>'; }).join('')+'</ol></div>' : '')
       + (it.tools ? '<div class="dt-sec"><h4>관련 AI · 도구</h4><div class="dt-tools">'+it.tools.map(function(t){ return '<span>'+esc(t)+'</span>'; }).join('')+'</div></div>' : '')
-      + '<div class="dt-trust"><b>출처</b> '+esc(it.source||'그린 AI Lab 자체 제작')+'<br><b>업데이트</b> '+esc(it.updated||it.date)+'<br><b>이용 범위</b> '+esc(LICENSE)+'</div>'
+      + '<div class="dt-sec"><h4>관련 콘텐츠</h4><div class="dt-rel">'+(it.rel||REL[it.cat]||[]).map(function(r){ return '<a href="'+esc(r[1])+'">'+esc(r[0])+' →</a>'; }).join('')+'</div></div>'
+      + '<div class="dt-trust"><b>가격</b> '+esc(it.price||'무료')+'<br><b>출처</b> '+esc(it.source||'그린 AI Lab 자체 제작')+'<br><b>업데이트</b> '+esc(it.updated||it.date)+'<br><b>이용 범위</b> '+esc(LICENSE)+'</div>'
       + '<div class="dt-btns">'+main+'</div></div>';
     sheet.classList.add('show'); inner.parentElement.scrollTop = 0;
     track('자료 상세 보기', { title: it.title });

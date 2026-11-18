@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>TOOLS LAB — 그린 AI Lab</title>
+  <meta name="description" content="웹에서 바로 쓰는 미니 AI 도구: 프롬프트 생성기, 콘텐츠 기획 도구, 후킹 문장 생성기.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TOOLS LAB — 그린 AI Lab">
+  <meta property="og:description" content="웹에서 바로 쓰는 미니 AI 도구: 프롬프트 생성기, 콘텐츠 기획 도구, 후킹 문장 생성기.">
+  <meta property="og:image" content="https://greenai-205.pages.dev/og.png">
+  <meta property="og:url" content="https://greenai-205.pages.dev/tools">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="/assets/guide.css">
+  <script src="/assets/lab.js"></script>
+</head>
+<body>
+<div class="page">
+  <header class="nav"><a class="brand" href="/"><i>G</i>그린 AI Lab<b>.</b></a><a class="back" href="/class">1:1 클래스 →</a></header>
+  <nav class="labnav" id="labnav"></nav>
+  <section class="hero">
+    <p class="eyebrow">05 · TOOLS LAB</p>
+    <h1>웹에서 바로 쓰는<br><em>미니 AI 도구</em></h1>
+    <p>가입 없이 바로 써요. 입력한 내용은 이 브라우저에만 저장돼요.</p>
+  </section>
+<style>
+.sel{margin-top:8px;width:100%;height:48px;border:1.5px solid var(--line);border-radius:14px;background:#fff;padding:0 12px;font:inherit;font-size:15px}
+.chk{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:14px;color:var(--ink2)}
+.hooks{margin-top:14px;display:grid;gap:8px}
+.hk{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--bg);border-radius:14px;padding:12px 14px}
+.hk small{display:block;font-size:11.5px;font-weight:800;color:var(--green-deep)}
+.hk b{font-size:15.5px;font-weight:800;line-height:1.4}
+.hk button{flex:none;border:0;border-radius:999px;background:#111;color:#fff;font:inherit;font-size:12.5px;font-weight:700;padding:6px 12px;cursor:pointer}
+@media (min-width:768px){.hooks{grid-template-columns:1fr 1fr}}
+</style>
+  <section class="block" id="prompt">
+    <p class="label">TOOL 01</p>
+    <h2>프롬프트 <em>생성기</em></h2>
+    <p class="lead">칸을 채우면 역할·맥락·작업·형식이 갖춰진 프롬프트가 만들어져요.</p>
+    <div class="card">
+      <div class="field"><label>AI의 역할</label><select id="g_role" class="sel"><option>10년 차 서비스 기획자</option><option>UX/UI 디자이너</option><option>퍼포먼스 마케터</option><option>콘텐츠 에디터</option><option>데이터 분석가</option><option>꼼꼼한 비서</option></select></div>
+      <div class="field"><label>하고 싶은 일<small>예) 신규 앱 온보딩 화면 아이디어</small></label><input id="g_task" data-save="g_task"></div>
+      <div class="field"><label>상황·맥락<small>대상, 목적, 제약 조건</small></label><textarea id="g_ctx" data-save="g_ctx" style="min-height:70px"></textarea></div>
+      <div class="grid2" style="margin-top:0">
+        <div class="field"><label>결과 형식</label><select id="g_fmt" class="sel"><option>표</option><option>번호 목록</option><option>3가지 안 비교</option><option>짧은 글(300자)</option><option>단계별 가이드</option></select></div>
+        <div class="field"><label>말투</label><select id="g_tone" class="sel"><option>전문적이고 간결하게</option><option>친근하게</option><option>초보자도 이해하게 쉽게</option><option>설득력 있게</option></select></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="g_q" checked> 부족한 정보는 먼저 질문하게 하기</label>
+      <label class="chk"><input type="checkbox" id="g_v" checked> 확실하지 않은 내용은 표시하게 하기</label>
+      <div class="prompt" style="margin-top:14px"><div class="ptitle">완성된 프롬프트</div><button class="copy" type="button" data-target="g_out">복사</button><pre id="g_out"></pre></div>
+    </div>
+  </section>
+
+  <section class="block" id="plan">
+    <p class="label">TOOL 02</p>
+    <h2>콘텐츠 <em>기획 도구</em></h2>
+    <p class="lead">주제 하나로 캐러셀·릴스·스레드 기획 틀과 AI 요청문을 한 번에 만들어요.</p>
+    <div class="card">
+      <div class="field"><label>주제</label><input id="c_topic" data-save="c_topic" placeholder="예) 회의록 정리 프롬프트"></div>
+      <div class="field"><label>타깃</label><input id="c_who" data-save="c_who" placeholder="예) 매주 회의가 많은 3년 차 직장인"></div>
+      <div class="field"><label>핵심 메시지 (한 줄)</label><input id="c_msg" data-save="c_msg" placeholder="예) 질문만 바꾸면 회의록이 2분에 끝나요"></div>
+      <div class="field"><label>형식</label><div class="chips" id="c_fmt" style="margin-top:6px"><button class="chip on" data-v="carousel">캐러셀 10장</button><button class="chip" data-v="reels">릴스 30초</button><button class="chip" data-v="threads">스레드 5줄</button></div></div>
+      <div class="prompt" style="margin-top:14px"><div class="ptitle">기획 틀</div><button class="copy" type="button" data-target="c_out">복사</button><pre id="c_out"></pre></div>
+      <div class="prompt light"><div class="ptitle">AI에게 원고 요청하기</div><button class="copy" type="button" data-target="c_ai">복사</button><pre id="c_ai"></pre></div>
+    </div>
+  </section>
+
+  <section class="block" id="hook">
+    <p class="label">TOOL 03</p>
+    <h2>후킹 문장 <em>생성기</em></h2>
+    <p class="lead">제품·주제와 장점을 넣으면 6가지 공식으로 첫 문장을 만들어요.</p>
+    <div class="card">
+      <div class="grid2" style="margin-top:0">
+        <div class="field"><label>제품·주제</label><input id="h_what" data-save="h_what" placeholder="예) AI 프롬프트"></div>
+        <div class="field"><label>타깃</label><input id="h_who" data-save="h_who" placeholder="예) 직장인"></div>
+      </div>
+      <div class="grid2" style="margin-top:0">
+        <div class="field"><label>장점·결과</label><input id="h_gain" data-save="h_gain" placeholder="예) 회의록 2분 정리"></div>
+        <div class="field"><label>불편·통념</label><input id="h_pain" data-save="h_pain" placeholder="예) 회의록 쓰느라 야근"></div>
+      </div>
+      <div id="h_out" class="hooks"></div>
+    </div>
+    <div class="note gray">지금은 입력값으로 문장을 조합하는 템플릿 도구예요. 앞으로 AI 기능을 붙여 더 자연스러운 문장을 만들 수 있게 확장할 예정이에요.</div>
+  </section>
+
+  <section class="cta">
+    <small>GREEN AI LAB</small>
+    <h2>자료로 익혔다면<br><em>내 결과물로</em> 만들어 봐요</h2>
+    <p>구독하면 템플릿·체크리스트·워크북이 있는 자료실이 바로 열려요.</p>
+    <a href="/" class="btn btn-green">무료 자료실 받기 →</a>
+  </section>
+  <footer><div class="f-brand">그린 AI Lab<b>.</b></div>© 2026 Green AI Lab · <a href="/class">1:1 클래스</a> · <a href="mailto:greenai.lab3@gmail.com">문의하기</a></footer>
+</div>
+<div class="sheet" id="labsheet" role="dialog" aria-modal="true"><div class="sheet-bg" data-close></div><div class="sheet-body"><button class="sheet-close" type="button" data-close aria-label="닫기">×</button><div id="labsheetin"></div></div></div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var $ = function(id){ return document.getElementById(id); };
+  document.querySelectorAll('[data-save]').forEach(function(el){ var k = 'gal_t_' + el.dataset.save; try{ if (localStorage.getItem(k)) el.value = localStorage.getItem(k); }catch(e){} el.addEventListener('input', function(){ try{ localStorage.setItem(k, el.value); }catch(e){} }); });
+  function v(id, d){ var x = $(id).value.trim(); return x || d; }
+  function gen(){
+    var p = '너는 ' + $('g_role').value + '야.\n\n'
+      + '[하고 싶은 일]\n' + v('g_task','[하고 싶은 일]') + '\n\n'
+      + '[상황·맥락]\n' + v('g_ctx','[대상, 목적, 제약 조건]') + '\n\n'
+      + '[결과 형식]\n' + $('g_fmt').value + ' 형태로, 말투는 ' + $('g_tone').value + '.\n';
+    if ($('g_q').checked) p += '\n시작하기 전에 꼭 필요한 정보가 부족하면 먼저 질문 3개 이내로 물어봐 줘.';
+    if ($('g_v').checked) p += '\n확실하지 않은 내용은 [확인 필요]로 표시해 줘.';
+    $('g_out').textContent = p;
+  }
+  ['g_role','g_task','g_ctx','g_fmt','g_tone','g_q','g_v'].forEach(function(id){ $(id).addEventListener('input', gen); $(id).addEventListener('change', gen); });
+  gen();
+  var fmt = 'carousel';
+  function plan(){
+    var t = v('c_topic','[주제]'), w = v('c_who','[타깃]'), m = v('c_msg','[핵심 메시지]'), o, ai;
+    if (fmt === 'carousel'){
+      o = '1장 표지: ' + m + ' (15자 이내로 다듬기)\n2장 공감: ' + w + '이 겪는 불편 한 장면\n3장 문제: 왜 이런 일이 생기는지\n4~8장 해결: ' + t + ' 핵심 5가지 (장마다 1개)\n9장 요약: 오늘 내용 한눈에\n10장 행동: 저장·팔로우·프로필 링크 안내';
+      ai = '인스타그램 캐러셀 10장 원고를 써 줘.\n주제: ' + t + '\n타깃: ' + w + '\n핵심 메시지: ' + m + '\n1장은 15자 이내 제목, 2~9장은 장마다 핵심 한 줄 + 설명 2줄, 10장은 저장·팔로우 유도. 과장 없이 구체적으로.';
+    } else if (fmt === 'reels'){
+      o = '0~3초 훅: ' + m + '\n3~10초 문제: ' + w + '의 불편 장면\n10~25초 해결: ' + t + ' 3포인트 (화면 자막 3개)\n25~30초 행동: 프로필 링크에서 자료 받기';
+      ai = '30초 릴스 대본을 써 줘.\n주제: ' + t + ' / 타깃: ' + w + ' / 핵심 메시지: ' + m + '\n장면별 화면 설명, 자막(10자 안팎), 내레이션을 표로. 첫 3초 훅은 3가지 안.';
+    } else {
+      o = '1줄: ' + m + '\n2줄: ' + w + '이 공감할 상황\n3줄: ' + t + ' 핵심 팁 1\n4줄: 핵심 팁 2\n5줄: 더 보고 싶으면 프로필 링크';
+      ai = '스레드에 올릴 5줄 글을 써 줘.\n주제: ' + t + ' / 타깃: ' + w + ' / 핵심 메시지: ' + m + '\n줄마다 40자 안팎, 이모지는 2개 이하, 마지막 줄은 행동 유도. 3가지 버전.';
+    }
+    $('c_out').textContent = o; $('c_ai').textContent = ai;
+  }
+  ['c_topic','c_who','c_msg'].forEach(function(id){ $(id).addEventListener('input', plan); });
+  $('c_fmt').addEventListener('click', function(e){ var c = e.target.closest('.chip'); if (!c) return; $('c_fmt').querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x === c); }); fmt = c.dataset.v; plan(); });
+  plan();
+  function hooks(){
+    var w = v('h_what','[주제]'), u = v('h_who','[타깃]'), g = v('h_gain','[장점]'), p = v('h_pain','[불편]');
+    var H = [['질문형','아직도 ' + p + '하세요?'],['숫자형','3가지만 알면 ' + g],['반전형', w + ', 이렇게 쓰는 줄 몰랐죠?'],['공감형', u + '라면 ' + p + ' 다 겪어봤잖아요'],['금지형', w + ', 이것 모르고 시작하지 마세요'],['결과형', w + ' 하나로 ' + g]];
+    $('h_out').innerHTML = H.map(function(h){ return '<div class="hk"><div><small>' + h[0] + '</small><b>' + GALAB.esc(h[1]) + '</b></div><button type="button" data-h="' + GALAB.esc(h[1]) + '">복사</button></div>'; }).join('');
+  }
+  $('h_out').addEventListener('click', function(e){ var b = e.target.closest('[data-h]'); if (b) GALAB.copy(b.dataset.h).then(function(){ GALAB.say('복사했어요'); }); });
+  ['h_what','h_who','h_gain','h_pain'].forEach(function(id){ $(id).addEventListener('input', hooks); });
+  hooks();
+  if (location.hash) { var el = document.querySelector(location.hash); if (el) setTimeout(function(){ el.scrollIntoView(); }, 50); }
+});
+</script>
+</body>
+</html>
