@@ -3,6 +3,7 @@ import json, html, importlib.util, pathlib
 ROOT = pathlib.Path(__file__).parent; OUT = ROOT.parent / "greenai"
 SITE = "https://greenai-205.pages.dev"
 E = html.escape
+import lab_more as M
 
 SHELL = """<!DOCTYPE html>
 <html lang="ko">
@@ -99,6 +100,7 @@ T = [
  ("Cursor","build","freemium","https://cursor.com","AI 코드 편집기","AI와 함께 코드를 쓰고 고치는 편집기예요.",["코드 작성·수정"],"커서"),
  ("Claude Code","build","paid","https://claude.com/product/claude-code","터미널·IDE에서 쓰는 Claude 코딩 에이전트","코드베이스를 읽고 수정·실행까지 하는 코딩 에이전트예요. 스킬과 플러그인으로 확장해요.",["웹사이트 제작","자동화 스크립트","코드 리뷰"],"클로드코드"),
 ]
+T += M.T
 dir_items = [dict(t=n, d=d, cat=c, price_k=p, price=PRICE[p], url=u, urlLabel="공식 사이트", what=w, use=us, alias=al,
                   rel=[["목적별 AI 툴 가이드","/guides/ai-tools"]]) for n,c,p,u,d,w,us,al in T]
 for it in dir_items: it["pk"] = it.pop("price_k")
@@ -140,9 +142,12 @@ for name, c, lic, d, w, us in S:
         how=["설치 명령으로 스킬 묶음 설치 (아래 코드)","Claude에게 평소처럼 요청 — 관련 요청이면 스킬이 자동으로 쓰여요","결과를 보고 이어서 수정 요청"],
         code=INSTALL_DOC if c == "doc" else INSTALL, url=f"https://github.com/anthropics/skills/tree/main/skills/{name}", urlLabel="원본 보기 (GitHub)",
         rel=[["Claude Skills 시작하기 (LEARNING LAB)","/learn#스킬"]]))
+for name, c, d, w, md in M.CS:
+    sk_items.append(dict(t=name, d=d+" (커스텀 템플릿)", cat=c, kind="custom", what=w, use=[d], lic=M.CS_LIC, src="그린 AI Lab 제작", how=M.CS_HOW, code=md, alias="커스텀 템플릿 skill.md"))
+for it in sk_items: it.setdefault("kind","official")
 page("skills", "SKILLS LIBRARY", "Claude Skills와 재사용 가능한 AI 스킬 모음. 스킬별 설명, 사용 목적, 설치 방법, 원본 출처와 라이선스.",
-     "02 · SKILLS LIBRARY", "Claude에게 일 잘하는 법을<br><em>가르치는 스킬</em> 모음", "스킬은 Claude가 특정 작업을 잘하도록 담은 지침·스크립트 묶음이에요.<br>공식 스킬의 쓰임새, 설치 방법, 라이선스를 정리했어요.",
-     lab=dict(items=sk_items, facets=[dict(key="cat",label="분야",values=SCAT)], whatLabel="이 스킬은", useLabel="이럴 때 써요", howLabel="쓰는 법",
+     "02 · SKILLS LIBRARY", "Claude에게 일 잘하는 법을<br><em>가르치는 스킬</em> 모음", "공식 스킬 16개와 바로 고쳐 쓰는 커스텀 스킬 템플릿 10개.<br>쓰임새, 설치 방법, SKILL.md, 라이선스를 정리했어요.",
+     lab=dict(items=sk_items, facets=[dict(key="kind",label="종류",values={"official":"공식 스킬","custom":"커스텀 템플릿"}),dict(key="cat",label="분야",values=SCAT)], whatLabel="이 스킬은", useLabel="이럴 때 써요", howLabel="쓰는 법",
               note="설치 방법은 바뀔 수 있어요. 사용 전 저장소 README와 각 스킬 폴더의 LICENSE를 꼭 확인해 주세요."),
      placeholder="스킬 이름이나 작업 (예: 엑셀, 포스터, 테스트)")
 
@@ -170,9 +175,11 @@ EXTRA = [
 ]
 for t, w, r, tool, pr, ex in EXTRA:
     PR.append(dict(t=t, d=f"{p2.P[w][0]} · 도구 특화", work=w, role=r, tool=tool, prompt=pr, ex=ex))
+for t, w, r, tool, pr, ex in M.PR:
+    PR.append(dict(t=t, d=f"{p2.P[w][0]} · {'대화형 AI' if tool=='chat' else '도구 특화'}", work=w, role=r, tool=tool, prompt=pr, ex=ex))
 WORK = {k: v[0] for k, v in p2.P.items()}
 ROLES = {"pm":"기획자·PM","designer":"디자이너","marketer":"마케터","creator":"크리에이터","office":"직장인"}
-TOOLS_ = {"chat":"대화형 AI","image":"이미지 AI","video":"영상 AI","research":"리서치 AI","slide":"슬라이드 AI","auto":"자동화","build":"시제품 제작"}
+TOOLS_ = {"chat":"대화형 AI","image":"이미지 AI","video":"영상 AI","audio":"음성·음악 AI","research":"리서치 AI","slide":"슬라이드 AI","auto":"자동화","build":"시제품 제작"}
 page("prompts", "PROMPT LIBRARY", f"업무별·역할별·도구별 프롬프트 {len(PR)}개. 복사하고 활용 예시를 보며 바로 쓰기.",
      "03 · PROMPT LIBRARY", f"업무·역할·도구로 찾는<br><em>프롬프트 {len(PR)}</em>", "초록 [대괄호]만 내 상황으로 바꾸면 돼요.<br>카드를 누르면 복사 버튼과 활용 예시가 나와요.",
      lab=dict(items=PR, inlinePrompt=True, facets=[dict(key="work",label="업무",values=WORK),dict(key="role",label="역할",values=ROLES),dict(key="tool",label="도구",values=TOOLS_)], src="그린 AI Lab 자체 제작"),
@@ -198,6 +205,7 @@ WF = [
  ("댓글 키워드 → 자료 링크 DM","content","초급",["인스타그램 DM 자동화 도구(ManyChat 등)","Make"],"게시물에 '프롬프트' 같은 키워드 댓글이 달리면 자료실 링크를 DM으로 보내요.",
   ["DM 자동화 도구에 인스타 계정 연결","게시물·키워드 규칙 만들기 (예: '프롬프트')","DM 문구: 자료 소개 + 자료실 링크(?from=insta)","플랫폼 자동화 정책을 확인하고 과도한 발송 피하기"],"댓글 응대 자동"),
 ]
+WF += M.WF
 wf_items = [dict(t=t, d=w, cat=c, level=lv, tools=tl, what=w, how=st, use=[f"기대 효과: {eff}"],
                  rel=[["프롬프트: n8n 워크플로 설계","/prompts#n8n"]]) for t,c,lv,tl,w,st,eff in WF]
 page("workflows", "WORKFLOW LAB", "Make, n8n으로 만드는 업무 자동화 워크플로. 사례, 단계별 실행 방법, 연결 도구.",
@@ -224,6 +232,7 @@ LS = [
  ("n8n 첫 자동화 만들기","build","고급","매주 뉴스 요약 메일 자동화를 처음부터",["n8n 클라우드 가입 또는 설치","Schedule → RSS → AI → Gmail 노드 연결","테스트 실행으로 결과 확인","실패 알림 추가"],[["WORKFLOW LAB","/workflows"]]),
  ("말로 만드는 웹 시제품","build","고급","Lovable·v0·Claude로 랜딩페이지 시제품",["문제·해결·기능 3개 정리","프롬프트로 화면 생성","폼·링크 연결","지인 5명 테스트"],[["프롬프트: 코딩 없이 웹 시제품","/prompts#시제품"]]),
 ]
+LS += M.LS
 ln_items = [dict(t=t, d=d, cat=c, level=lv, how=st, rel=rel, alias=c) for t,c,lv,d,st,rel in LS]
 page("learn", "LEARNING LAB", "초급·중급·고급으로 나눈 AI 활용 가이드와 실습 튜토리얼.",
      "06 · LEARNING LAB", "단계별로 익히는<br><em>AI 실무 학습</em>", "초급부터 고급까지, 짧게 읽고 바로 실습해요.<br>각 레슨은 관련 자료·도구로 이어져요.",
@@ -281,6 +290,47 @@ TOOLS_BODY = r'''
     </div>
     <div class="note gray">지금은 입력값으로 문장을 조합하는 템플릿 도구예요. 앞으로 AI 기능을 붙여 더 자연스러운 문장을 만들 수 있게 확장할 예정이에요.</div>
   </section>
+
+  <section class="block" id="persona">
+    <p class="label">TOOL 04</p>
+    <h2>페르소나 <em>카드 생성기</em></h2>
+    <div class="card">
+      <div class="grid2" style="margin-top:0">
+        <div class="field"><label>이름·나이</label><input id="p_name" data-save="p_name" placeholder="예) 김민지, 29세"></div>
+        <div class="field"><label>직업·상황</label><input id="p_job" data-save="p_job" placeholder="예) 3년 차 마케터, 야근 잦음"></div>
+      </div>
+      <div class="field"><label>목표</label><input id="p_goal" data-save="p_goal" placeholder="예) 광고 소재를 빨리 만들고 싶다"></div>
+      <div class="field"><label>불편</label><input id="p_pain" data-save="p_pain" placeholder="예) 디자인 툴이 어렵고 시간이 없다"></div>
+      <div class="field"><label>지금 쓰는 대안</label><input id="p_alt" data-save="p_alt" placeholder="예) 캔바 템플릿, 외주"></div>
+      <div class="prompt" style="margin-top:14px"><div class="ptitle">페르소나 카드</div><button class="copy" type="button" data-target="p_out">복사</button><pre id="p_out"></pre></div>
+      <div class="prompt light"><div class="ptitle">AI로 보강하기</div><button class="copy" type="button" data-target="p_ai">복사</button><pre id="p_ai"></pre></div>
+    </div>
+  </section>
+
+  <section class="block" id="course">
+    <p class="label">TOOL 05</p>
+    <h2>강의 커리큘럼 <em>틀 생성기</em></h2>
+    <div class="card">
+      <div class="field"><label>강의 주제</label><input id="k_topic" data-save="k_topic" placeholder="예) 생성형 AI로 만드는 브랜드 광고"></div>
+      <div class="grid2" style="margin-top:0">
+        <div class="field"><label>총 시간(시간)</label><input id="k_hours" type="number" min="1" max="40" value="6"></div>
+        <div class="field"><label>수강생 수준</label><select id="k_lv" class="sel"><option>입문</option><option>초중급</option><option>실무자</option></select></div>
+      </div>
+      <div class="prompt" style="margin-top:14px"><div class="ptitle">커리큘럼 틀</div><button class="copy" type="button" data-target="k_out">복사</button><pre id="k_out"></pre></div>
+      <div class="prompt light"><div class="ptitle">AI에게 상세 설계 요청</div><button class="copy" type="button" data-target="k_ai">복사</button><pre id="k_ai"></pre></div>
+    </div>
+  </section>
+
+  <section class="block" id="size">
+    <p class="label">TOOL 06</p>
+    <h2>SNS 사이즈 · <em>안전 영역 계산기</em></h2>
+    <div class="card">
+      <div class="chips" id="z_fmt"><button class="chip on" data-v="reels">릴스·스토리 9:16</button><button class="chip" data-v="feed">피드 4:5</button><button class="chip" data-v="sq">정사각 1:1</button><button class="chip" data-v="yt">유튜브 썸네일 16:9</button></div>
+      <div class="zbox"><div id="z_frame"><div id="z_top"></div><div id="z_safe">글자·로고는 여기</div><div id="z_bot"></div></div></div>
+      <pre id="z_out" class="zout"></pre>
+    </div>
+    <div class="note gray">안전 영역은 릴스·스토리 기준 위 약 14%, 아래 약 20%를 비우는 일반적인 기준이에요. 올리기 전 앱 미리보기로 한 번 더 확인해 주세요.</div>
+  </section>
 '''
 TOOLS_STYLE = '''<style>
 .sel{margin-top:8px;width:100%;height:48px;border:1.5px solid var(--line);border-radius:14px;background:#fff;padding:0 12px;font:inherit;font-size:15px}
@@ -291,6 +341,12 @@ TOOLS_STYLE = '''<style>
 .hk b{font-size:15.5px;font-weight:800;line-height:1.4}
 .hk button{flex:none;border:0;border-radius:999px;background:#111;color:#fff;font:inherit;font-size:12.5px;font-weight:700;padding:6px 12px;cursor:pointer}
 @media (min-width:768px){.hooks{grid-template-columns:1fr 1fr}}
+.zbox{margin-top:14px;display:flex;justify-content:center}
+#z_frame{position:relative;width:200px;background:#f1f1ef;border:2px solid #111;border-radius:10px;overflow:hidden}
+#z_top,#z_bot{position:absolute;left:0;right:0;background:rgba(229,72,77,.18)}
+#z_top{top:0}#z_bot{bottom:0}
+#z_safe{position:absolute;left:6%;right:6%;display:grid;place-items:center;border:2px dashed #3E9A58;border-radius:8px;font-size:12px;font-weight:800;color:#3E9A58}
+.zout{margin-top:12px;white-space:pre-wrap;font-family:inherit;font-size:14px;color:var(--ink2);background:var(--bg);border-radius:12px;padding:12px}
 </style>'''
 TOOLS_JS = r'''<script>
 document.addEventListener('DOMContentLoaded', function(){
@@ -334,9 +390,36 @@ document.addEventListener('DOMContentLoaded', function(){
   $('h_out').addEventListener('click', function(e){ var b = e.target.closest('[data-h]'); if (b) GALAB.copy(b.dataset.h).then(function(){ GALAB.say('복사했어요'); }); });
   ['h_what','h_who','h_gain','h_pain'].forEach(function(id){ $(id).addEventListener('input', hooks); });
   hooks();
+
+  function persona(){
+    var n = v('p_name','[이름·나이]'), j = v('p_job','[직업·상황]'), g = v('p_goal','[목표]'), p = v('p_pain','[불편]'), a = v('p_alt','[대안]');
+    $('p_out').textContent = '👤 ' + n + '\n직업·상황: ' + j + '\n목표: ' + g + '\n불편: ' + p + '\n지금 대안: ' + a + '\n한 줄: "' + p + ' 때문에 ' + g + '을(를) 못 하고 있어요."';
+    $('p_ai').textContent = '아래 페르소나를 현실적으로 보강해 줘. 하루 일과, 정보를 얻는 채널, 구매를 결정하는 기준, 망설이는 이유, 이 사람에게 통할 메시지 3개를 추가해 줘. 과장 없이.\n\n' + $('p_out').textContent;
+  }
+  ['p_name','p_job','p_goal','p_pain','p_alt'].forEach(function(id){ $(id).addEventListener('input', persona); }); persona();
+  function course(){
+    var t = v('k_topic','[강의 주제]'), h = Math.max(1, Math.min(40, +$('k_hours').value || 6)), lv = $('k_lv').value;
+    var parts = Math.max(2, Math.min(8, Math.round(h / 1.5))), per = Math.round(h * 60 / parts);
+    var names = ['이해: 개념과 사례','도구: 핵심 툴 익히기','실습 1: 따라 만들기','실습 2: 내 주제로 적용','심화: 품질 높이기','검증: 피드백과 개선','확장: 자동화·응용','발표: 결과물 공유'];
+    var o = '강의: ' + t + ' (' + h + '시간 · ' + lv + ')\n학습 목표: 1) ___을 설명할 수 있다 2) ___을 직접 만든다 3) ___에 적용한다\n\n';
+    for (var i = 0; i < parts; i++) o += (i+1) + '회 (' + per + '분) ' + names[i % names.length] + '\n   실습: ____ / 결과물: ____\n';
+    $('k_out').textContent = o;
+    $('k_ai').textContent = '[' + t + '] 강의를 ' + h + '시간, ' + lv + ' 수강생 대상으로 설계해 줘. ' + parts + '개 파트로 나누고 파트마다 학습 목표, 내용, 실습, 결과물, 소요 시간을 표로. 90분마다 실습 1개 이상, 마지막에 수강생 체크리스트.';
+  }
+  ['k_topic','k_hours','k_lv'].forEach(function(id){ $(id).addEventListener('input', course); $(id).addEventListener('change', course); }); course();
+  var Z = { reels:[9,16,'1080 × 1920 (권장 1440 × 2560)',14,20,'릴스·스토리·쇼츠·틱톡'], feed:[4,5,'1080 × 1350 (권장 1440 × 1800)',5,5,'인스타·페북 피드'], sq:[1,1,'1080 × 1080',5,5,'피드·캐러셀·마켓플레이스'], yt:[16,9,'1280 × 720',6,12,'유튜브 썸네일 (오른쪽 아래 재생 시간 표시 피하기)'] };
+  function zone(k){
+    var z = Z[k], w = 200, hh = Math.round(w * z[1] / z[0]); if (hh > 360){ hh = 360; w = Math.round(hh * z[0] / z[1]); }
+    $('z_frame').style.width = w + 'px'; $('z_frame').style.height = hh + 'px';
+    $('z_top').style.height = z[3] + '%'; $('z_bot').style.height = z[4] + '%';
+    $('z_safe').style.top = (z[3] + 2) + '%'; $('z_safe').style.bottom = (z[4] + 2) + '%';
+    var H = parseInt(z[2].split('×')[1]);
+    $('z_out').textContent = '쓰는 곳: ' + z[5] + '\n비율: ' + z[0] + ':' + z[1] + '\n크기: ' + z[2] + '\n피할 영역: 위 ' + z[3] + '% (약 ' + Math.round(H * z[3] / 100) + 'px), 아래 ' + z[4] + '% (약 ' + Math.round(H * z[4] / 100) + 'px)';
+  }
+  $('z_fmt').addEventListener('click', function(e){ var c = e.target.closest('.chip'); if (!c) return; $('z_fmt').querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x === c); }); zone(c.dataset.v); }); zone('reels');
   if (location.hash) { var el = document.querySelector(location.hash); if (el) setTimeout(function(){ el.scrollIntoView(); }, 50); }
 });
 </script>'''
-page("tools", "TOOLS LAB", "웹에서 바로 쓰는 미니 AI 도구: 프롬프트 생성기, 콘텐츠 기획 도구, 후킹 문장 생성기.",
+page("tools", "TOOLS LAB", "웹에서 바로 쓰는 미니 AI 도구 6종: 프롬프트·콘텐츠 기획·후킹 문장·페르소나·커리큘럼·SNS 사이즈.",
      "05 · TOOLS LAB", "웹에서 바로 쓰는<br><em>미니 AI 도구</em>", "가입 없이 바로 써요. 입력한 내용은 이 브라우저에만 저장돼요.",
      body=TOOLS_STYLE + TOOLS_BODY, script=TOOLS_JS)
