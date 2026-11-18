@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex, nofollow">
+  <title>그린 AI Lab 자료실</title>
+  <meta name="description" content="그린 AI Lab이 나눈 AI 실무 · UX/UI 디자인 · 서비스 기획 자료를 한곳에 모았어요.">
+  <!-- 공유 미리보기 (YOUR-SITE 부분을 실제 주소로 바꾸세요) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="그린 AI Lab 자료실">
+  <meta property="og:description" content="AI 실무 · UX/UI 디자인 · 서비스 기획 자료를 한곳에 모았어요.">
+  <meta property="og:image" content="https://YOUR-SITE.vercel.app/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- 구독자만 보기: 구독 표시가 없으면 신청 페이지로 보내요 -->
+  <script>
+    (function(){
+      var KEY = 'green';  /* 환영 메일 링크 /archive?k=green 의 green 과 같아야 해요 */
+      try{
+        var q = new URLSearchParams(location.search);
+        if (q.get('k') === KEY) { localStorage.setItem('gal_sub','1'); history.replaceState(null,'',location.pathname + location.hash); }
+        if (!localStorage.getItem('gal_sub')) location.replace('/?from=archive');
+      }catch(e){}
+    })();
+  </script>
+  <!-- 방문 통계 (Vercel 대시보드에서 Analytics를 켜면 동작해요) -->
+  <script>window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root{
+      --black:#000; --ink:#111; --ink2:#444; --gray:#8a8a8a; --line:#ececec;
+      --bg:#f6f6f4; --white:#fff;
+      --green:#6CC284; --green-deep:#3E9A58; --green-soft:#EAF6EE; --blue:#3B6FE0; --blue-soft:#EAF0FC;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
+      -webkit-font-smoothing:antialiased;background:#e9e9e6;color:var(--ink);word-break:keep-all;line-height:1.6}
+    .page{max-width:480px;margin:0 auto;background:var(--bg);min-height:100dvh;overflow:hidden}
+    a{color:inherit}
+
+    /* ───── 헤더 ───── */
+    .nav{position:sticky;top:0;z-index:30;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      display:flex;align-items:center;justify-content:space-between;padding:14px 20px;color:#fff}
+    .brand{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:800;text-decoration:none}
+    .brand i{width:22px;height:22px;border-radius:6px;background:var(--green);color:#000;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800}
+    .brand b{color:var(--green)}
+    .nav ul{display:flex;gap:16px;list-style:none}
+    .nav ul a{font-size:13.5px;font-weight:600;color:#bdbdbd;text-decoration:none}
+    .nav ul a:hover{color:#fff}
+
+    /* ───── HERO ───── */
+    .hero{background:var(--black);color:#fff;padding:36px 24px 40px;position:relative}
+    .hero::before{content:"";position:absolute;top:-160px;right:-170px;width:440px;height:440px;border-radius:50%;
+      background:repeating-radial-gradient(circle at 30% 70%,rgba(255,255,255,.08) 0 1px,transparent 1px 9px);pointer-events:none}
+    .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.1em;color:var(--green);position:relative}
+    .hero h1{margin-top:12px;font-size:32px;line-height:1.3;font-weight:800;letter-spacing:-.025em;position:relative}
+    .hero h1 em{font-style:normal;color:var(--green)}
+    .hero p{margin-top:14px;font-size:15px;color:#c4c4c4;position:relative}
+    .btn{position:relative;margin-top:26px;display:flex;align-items:center;justify-content:center;height:56px;border-radius:999px;
+      background:var(--green);color:#000;font-size:16px;font-weight:800;text-decoration:none;transition:transform .1s}
+    .btn:active{transform:scale(.98)}
+    .stats{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+    .stats div{background:#141414;border:1px solid #262626;border-radius:16px;padding:16px}
+    .stats b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em}
+    .stats b small{font-size:15px;color:var(--green);margin-left:1px}
+    .stats span{font-size:12.5px;color:#9a9a9a}
+
+    /* ───── 자료실 ───── */
+    .archive{padding:44px 0 8px}
+    .archive-head{padding:0 20px}
+    .archive-head h2{font-size:28px;font-weight:800;letter-spacing:-.02em}
+    .archive-head h2 em{font-style:normal;color:var(--green-deep)}
+    .archive-head p{margin-top:4px;font-size:14.5px;color:var(--ink2)}
+    .archive-head p b{color:var(--green-deep)}
+    .tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+    .tags span{font-size:12.5px;color:var(--gray)}
+    .tags span::before{content:"#"}
+
+    .filters{position:sticky;top:52px;z-index:20;background:rgba(246,246,244,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      margin-top:18px;display:flex;gap:8px;overflow-x:auto;padding:12px 20px;scrollbar-width:none;border-bottom:1px solid var(--line)}
+    .filters::-webkit-scrollbar{display:none}
+    .chip{flex:none;height:36px;padding:0 15px;border-radius:999px;border:1px solid #dcdcdc;background:#fff;
+      font:inherit;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s}
+    .chip em{font-style:normal;font-size:12px;color:var(--gray);margin-left:4px}
+    .chip.on{background:var(--black);border-color:var(--black);color:#fff}
+    .chip.on em{color:var(--green)}
+
+    .list{padding:18px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .item{display:flex;flex-direction:column;min-width:0;background:#fff;border-radius:18px;padding:16px 14px 12px;border:1px solid var(--line);
+      text-decoration:none;animation:fade .3s ease-out both;transition:border-color .15s,transform .1s}
+    .item:active{transform:scale(.99)}
+    .item:hover{border-color:#cfcfcf}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}}
+    .item-top{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+    .no{min-width:26px;height:22px;padding:0 6px;border-radius:6px;background:var(--black);color:var(--green);
+      font-size:11.5px;font-weight:800;display:grid;place-items:center}
+    .tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--green-soft);color:var(--green-deep)}
+    .tag.t-프롬프트{background:var(--blue-soft);color:var(--blue)}
+    .tag.t-템플릿,.tag.t-키트{background:#f0f0f0;color:#333}
+    .date{display:block;margin-top:10px;font-size:11.5px;color:var(--gray)}
+    .item h3{margin-top:2px;font-size:15px;line-height:1.4;font-weight:800;letter-spacing:-.01em;
+      display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .item p{margin-top:5px;font-size:12.5px;line-height:1.5;color:var(--gray);
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .go{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);display:flex;justify-content:flex-end;
+      font-size:13px;font-weight:800;color:var(--ink)}
+    .item .body{flex:1}
+    .go.get{color:var(--green-deep)}
+    .new{font-size:10px;font-weight:800;color:#fff;background:var(--green-deep);border-radius:5px;padding:1px 5px}
+    .empty{grid-column:1/-1}
+    .empty{display:none;padding:48px 0;text-align:center;font-size:14.5px;color:var(--gray)}
+
+    /* ───── 클래스 CTA ───── */
+    .cta{margin:32px 20px 0;background:var(--black);color:#fff;border-radius:24px;padding:30px 22px 22px;position:relative;overflow:hidden}
+    .cta::after{content:"";position:absolute;right:-60px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:rgba(108,194,132,.18)}
+    .cta small{font-size:12.5px;font-weight:700;color:var(--green);letter-spacing:.08em;position:relative}
+    .cta h2{margin-top:8px;font-size:23px;line-height:1.38;font-weight:800;position:relative}
+    .cta h2 em{font-style:normal;color:var(--green)}
+    .cta p{margin-top:10px;font-size:14px;color:#bdbdbd;position:relative}
+    .cta .btn{margin-top:22px}
+
+    footer{margin-top:40px;background:var(--black);color:#8a8a8a;padding:28px 24px calc(28px + env(safe-area-inset-bottom));text-align:center;font-size:12.5px;line-height:1.9}
+    footer .f-brand{color:#fff;font-weight:800;font-size:14px}
+    footer .f-brand b{color:var(--green)}
+    footer nav{margin-top:8px;display:flex;justify-content:center;gap:16px}
+    footer nav a{color:#bdbdbd;text-decoration:none;font-weight:600}
+
+    /* ───── 썸네일 ───── */
+    .thumb{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;margin:-4px -4px 12px;display:block}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .cover{position:absolute;inset:0;padding:10px 12px;display:flex;flex-direction:column;justify-content:space-between}
+    .cover small{font-size:10.5px;font-weight:800;letter-spacing:.06em;opacity:.85}
+    .cover b{font-size:30px;font-weight:900;letter-spacing:-.04em;line-height:1}
+    .cover::after{content:"";position:absolute;right:-26px;bottom:-26px;width:90px;height:90px;border-radius:50%;border:12px solid currentColor;opacity:.12}
+    .c-ai{background:#0b0b0b;color:var(--green)}
+    .c-ux{background:var(--blue);color:#fff}
+    .c-pm{background:#d9f0e0;color:#1f5e33}
+
+    /* ───── 추천 찾기 버튼 ───── */
+    .finder{margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;
+      background:#fff;border:1.5px solid var(--green);border-radius:16px;padding:14px 16px;font:inherit;cursor:pointer;text-align:left}
+    .finder b{display:block;font-size:15px;font-weight:800}
+    .finder span{display:block;font-size:12.5px;color:var(--gray)}
+    .finder i{font-style:normal;flex:none;width:34px;height:34px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-weight:800}
+
+    /* ───── 인기 자료 ───── */
+    .popular{margin-top:22px}
+    .popular h3{padding:0 20px;font-size:16px;font-weight:800}
+    .pop-row{margin-top:10px;display:flex;gap:10px;overflow-x:auto;padding:0 20px 4px;scroll-snap-type:x mandatory;scroll-padding:0 20px;scrollbar-width:none}
+    .pop-row::-webkit-scrollbar{display:none}
+    .pop{flex:none;width:68%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;text-decoration:none;color:inherit;position:relative}
+    .pop .rank{position:absolute;top:22px;right:22px;z-index:2;width:26px;height:26px;border-radius:8px;background:#fff;color:#000;font-size:13px;font-weight:900;display:grid;place-items:center}
+    .pop .thumb{margin:0 0 10px}
+    .pop h4{font-size:14.5px;font-weight:800;line-height:1.4}
+
+    /* ───── 추천 시트 ───── */
+    .sheet{position:fixed;inset:0;z-index:70;display:none;align-items:flex-end;justify-content:center}
+    .sheet.show{display:flex}
+    .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+    .sheet-body{position:relative;width:100%;max-width:520px;max-height:88dvh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;
+      padding:24px 20px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease-out}
+    @keyframes up{from{transform:translateY(30px);opacity:0}}
+    .sheet-close{position:absolute;top:14px;right:16px;border:0;background:none;font-size:24px;color:#999;cursor:pointer}
+    .q-step{font-size:12.5px;font-weight:800;color:var(--green-deep)}
+    .sheet h3{margin-top:4px;font-size:20px;font-weight:800;line-height:1.4}
+    .opts{margin-top:16px;display:grid;gap:8px}
+    .opt{display:flex;align-items:center;gap:12px;width:100%;padding:15px 16px;border-radius:14px;border:1.5px solid var(--line);background:#fff;
+      font:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer;transition:all .15s}
+    .opt:hover{border-color:var(--green)}
+    .opt em{font-style:normal;font-size:20px}
+    .opt small{display:block;font-size:12.5px;font-weight:500;color:var(--gray)}
+    .rec{margin-top:16px;display:grid;gap:8px}
+    .rec a{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;text-decoration:none;color:inherit}
+    .rec .thumb{flex:none;width:96px;margin:0;border-radius:10px}
+    .rec .cover b{font-size:20px}
+    .rec .cover small{display:none}
+    .rec h4{font-size:14.5px;font-weight:800;line-height:1.4}
+    .rec p{font-size:12.5px;color:var(--gray)}
+    .again{margin-top:14px;width:100%;height:48px;border-radius:999px;border:0;background:var(--black);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+
+    /* ───── 스크롤 줄이기 (모바일) ───── */
+    .hero{padding:26px 20px 30px}
+    .hero h1{font-size:28px}
+    .hero p{margin-top:10px;font-size:14.5px}
+    .hero .btn{margin-top:18px;height:52px}
+    .stats{margin-top:18px;grid-template-columns:repeat(4,1fr);gap:6px}
+    .stats div{padding:10px 4px;text-align:center;border-radius:12px}
+    .stats b{font-size:17px}
+    .stats b small{font-size:11px}
+    .stats span{font-size:10.5px;display:block;line-height:1.35}
+    .archive{padding-top:28px}
+    .archive-head h2{font-size:24px}
+    .tags{display:none}
+    .filters{margin-top:10px}
+    .cta{margin-top:24px;padding:24px 20px 20px}
+    .cta h2{font-size:20px}
+    .cta .btn{margin-top:16px;height:52px}
+    footer{margin-top:28px}
+
+    /* ═════════ PC / 태블릿 ═════════ */
+    @media (min-width:768px){
+      :root{--gut:max(40px,calc((100% - 1080px)/2))}
+      body{background:var(--bg)}
+      .page{max-width:none}
+      .nav{padding:16px var(--gut)}
+      .nav ul{gap:28px}
+      .nav ul a{font-size:14.5px}
+
+      .hero{padding:56px var(--gut) 60px;display:grid;grid-template-columns:1.15fr 1fr;column-gap:64px;align-items:center}
+      .hero::before{width:760px;height:760px;top:-280px;right:auto;left:30%}
+      .hero > *:not(.stats){grid-column:1}
+      .stats{grid-column:2;grid-row:1/5;margin-top:0;gap:12px;grid-template-columns:1fr 1fr}
+      .stats div{text-align:left}
+      .stats span{font-size:14px}
+      .tags{display:flex}
+      .stats div{padding:26px 24px}
+      .stats b{font-size:34px}
+      .stats span{font-size:14px}
+      .eyebrow{font-size:14px}
+      .hero h1{font-size:42px}
+      .hero p{font-size:17px}
+      .hero .btn{width:280px}
+
+      .archive{padding-top:52px}
+      .archive-head{padding:0 var(--gut);display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px}
+      .archive-head h2{font-size:40px;line-height:1.2}
+      .archive-head p{font-size:16px;margin:0 0 6px}
+      .tags{flex-basis:100%;order:5}
+      .finder{max-width:420px;margin-top:0;flex-basis:auto;margin-left:auto}
+      .popular h3{padding:0 var(--gut);font-size:18px}
+      .pop-row{padding:0 var(--gut) 4px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;overflow:visible}
+      .pop{width:auto}
+
+      .filters{top:var(--navh,56px);padding:14px var(--gut)}
+      .chip{height:40px;padding:0 18px;font-size:14.5px}
+
+      .list{padding:24px var(--gut) 0;grid-template-columns:repeat(3,1fr);gap:16px}
+      .item{padding:22px 20px 16px;border-radius:20px}
+      .item h3{font-size:17.5px}
+      .item p{font-size:14px}
+      .date{font-size:12.5px}
+      .go{font-size:14px}
+
+      .cta{margin:48px var(--gut) 0;padding:36px 44px;display:grid;grid-template-columns:1fr auto;column-gap:40px;align-items:center}
+      .cta > *:not(.btn){grid-column:1}
+      .cta .btn{grid-column:2;grid-row:1/4;width:280px;margin-top:0}
+      .cta h2{font-size:30px}
+      .cta p{font-size:15.5px}
+
+      footer{margin-top:56px;padding:36px var(--gut)}
+    }
+    @media (min-width:1024px){
+      .list{grid-template-columns:repeat(4,1fr)}
+      .hero h1{font-size:58px}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="nav">
+    <a class="brand" href="#top"><i>G</i>그린 AI Lab<b>.</b></a>
+    <ul>
+      <li><a href="#archive">자료실</a></li>
+      <li><a href="https://blog.naver.com/youisy2" target="_blank" rel="noopener">블로그</a></li>
+      <li><a href="mailto:greenai.lab3@gmail.com">문의</a></li>
+    </ul>
+  </header>
+
+  <section class="hero" id="top">
+    <p class="eyebrow">GREEN AI LAB ARCHIVE</p>
+    <h1>그동안 나눈 자료,<br><em>전부 여기에.</em></h1>
+    <p>AI 실무 활용부터 UX/UI 디자인, 서비스 기획까지.<br>블로그에서 나눈 자료를 한곳에 모았어요.</p>
+    <a href="#archive" class="btn">자료 받으러 가기 →</a>
+    
+    <div class="stats">
+      <div><b id="statAll">10</b><span>배포 자료</span></div>
+      <div><b>60<small>+</small></b><span>실무 프롬프트</span></div>
+      <div><b>20<small>개</small></b><span>AI 툴 정리</span></div>
+      <div><b>3<small>개</small></b><span>실무 분야</span></div>
+    </div>
+  </section>
+
+  <section class="archive" id="archive">
+    <div class="archive-head">
+      <h2>자료실<em>.</em></h2>
+      <p>총 <b id="totalCount">10</b>개 자료 — 전부 무료예요.</p>
+      <div class="tags"><span>가이드</span><span>프롬프트</span><span>템플릿</span><span>체크리스트</span><span>워크북</span><span>AI실무</span><span>UXUI</span><span>서비스기획</span><span>전부무료</span></div>
+      <button class="finder" id="finderOpen" type="button">
+        <div><b>나에게 맞는 자료 찾기</b><span>질문 2개면 딱 맞는 자료를 골라 드려요</span></div><i>→</i>
+      </button>
+    </div>
+
+    <div class="popular" id="popular">
+      <h3>🔥 지금 많이 받는 자료</h3>
+      <div class="pop-row" id="popRow"></div>
+    </div>
+
+    <nav class="filters" id="filters" aria-label="자료 종류"></nav>
+
+    <div class="list" id="list"></div>
+    <p class="empty" id="empty">조건에 맞는 자료가 없어요.</p>
+  </section>
+
+  <section class="cta">
+    <small>NEXT STEP</small>
+    <h2>자료로 익혔다면<br><em>클래스에서 직접</em> 만들어 봐요</h2>
+    <p>그린 AI Lab 클래스에서 AI · 디자인 · 기획을 실무 결과물로 완성해 보세요.</p>
+    <a href="#" id="classLink" class="btn" target="_blank" rel="noopener">클래스 신청하기 →</a>
+  </section>
+
+  <footer>
+    <div class="f-brand">그린 AI Lab<b>.</b></div>
+    © 2026 Green AI Lab
+    <nav>
+      <a href="#archive">자료실</a>
+      <a href="https://blog.naver.com/youisy2" target="_blank" rel="noopener">블로그</a>
+      <a href="mailto:greenai.lab3@gmail.com">문의</a>
+    </nav>
+  </footer>
+</div>
+
+<!-- 나에게 맞는 자료 찾기 -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-bg" data-close></div>
+  <div class="sheet-body">
+    <button class="sheet-close" type="button" data-close aria-label="닫기">×</button>
+    <div id="sheetInner"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   자료 목록 — 여기만 수정하면 돼요 (맨 위가 최신, 번호는 자동)
+   ============================================================ */
+var ITEMS = [
+  { cat:'ai', type:'가이드',     date:'2026.11.18', popular:true, title:'Kling AI 광고 영상 제작 A to Z',          desc:'이미지 한 장으로 15초 세로 광고 영상 만들기',        url:'/guides/kling-ai', action:'view', thumb:'' },
+  { cat:'ai', type:'프롬프트',   date:'2026.11.18', popular:true, title:'바로 복사해 쓰는 실무 AI 프롬프트 60',     desc:'기획·디자인·마케팅·글쓰기·업무, 검색하고 복사',      url:'/guides/ai-prompts', action:'view', thumb:'' },
+  { cat:'ai', type:'키트',       date:'2026.11.18', title:'AI 광고 소재 제작 키트',                                desc:'이미지 프롬프트 6종 · 카피 공식 · 사이즈 규격표',    url:'/guides/ad-creative-kit', action:'view', thumb:'' },
+  { cat:'ai', type:'가이드',     date:'2026.11.18', title:'목적별 생성형 AI 툴 가이드',                            desc:'이 작업엔 이 툴, 툴 20개와 작업별 조합',            url:'/guides/ai-tools', action:'view', thumb:'' },
+  { cat:'ux', type:'체크리스트', date:'2026.11.18', popular:true, title:'AI 서비스 UX 상태별 설계 체크리스트',     desc:'입력 전부터 오류·거절까지 9가지 상태, 36개 항목',   url:'/guides/ai-ux-checklist', action:'view', thumb:'' },
+  { cat:'ux', type:'가이드',     date:'2026.11.18', title:'모바일 UI 규격 치트시트',                               desc:'화면·터치·간격·글자·대비·컴포넌트 숫자 한 장',      url:'/guides/mobile-ui-cheatsheet', action:'view', thumb:'' },
+  { cat:'ux', type:'템플릿',     date:'2026.11.18', title:'UX/UI 포트폴리오 케이스 스터디 템플릿',                 desc:'8단계 문장 틀 · 좋은 예 · 정리본 자동 만들기',      url:'/guides/portfolio-case-study', action:'view', thumb:'' },
+  { cat:'pm', type:'템플릿',     date:'2026.11.18', title:'서비스 기획서 · 기능명세서 템플릿',                     desc:'워드·엑셀 템플릿 다운로드와 작성법',                url:'/guides/planning-templates', action:'get', thumb:'' },
+  { cat:'pm', type:'워크북',     date:'2026.11.18', title:'AI로 하는 앱 아이디어 검증 워크북',                     desc:'6단계를 채우면 AI 검토 질문과 정리본이 완성',       url:'/guides/idea-validation-workbook', action:'view', thumb:'' },
+  { cat:'pm', type:'사전',       date:'2026.11.18', title:'출근 즉시 쓰는 PM 실무 용어 사전',                       desc:'용어 70개, 쉬운 뜻과 실제 회의 예문',                url:'/guides/pm-glossary', action:'view', thumb:'' }
+];
+/* 항목 설명
+   cat     : ai / ux / pm  (썸네일 색과 추천에 쓰여요)
+   type    : 가이드 / 프롬프트 / 템플릿 / 키트 (새 종류를 쓰면 탭이 자동으로 생겨요)
+   date    : 2026.11.18 형식 — 30일 안이면 NEW가 자동으로 붙어요
+   popular : true 면 '지금 많이 받는 자료'에 올라가요 (최대 3개)
+   url     : 자료 링크 / action : 'view' 보러가기 · 'get' 받으러가기
+   thumb   : 썸네일 이미지 주소 (비워두면 자동 커버) */
+
+var CLASS_URL = '#';   /* 클래스 신청 링크 */
+var NEW_DAYS  = 30;
+
+(function(){
+  var CAT = { ai:{label:'AI 실무', mark:'AI'}, ux:{label:'UX/UI', mark:'UX'}, pm:{label:'기획·PM', mark:'PM'} };
+  var $ = function(id){ return document.getElementById(id); };
+  var list = $('list'), empty = $('empty'), filters = $('filters');
+  $('classLink').href = CLASS_URL;
+  $('totalCount').textContent = ITEMS.length;
+  $('statAll').textContent = ITEMS.length;
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function ext(u){ return /^https?:\/\//.test(u) ? ' target="_blank" rel="noopener"' : ''; }
+  function isNew(it){
+    if (it.isNew) return true;
+    var p = String(it.date).split('.').map(Number); if (!p[0]) return false;
+    var d = new Date(p[0], (p[1]||1)-1, p[2]||1);
+    return (Date.now() - d) / 864e5 <= NEW_DAYS;
+  }
+  function track(name, data){ try{ window.va('event', { name:name, data:data }); }catch(e){} }
+  function thumb(it){
+    if (it.thumb) return '<span class="thumb"><img src="'+esc(it.thumb)+'" alt="" loading="lazy"></span>';
+    var c = CAT[it.cat] || CAT.ai;
+    return '<span class="thumb"><span class="cover c-'+esc(it.cat)+'"><small>'+esc(c.label)+' · '+esc(it.type)+'</small><b>'+c.mark+'</b></span></span>';
+  }
+  function no(it){ return String(ITEMS.length - ITEMS.indexOf(it)).padStart(2,'0'); }
+
+  /* 종류 탭 */
+  var types = [];
+  ITEMS.forEach(function(it){ if (types.indexOf(it.type) < 0) types.push(it.type); });
+  filters.innerHTML = ['전체'].concat(types).map(function(t, i){
+    var n = t === '전체' ? ITEMS.length : ITEMS.filter(function(it){ return it.type === t; }).length;
+    return '<button class="chip'+(i===0?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'<em>'+n+'</em></button>';
+  }).join('');
+
+  /* 목록 */
+  function render(f){
+    var shown = 0;
+    list.innerHTML = ITEMS.map(function(it){
+      if (f !== '전체' && it.type !== f) return '';
+      shown++;
+      return '<a class="item" href="'+esc(it.url || '#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'">'
+        + thumb(it)
+        + '<div class="item-top"><span class="no">'+no(it)+'</span>'
+        + '<span class="tag t-'+esc(it.type)+'">'+esc(it.type)+'</span>'
+        + (isNew(it) ? '<span class="new">NEW</span>' : '') + '</div>'
+        + '<div class="body"><span class="date">'+esc(String(it.date).slice(0,7))+'</span>'
+        + '<h3>'+esc(it.title)+'</h3><p>'+esc(it.desc)+'</p></div>'
+        + '<div class="go'+(it.action==='get'?' get':'')+'">'+(it.action==='get'?'받으러가기 →':'보러가기 →')+'</div>'
+        + '</a>';
+    }).join('');
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  filters.addEventListener('click', function(e){
+    var b = e.target.closest('.chip'); if (!b) return;
+    filters.querySelectorAll('.chip').forEach(function(c){ c.classList.toggle('on', c === b); });
+    render(b.dataset.f);
+  });
+
+  /* 인기 자료 */
+  var pops = ITEMS.filter(function(it){ return it.popular; }).slice(0,3);
+  if (!pops.length) $('popular').style.display = 'none';
+  $('popRow').innerHTML = pops.map(function(it, i){
+    return '<a class="pop" href="'+esc(it.url||'#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'"><span class="rank">'+(i+1)+'</span>'
+      + thumb(it) + '<h4>'+esc(it.title)+'</h4></a>';
+  }).join('');
+
+  /* 클릭 기록 */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[data-t]'); if (a) track('자료 클릭', { title: a.dataset.t });
+    if (e.target.closest('#classLink')) track('클래스 클릭', { from: 'archive' });
+  });
+
+  /* 나에게 맞는 자료 찾기 */
+  var sheet = $('sheet'), inner = $('sheetInner'), ans = {};
+  var Q = [
+    { key:'cat', title:'어떤 분야가<br>가장 궁금하세요?', opts:[
+      { v:'ai', e:'🤖', t:'AI 실무 활용', s:'AI 툴·프롬프트·영상 제작' },
+      { v:'ux', e:'🎨', t:'UX/UI 디자인', s:'화면 설계·피그마·포트폴리오' },
+      { v:'pm', e:'🗂️', t:'서비스 기획 · PM', s:'기획 문서·아이디어 검증' },
+      { v:'all', e:'✨', t:'다 궁금해요', s:'골고루 추천해 주세요' } ]},
+    { key:'need', title:'지금 필요한 건<br>어느 쪽에 가까워요?', opts:[
+      { v:'learn', e:'📖', t:'차근차근 배우고 싶어요', s:'따라 하기 쉬운 가이드' },
+      { v:'copy',  e:'📋', t:'바로 복사해서 쓰고 싶어요', s:'프롬프트 · 템플릿' },
+      { v:'file',  e:'🧩', t:'작업 파일이 필요해요', s:'키트 · 문서 양식' } ]}
+  ];
+  var NEED = { learn:['가이드','사전'], copy:['프롬프트','키트','템플릿'], file:['템플릿','워크북','체크리스트'] };
+
+  function ask(i){
+    var q = Q[i];
+    inner.innerHTML = '<p class="q-step">질문 '+(i+1)+' / '+Q.length+'</p><h3>'+q.title+'</h3><div class="opts">'
+      + q.opts.map(function(o){ return '<button class="opt" type="button" data-v="'+o.v+'"><em>'+o.e+'</em><div>'+o.t+'<small>'+o.s+'</small></div></button>'; }).join('')
+      + '</div>';
+    inner.querySelectorAll('.opt').forEach(function(b){
+      b.onclick = function(){ ans[q.key] = b.dataset.v; i + 1 < Q.length ? ask(i + 1) : result(); };
+    });
+  }
+  function result(){
+    var scored = ITEMS.map(function(it, idx){
+      var s = 0;
+      if (ans.cat === 'all' || it.cat === ans.cat) s += 2;
+      if (NEED[ans.need].indexOf(it.type) >= 0) s += 1.5;
+      if (it.popular) s += .3;
+      return { it:it, s:s - idx * .01 };
+    }).sort(function(a,b){ return b.s - a.s; }).slice(0,3);
+    track('자료 추천', { cat: ans.cat, need: ans.need });
+    inner.innerHTML = '<p class="q-step">추천 결과</p><h3>이 자료부터<br>보시는 걸 추천해요 👇</h3><div class="rec">'
+      + scored.map(function(r){ var it = r.it;
+          return '<a href="'+esc(it.url||'#')+'"'+ext(it.url)+' data-t="'+esc(it.title)+'">'+thumb(it)
+            + '<div><h4>'+esc(it.title)+'</h4><p>'+esc(it.desc)+'</p></div></a>'; }).join('')
+      + '</div><button class="again" type="button" id="again">다시 고르기</button>';
+    $('again').onclick = function(){ ans = {}; ask(0); };
+  }
+  $('finderOpen').onclick = function(){ ans = {}; ask(0); sheet.classList.add('show'); };
+  sheet.addEventListener('click', function(e){ if (e.target.closest('[data-close]')) sheet.classList.remove('show'); });
+
+  render('전체');
+})();
+</script>
+</body>
+</html>

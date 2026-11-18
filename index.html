@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>자료실 받기 — 그린 AI Lab</title>
+  <meta name="description" content="AI 실무 활용부터 UX/UI 디자인, 서비스 기획까지. 그린 AI Lab 자료실을 이메일 구독 한 번으로 바로 열어드려요.">
+  <!-- 공유 미리보기 (YOUR-SITE 부분을 실제 주소로 바꾸세요) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="그린 AI Lab 자료실 — 구독하면 바로 열려요">
+  <meta property="og:description" content="AI 실무 · UX/UI 디자인 · 서비스 기획 자료를 무료로 받아 가세요.">
+  <meta property="og:image" content="https://YOUR-SITE.vercel.app/og.png">
+  <meta property="og:url" content="https://YOUR-SITE.vercel.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- 방문 통계 (Vercel 대시보드에서 Analytics를 켜면 동작해요) -->
+  <script>window.va = window.va || function(){ (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root{
+      --black:#000; --ink:#111; --ink2:#444; --gray:#8a8a8a; --line:#ececec;
+      --bg:#f6f6f4; --white:#fff;
+      --green:#6CC284; --green-deep:#3E9A58; --green-soft:#EAF6EE;
+      --blue:#3B6FE0; --error:#E5484D;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
+      -webkit-font-smoothing:antialiased; background:#e9e9e6; color:var(--ink);
+      word-break:keep-all; line-height:1.6;
+    }
+    .page{max-width:480px;margin:0 auto;background:var(--white);min-height:100dvh;padding-bottom:96px;overflow:hidden}
+    section{padding:56px 24px}
+    .sec-label{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--green-deep)}
+    .sec-title{margin-top:8px;font-size:26px;line-height:1.35;font-weight:800;letter-spacing:-.02em}
+    .sec-title em{font-style:normal;color:var(--green-deep)}
+    .sec-desc{margin-top:10px;font-size:15px;color:var(--ink2)}
+
+    /* ───── HERO ───── */
+    .hero{background:var(--black);color:#fff;padding:22px 24px 52px;position:relative}
+    .hero::before{content:"";position:absolute;top:-140px;right:-170px;width:440px;height:440px;border-radius:50%;
+      background:repeating-radial-gradient(circle at 30% 70%,rgba(255,255,255,.08) 0 1px,transparent 1px 9px);pointer-events:none}
+    .topbar{display:flex;justify-content:space-between;align-items:center;position:relative}
+    .brand{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;text-decoration:none}
+    .brand i{width:22px;height:22px;border-radius:6px;background:var(--green);color:#000;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800}
+    .badge{display:inline-flex;align-items:center;gap:6px;margin-top:40px;padding:6px 12px;border-radius:999px;
+      background:rgba(108,194,132,.14);border:1px solid rgba(108,194,132,.45);color:var(--green);font-size:12.5px;font-weight:700;position:relative}
+    .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(108,194,132,.25)}
+    .hero h1{margin-top:16px;font-size:34px;line-height:1.28;font-weight:800;letter-spacing:-.025em;position:relative}
+    .hero h1 em{font-style:normal;color:var(--green)}
+    .hero p{margin-top:16px;font-size:15.5px;color:#c4c4c4;position:relative}
+    .hero p b{color:#fff}
+    .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:58px;border:0;border-radius:999px;
+      font:inherit;font-size:16.5px;font-weight:800;cursor:pointer;text-decoration:none;transition:transform .1s,opacity .2s}
+    .btn:active{transform:scale(.98)}
+    .btn-green{background:var(--green);color:#000}
+    .btn-black{background:var(--black);color:#fff}
+    .hero .btn{margin-top:28px;position:relative}
+    .stats{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:relative}
+    .stats div{background:#141414;border:1px solid #262626;border-radius:14px;padding:14px 8px;text-align:center}
+    .stats b{display:block;font-size:20px;font-weight:800;color:#fff}
+    .stats span{font-size:12px;color:#9a9a9a}
+
+    /* ───── 자료 카드 ───── */
+    .cards{margin-top:28px;display:grid;gap:12px}
+    .card{display:flex;gap:16px;padding:20px 18px;border:1px solid var(--line);border-radius:18px;background:#fff}
+    .card .num{flex:none;font-size:30px;font-weight:800;line-height:1;color:var(--green);letter-spacing:-.03em;width:38px}
+    .card h3{font-size:16.5px;font-weight:700;line-height:1.4}
+    .card p{margin-top:4px;font-size:14px;color:var(--gray)}
+    .card.plus{background:var(--green-soft);border-color:transparent}
+    .card.plus .num{color:var(--green-deep)}
+
+    /* ───── 카테고리 리스트 ───── */
+    .alt{background:var(--bg)}
+    .group{margin-top:28px}
+    .group-label{display:inline-block;font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--black);color:#fff}
+    .list{margin-top:12px;list-style:none;background:#fff;border-radius:18px;padding:4px 18px}
+    .list li{display:flex;gap:12px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--line)}
+    .list li:last-child{border-bottom:0}
+    .list li::before{content:"✦";color:var(--green-deep);font-size:13px;margin-top:3px}
+    .list b{display:block;font-size:15px;font-weight:700}
+    .list span{display:block;font-size:13.5px;color:var(--gray)}
+
+    /* ───── 대상 ───── */
+    .split{margin-top:24px;display:grid;gap:12px}
+    .box{border-radius:18px;padding:22px 20px}
+    .box h3{font-size:16px;font-weight:800;margin-bottom:12px}
+    .box ul{list-style:none;display:grid;gap:9px}
+    .box li{display:flex;gap:10px;font-size:14.5px;color:var(--ink2)}
+    .box.yes{background:var(--green-soft)}
+    .box.yes li::before{content:"✓";color:var(--green-deep);font-weight:800}
+    .box.no{background:var(--bg)}
+    .box.no li::before{content:"✕";color:#b0b0b0;font-weight:800}
+
+    /* ───── 3단계 ───── */
+    .steps{margin-top:24px;display:grid;gap:10px;counter-reset:s}
+    .step{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:16px}
+    .step::before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;
+      background:var(--black);color:var(--green);display:grid;place-items:center;font-weight:800;font-size:14px}
+    .step b{font-size:15px}
+    .step span{display:block;font-size:13px;color:var(--gray)}
+
+    /* ───── 운영자 ───── */
+    .profile{margin-top:24px;background:var(--black);color:#fff;border-radius:22px;padding:24px 22px}
+    .profile-head{display:flex;align-items:center;gap:14px}
+    .avatar{width:58px;height:58px;border-radius:16px;background:var(--green);display:grid;place-items:center;font-size:24px;font-weight:800;color:#000}
+    .profile h3{font-size:19px;font-weight:800}
+    .profile small{color:#9a9a9a;font-size:13px}
+    .profile ul{margin-top:18px;list-style:none;display:grid;gap:8px}
+    .profile li{font-size:14px;color:#d6d6d6;display:flex;gap:8px}
+    .profile li::before{content:"▸";color:var(--green)}
+
+    /* ───── 폼 ───── */
+    .apply{background:var(--black);color:#fff}
+    .apply .sec-title em{color:var(--green)}
+    .apply .sec-desc{color:#bdbdbd}
+    .stb_form{margin-top:28px}
+    .stb_form_title{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    .stb_form_set{border:0}
+    .stb_form_set_label{display:block;font-size:13.5px;color:#bdbdbd;margin-bottom:8px}
+    .stb_asterisk{color:var(--green);margin-left:2px}
+    .stb_form_set_input{width:100%;height:56px;border-radius:999px;border:2px solid var(--green);background:#fff;
+      padding:0 20px;font:inherit;font-size:16px;color:#111;outline:0;transition:box-shadow .2s}
+    .stb_form_set_input:focus{box-shadow:0 0 0 4px rgba(108,194,132,.3)}
+    .stb_form_set_input::placeholder{color:#a0a0a0}
+    .stb_form_msg_error{min-height:18px;margin-top:6px;padding-left:6px;font-size:12.5px;color:#FF8A8A}
+    .stb_form_policy{margin-top:8px;background:#141414;border:1px solid #262626;border-radius:16px;padding:14px 16px}
+    .stb_form_policy>label{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px;color:#ddd;cursor:pointer}
+    .stb_form_policy input[type=checkbox]{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;
+      border:1.5px solid #555;display:grid;place-items:center;cursor:pointer;flex:none}
+    .stb_form_policy input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
+    .stb_form_policy input[type=checkbox]:checked::after{content:"";width:5px;height:10px;border:solid #000;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+    .stb_form_policy label>span{color:var(--green)}
+    .stb_form_modal_open_btn{background:none;border:0;padding:0;font:inherit;color:#fff;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+    .stb_form_policy .stb_form_msg_error{margin-top:4px;padding-left:0;min-height:0}
+    .stb_form_policy .stb_form_msg_error:not(:empty){margin-top:8px}
+    .stb_form_result{font-size:13px;color:#FF8A8A;margin-top:8px}
+    .stb_form_set_submit{border:0;margin-top:16px}
+    .stb_form_submit_button{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:58px;border:0;border-radius:999px;
+      font:inherit;font-size:16.5px;font-weight:800;cursor:pointer;transition:transform .1s,opacity .2s}
+    .stb_form_submit_button:active{transform:scale(.98)}
+    .stb_form_submit_button:disabled{opacity:.6;cursor:default}
+    .spinner{width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.25);border-top-color:#000;animation:spin .8s linear infinite;display:none}
+    .is-loading .spinner{display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .form-note{margin-top:12px;text-align:center;font-size:12.5px;color:#8a8a8a}
+
+    /* 개인정보 모달 (바텀시트) */
+    .stb_form_modal{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center}
+    .stb_form_modal.blind{display:none}
+    .stb_form_modal_bg{position:absolute;inset:0;background:rgba(0,0,0,.6)}
+    .stb_form_modal_body{position:relative;z-index:1;width:100%;max-width:480px;background:#fff;color:#111;border-radius:22px 22px 0 0;
+      padding:26px 22px calc(20px + env(safe-area-inset-bottom));animation:up .25s ease-out}
+    @keyframes up{from{transform:translateY(30px);opacity:0}}
+    .stb_form_modal_title{font-size:18px;font-weight:800;margin-bottom:12px}
+    .stb_form_modal_text,.stb_form_modal_text *{font-size:14px!important;line-height:1.7;color:#444;font-family:inherit!important}
+    .stb_form_modal_btn{margin-top:20px}
+    .stb_form_modal_close_btn{width:100%;height:50px;border:0;border-radius:999px;background:#111;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+
+    /* ───── FAQ ───── */
+    .faq{margin-top:24px;display:grid;gap:10px}
+    .faq details{border:1px solid var(--line);border-radius:16px;padding:0 18px;background:#fff}
+    .faq summary{list-style:none;cursor:pointer;padding:18px 0;font-size:15px;font-weight:700;display:flex;justify-content:space-between;gap:12px}
+    .faq summary::-webkit-details-marker{display:none}
+    .faq summary::after{content:"+";color:var(--green-deep);font-size:20px;line-height:1;transition:transform .2s}
+    .faq details[open] summary::after{transform:rotate(45deg)}
+    .faq p{padding-bottom:18px;font-size:14px;color:var(--ink2)}
+
+    footer{padding:32px 24px 24px;text-align:center;font-size:12.5px;color:var(--gray);line-height:1.8}
+    footer a{color:var(--ink2);text-decoration:none;font-weight:600}
+
+    /* ───── 하단 고정 CTA ───── */
+    .sticky{position:fixed;left:0;right:0;bottom:0;z-index:40;pointer-events:none;transition:opacity .25s,transform .25s}
+    .sticky.hide{opacity:0;transform:translateY(20px)}
+    .sticky-inner{max-width:480px;margin:0 auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+      background:linear-gradient(to top,#fff 60%,rgba(255,255,255,0))}
+    .sticky .btn{pointer-events:auto;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+
+    /* ───── 완료 오버레이 ───── */
+    .done{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);padding:24px}
+    .done.show{display:flex}
+    .done-box{position:relative;width:100%;max-width:360px;background:#fff;border-radius:24px;padding:36px 24px 24px;text-align:center;animation:pop .3s ease-out}
+    @keyframes pop{from{transform:scale(.92);opacity:0}}
+    .done-check{width:64px;height:64px;margin:0 auto;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:30px;font-weight:800;color:#000}
+    .done h3{margin-top:18px;font-size:21px;font-weight:800}
+    .done p{margin-top:8px;font-size:14.5px;color:var(--ink2)}
+    .done .btn{margin-top:22px;height:54px;font-size:15.5px}
+    .done-close{position:absolute;top:12px;right:14px;background:none;border:0;font-size:24px;color:#999;cursor:pointer}
+
+    /* ───── 스크롤 줄이기 (모바일) ───── */
+    section{padding:40px 20px}
+    .hero{padding:20px 20px 36px}
+    .badge{margin-top:28px}
+    .hero h1{font-size:30px}
+    .hero .btn{margin-top:22px}
+    .stats{margin-top:20px}
+    .stats div{padding:10px 6px}
+    .stats b{font-size:17px}
+    .sec-title{font-size:23px}
+    .cards{grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+    .card{flex-direction:column;gap:8px;padding:16px 14px;border-radius:16px}
+    .card .num{font-size:22px;width:auto}
+    .card h3{font-size:14.5px}
+    .card p{font-size:12.5px;line-height:1.5}
+    .split{margin-top:20px;gap:10px}
+    .box{padding:18px}
+    .box h3{font-size:15px;margin-bottom:10px}
+    .box li{font-size:14px}
+    .box.how{background:#fff}
+    .box.how .steps{margin-top:0;gap:0}
+    .box.how .step{border:0;border-radius:0;padding:8px 0;gap:12px}
+    .box.how .step::before{width:26px;height:26px;font-size:12.5px}
+    .box.how .step b{font-size:14px}
+    .box.how .step span{font-size:12.5px}
+    .s-about{padding-top:8px;padding-bottom:40px}
+    .profile{margin-top:0;padding:18px;display:flex;flex-direction:column;gap:12px}
+    .profile-head{gap:12px}
+    .avatar{width:46px;height:46px;font-size:20px;border-radius:13px}
+    .profile h3{font-size:16px}
+    .profile ul{margin-top:0;display:flex;flex-wrap:wrap;gap:6px}
+    .profile li{font-size:12.5px;background:#1a1a1a;border-radius:999px;padding:4px 10px}
+    .profile li::before{display:none}
+    .stb_form{margin-top:20px}
+    .faq{margin-top:16px;gap:8px}
+    .faq summary{padding:14px 0;font-size:14.5px}
+
+    /* ───── 자료실 안내 띠 ───── */
+    .gate-note{display:none;background:var(--green);color:#000;font-size:13.5px;font-weight:700;text-align:center;padding:11px 16px}
+    .gate-note.show{display:block}
+    /* ───── 자료 미리보기 띠 ───── */
+    .peek{margin:20px -20px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+    .peek-track{display:flex;gap:10px;width:max-content;animation:slide 28s linear infinite}
+    .peek:hover .peek-track{animation-play-state:paused}
+    @keyframes slide{to{transform:translateX(-50%)}}
+    .pk{width:150px;flex:none}
+    .pk .cv{position:relative;aspect-ratio:16/10;border-radius:12px;overflow:hidden;padding:8px 10px;display:flex;flex-direction:column;justify-content:space-between}
+    .pk .cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .pk .cv small{font-size:10px;font-weight:800;letter-spacing:.05em;opacity:.85}
+    .pk .cv b{font-size:24px;font-weight:900;letter-spacing:-.04em;line-height:1}
+    .pk p{margin-top:6px;font-size:12px;font-weight:700;line-height:1.35;color:var(--ink)}
+    .c-ai{background:#0b0b0b;color:var(--green)} .c-ux{background:var(--blue);color:#fff} .c-pm{background:#d9f0e0;color:#1f5e33}
+    @media (prefers-reduced-motion:reduce){.peek-track{animation:none}}
+    /* ───── 후기 ───── */
+    .s-proof{display:none}
+    .proof-nums{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .proof-nums div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center}
+    .proof-nums b{display:block;font-size:20px;font-weight:800;color:var(--green-deep)}
+    .proof-nums span{font-size:12px;color:var(--gray)}
+    .reviews{margin:16px -20px 0;padding:0 20px 4px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 20px;scrollbar-width:none}
+    .reviews::-webkit-scrollbar{display:none}
+    .reviews img{flex:none;width:72%;border-radius:16px;border:1px solid var(--line);scroll-snap-align:start;background:#fff}
+    .reviews blockquote{flex:none;width:78%;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;font-size:14px;color:var(--ink2)}
+    .reviews cite{display:block;margin-top:8px;font-style:normal;font-size:12.5px;color:var(--gray)}
+
+    /* ═════════ PC / 태블릿 ═════════ */
+    @media (min-width:768px){
+      :root{--gut:max(40px,calc((100% - 1040px)/2))}
+      body{background:var(--white)}
+      .page{max-width:none;padding-bottom:0}
+      section{padding:72px var(--gut)}
+      .sec-label{font-size:14px}
+      .sec-title{font-size:34px;margin-top:8px}
+      .sec-desc{font-size:17px}
+
+      .hero{padding:24px var(--gut) 64px;text-align:center}
+      .hero::before{width:760px;height:760px;top:-260px;right:-200px}
+      .topbar{justify-content:flex-start}
+      .badge{margin:40px auto 0}
+      .hero h1{font-size:48px;margin-top:18px}
+      .hero p{font-size:18px;margin-top:20px}
+      .hero .btn{width:340px;margin:28px auto 0}
+      .stats{max-width:620px;margin:32px auto 0;gap:12px}
+      .stats div{padding:16px 10px}
+      .stats b{font-size:26px}
+      .stats span{font-size:13.5px}
+
+      .cards{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
+      .card{gap:10px;padding:22px 22px}
+      .card .num{font-size:28px}
+      .card h3{font-size:18px}
+      .card p{font-size:15px}
+
+      .split{grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+      .box{padding:26px 26px}
+      .box h3{font-size:18px}
+      .box li{font-size:15.5px}
+
+      .s-about{padding-top:0;padding-bottom:72px}
+      .profile{flex-direction:row;align-items:center;justify-content:space-between;padding:24px 28px}
+      .profile ul{justify-content:flex-end;max-width:60%}
+      .profile li{font-size:13.5px}
+
+      .apply{text-align:center}
+      .apply #stb_subscribe{max-width:520px;margin:0 auto;text-align:left}
+      .apply .form-note{text-align:center}
+
+      .s-faq{max-width:none}
+      .faq{max-width:none;margin-top:24px;grid-template-columns:1fr 1fr;align-items:start;gap:10px}
+      .faq summary{font-size:15.5px;padding:18px 0}
+      .faq p{font-size:15px}
+
+      footer{padding:40px var(--gut)}
+      .peek{margin:28px 0 0}
+      .pk{width:200px}
+      .proof-nums{max-width:640px}
+      .reviews{margin:20px 0 0;padding:0 0 4px;display:grid;grid-template-columns:repeat(3,1fr);overflow:visible}
+      .reviews img,.reviews blockquote{width:auto}
+      .sticky-inner{max-width:420px;background:none}
+    }
+    @media (min-width:1024px){
+      .hero h1{font-size:54px}
+      .sticky{display:none}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="gate-note" id="gateNote">🔒 자료실은 구독자 전용이에요. 아래에서 이메일을 입력하면 바로 열려요.</div>
+
+  <!-- ───── HERO ───── -->
+  <header class="hero">
+    <div class="topbar">
+      <a class="brand" href="/"><i>G</i>그린 AI Lab</a>
+    </div>
+    <span class="badge">구독하면 바로 열리는 자료실</span>
+    <h1>AI 실무부터<br>UX/UI·서비스 기획까지<br><em>그린 AI Lab 자료실</em></h1>
+    <p>블로그에서 하나씩 나눠온 자료를 <b>한곳에 모았어요.</b><br>이메일만 입력하면 지금 바로 자료실이 열려요.</p>
+    <a href="#apply" class="btn btn-green">무료로 자료실 받기 →</a>
+    <!-- 숫자는 실제 자료 수에 맞게 수정하세요 -->
+    <div class="stats">
+      <div><b>AI</b><span>실무 활용</span></div>
+      <div><b>UX/UI</b><span>디자인</span></div>
+      <div><b>PM</b><span>서비스 기획</span></div>
+    </div>
+  </header>
+
+  <!-- ───── 자료 구성 ───── -->
+  <section class="s-what">
+    <p class="sec-label">WHAT YOU GET</p>
+    <h2 class="sec-title">자료실에는<br><em>이런 자료</em>가 들어 있어요</h2>
+    <div class="peek" aria-hidden="true"><div class="peek-track" id="peek"></div></div>
+    <div class="cards">
+      <div class="card"><span class="num">01</span><div><h3>Kling AI 광고 영상 가이드</h3><p>이미지 한 장으로 15초 광고 영상까지</p></div></div>
+      <div class="card"><span class="num">02</span><div><h3>실무 AI 프롬프트 60</h3><p>기획·디자인·마케팅, 검색하고 바로 복사</p></div></div>
+      <div class="card"><span class="num">03</span><div><h3>AI 서비스 UX 체크리스트</h3><p>로딩·스트리밍·오류까지 36개 항목</p></div></div>
+      <div class="card"><span class="num">04</span><div><h3>모바일 UI 규격 치트시트</h3><p>터치·간격·글자·대비 숫자 한 장</p></div></div>
+      <div class="card"><span class="num">05</span><div><h3>기획서 · 기능명세서 템플릿</h3><p>워드·엑셀로 바로 받는 기획 문서</p></div></div>
+      <div class="card plus"><span class="num">+5</span><div><h3>광고 키트, 워크북, 용어 사전…</h3><p>모두 10종, 새 자료는 계속 추가돼요</p></div></div>
+    </div>
+  </section>
+
+  <!-- ───── 대상 + 바로 열람 ───── -->
+  <section class="alt s-for">
+    <p class="sec-label">FOR YOU</p>
+    <h2 class="sec-title">필요한 분이라면<br><em>신청하는 순간</em> 바로 열려요</h2>
+    <div class="split">
+      <div class="box yes">
+        <h3>이런 분께 추천해요</h3>
+        <ul>
+          <li>AI를 업무에 바로 써보고 싶은 분</li>
+          <li>UX/UI 디자이너·기획자로 성장하고 싶은 분</li>
+          <li>흩어진 자료를 한곳에서 보고 싶은 분</li>
+        </ul>
+      </div>
+      <div class="box how">
+        <h3>기다릴 필요 없어요</h3>
+        <div class="steps">
+          <div class="step"><div><b>이메일·이름 입력</b><span>10초면 충분해요</span></div></div>
+          <div class="step"><div><b>신청 버튼 누르기</b><span>바로 자료실로 이동해요</span></div></div>
+          <div class="step"><div><b>자료실 둘러보기</b><span>필요한 자료를 골라 보세요</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── 숫자 · 후기 (아래 스크립트의 PROOF / REVIEWS 를 채우면 나타나요) ───── -->
+  <section class="s-proof" id="proof">
+    <p class="sec-label">REVIEW</p>
+    <h2 class="sec-title">먼저 받아 본 분들의<br><em>이야기</em></h2>
+    <div class="proof-nums" id="proofNums"></div>
+    <div class="reviews" id="reviews"></div>
+  </section>
+
+  <!-- ───── 운영자 ───── -->
+  <section class="s-about">
+    <div class="profile">
+      <div class="profile-head">
+        <div class="avatar">G</div>
+        <div><h3>그린 AI Lab</h3><small>앱기획PM · UXUI · 피그마 · AI디자인</small></div>
+      </div>
+      <ul>
+        <li>UX/UI 디자인 콘텐츠 제작</li>
+        <li>생성형 AI 활용법 연구·공유</li>
+        <li>서비스 기획 · PM 강의</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ───── 신청 폼 ───── -->
+  <section class="apply" id="apply">
+    <p class="sec-label" style="color:var(--green)">APPLY</p>
+    <h2 class="sec-title">지금 신청하고<br><em>자료실 바로 열기</em></h2>
+    <p class="sec-desc">구독 신청이 끝나면 자료실로 바로 이동해요.</p>
+
+    <div id="stb_subscribe">
+      <form action="https://stibee.com/api/v1.0/lists/AYVjI18DkOLbtFg151JMP7lNDxTEDw==/public/subscribers" method="POST" target="_blank" accept-charset="utf-8" class="stb_form" name="stb_subscribe_form" id="stb_subscribe_form" data-lang="" novalidate>
+
+        <h1 class="stb_form_title">그린ai랩 구독하기</h1>
+
+        <fieldset class="stb_form_set">
+          <label for="stb_email" class="stb_form_set_label">이메일 주소<span class="stb_asterisk">*</span></label>
+          <input type="text" class="stb_form_set_input" id="stb_email" name="email" required="required"
+                 inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="example@email.com">
+          <div class="stb_form_msg_error" id="stb_email_error"></div>
+        </fieldset>
+
+        <fieldset class="stb_form_set">
+          <label for="stb_name" class="stb_form_set_label">이름</label>
+          <input type="text" class="stb_form_set_input" id="stb_name" name="name"
+                 autocomplete="name" placeholder="이름 (선택)">
+          <div class="stb_form_msg_error" id="stb_name_error"></div>
+        </fieldset>
+
+        <div class="stb_form_policy">
+          <label>
+            <input type="checkbox" id="stb_policy" value="stb_policy_true">
+            <span>(필수)</span>
+            <button id="stb_form_modal_open" data-modal="stb_form_policy_modal" class="stb_form_modal_open_btn" type="button">개인정보 수집 및 이용</button>에 동의합니다.
+          </label>
+          <div class="stb_form_msg_error" id="stb_policy_error"></div>
+          <div class="stb_form_modal stb_form_policy_text blind" id="stb_form_policy_modal">
+            <div class="stb_form_modal_bg" id="stb_form_modal_bg"></div>
+            <div class="stb_form_modal_body">
+              <h1 class="stb_form_modal_title">개인정보 수집 및 이용</h1>
+              <div class="stb_form_modal_text"><div>뉴스레터 발송을 위한 최소한의 개인정보를 수집하고 이용합니다.&nbsp; <span>제휴 콘텐츠, 프로모션, 이벤트 정보 등의 광고성 정보를 수신합니다.</span> 수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 파기됩니다.</div></div>
+              <div class="stb_form_modal_btn">
+                <button id="stb_form_modal_close" class="stb_form_modal_close_btn" data-modal="stb_form_policy_modal" type="button">닫기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stb_form_result" id="stb_form_result"></div>
+
+        <fieldset class="stb_form_set_submit">
+          <button type="submit" class="stb_form_submit_button" id="stb_form_submit_button"
+            style="background-color:#6CC284;color:#000000;"><span class="spinner"></span><span>자료실 받기 →</span></button>
+        </fieldset>
+      </form>
+      <p class="form-note">입력한 정보는 자료·소식 발송에만 사용해요.</p>
+    </div>
+  </section>
+
+  <!-- ───── FAQ ───── -->
+  <section class="s-faq">
+    <p class="sec-label">FAQ</p>
+    <h2 class="sec-title">자주 묻는 질문</h2>
+    <div class="faq">
+      <details><summary>정말 무료인가요?</summary><p>네, 이메일 구독만 하면 자료실을 무료로 볼 수 있어요.</p></details>
+      <details><summary>신청하면 언제 볼 수 있나요?</summary><p>신청 버튼을 누르면 바로 자료실로 이동해요. 기다릴 필요 없어요.</p></details>
+      <details><summary>자료실 주소를 잃어버렸어요.</summary><p>이 페이지에서 같은 이메일로 다시 신청하면 자료실로 이동해요.</p></details>
+      <details><summary>구독은 언제든 해지할 수 있나요?</summary><p>네, 받은 메일 하단의 수신거부 링크로 언제든 해지할 수 있어요. 해지하면 정보는 즉시 파기돼요.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    © 그린 AI Lab<br>
+    문의 <a href="mailto:greenai.lab3@gmail.com">greenai.lab3@gmail.com</a>
+  </footer>
+</div>
+
+<!-- 하단 고정 CTA -->
+<div class="sticky" id="sticky">
+  <div class="sticky-inner"><a href="#apply" class="btn btn-black">무료로 자료실 받기 →</a></div>
+</div>
+
+<!-- 완료 오버레이 -->
+<div class="done" id="done" role="dialog" aria-modal="true">
+  <div class="done-box">
+    <button class="done-close" id="doneClose" type="button" aria-label="닫기">×</button>
+    <div class="done-check">✓</div>
+    <h3>신청 완료!</h3>
+    <p>자료실로 이동하고 있어요.<br>이동하지 않으면 아래 버튼을 눌러 주세요.</p>
+    <a href="/archive" class="btn btn-green">자료실 바로가기 →</a>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   여기만 수정하면 돼요
+   ============================================================ */
+/* 자료 미리보기 띠 — thumb 에 이미지 주소를 넣으면 실제 표지가 보여요 */
+var PEEK = [
+  { cat:'ai', type:'가이드',     title:'Kling AI 광고 영상 A to Z',   thumb:'' },
+  { cat:'ai', type:'프롬프트',   title:'실무 AI 프롬프트 60',          thumb:'' },
+  { cat:'ux', type:'체크리스트', title:'AI 서비스 UX 체크리스트',      thumb:'' },
+  { cat:'pm', type:'템플릿',     title:'기획서 · 기능명세서 템플릿',   thumb:'' },
+  { cat:'ai', type:'키트',       title:'AI 광고 소재 제작 키트',       thumb:'' },
+  { cat:'ux', type:'가이드',     title:'모바일 UI 규격 치트시트',      thumb:'' },
+  { cat:'pm', type:'워크북',     title:'앱 아이디어 검증 워크북',      thumb:'' },
+  { cat:'ux', type:'템플릿',     title:'포트폴리오 케이스 스터디',     thumb:'' },
+  { cat:'ai', type:'가이드',     title:'목적별 AI 툴 가이드',          thumb:'' },
+  { cat:'pm', type:'사전',       title:'PM 실무 용어 사전',            thumb:'' }
+];
+/* 숫자 — 실제 값만 넣어 주세요. 예) { num:'1,200+', label:'구독자' } */
+var PROOF = [];
+/* 후기 — 캡처 이미지면 { img:'review1.png' }, 글이면 { text:'후기 내용', who:'디자이너 김OO' } */
+var REVIEWS = [];
+
+(function(){
+  var MARK = { ai:'AI', ux:'UX', pm:'PM' }, LABEL = { ai:'AI 실무', ux:'UX/UI', pm:'기획·PM' };
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  var html = PEEK.map(function(p){
+    return '<div class="pk"><div class="cv c-'+esc(p.cat)+'">'
+      + (p.thumb ? '<img src="'+esc(p.thumb)+'" alt="" loading="lazy">' : '<small>'+LABEL[p.cat]+' · '+esc(p.type)+'</small><b>'+MARK[p.cat]+'</b>')
+      + '</div><p>'+esc(p.title)+'</p></div>';
+  }).join('');
+  document.getElementById('peek').innerHTML = html + html;   /* 끊김 없이 흐르도록 두 번 */
+
+  if (PROOF.length || REVIEWS.length) {
+    document.getElementById('proof').style.display = 'block';
+    document.getElementById('proofNums').innerHTML = PROOF.map(function(p){ return '<div><b>'+esc(p.num)+'</b><span>'+esc(p.label)+'</span></div>'; }).join('');
+    if (!PROOF.length) document.getElementById('proofNums').style.display = 'none';
+    document.getElementById('reviews').innerHTML = REVIEWS.map(function(r){
+      return r.img ? '<img src="'+esc(r.img)+'" alt="후기" loading="lazy">'
+                   : '<blockquote>'+esc(r.text)+'<cite>— '+esc(r.who)+'</cite></blockquote>';
+    }).join('');
+  }
+
+  if (new URLSearchParams(location.search).get('from') === 'archive') document.getElementById('gateNote').classList.add('show');
+})();
+</script>
+
+<script>
+(function(){
+  var ARCHIVE_URL = '/archive';
+  var form = document.getElementById('stb_subscribe_form');
+  var email = document.getElementById('stb_email');
+  var policy = document.getElementById('stb_policy');
+  var emailErr = document.getElementById('stb_email_error');
+  var policyErr = document.getElementById('stb_policy_error');
+  var result = document.getElementById('stb_form_result');
+  var btn = document.getElementById('stb_form_submit_button');
+  var modal = document.getElementById('stb_form_policy_modal');
+  var done = document.getElementById('done');
+
+  // 개인정보 모달
+  document.getElementById('stb_form_modal_open').addEventListener('click', function(e){ e.preventDefault(); modal.classList.remove('blind'); });
+  document.getElementById('stb_form_modal_close').addEventListener('click', function(){ modal.classList.add('blind'); });
+  document.getElementById('stb_form_modal_bg').addEventListener('click', function(){ modal.classList.add('blind'); });
+  document.getElementById('doneClose').addEventListener('click', function(){ done.classList.remove('show'); });
+
+  // 신청 영역이 보이면 하단 CTA 숨김
+  var sticky = document.getElementById('sticky');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ sticky.classList.toggle('hide', e.isIntersecting); });
+    }, {threshold: 0.15}).observe(document.getElementById('apply'));
+  }
+
+  email.addEventListener('input', function(){ emailErr.textContent=''; });
+  policy.addEventListener('change', function(){ policyErr.textContent=''; });
+
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    result.textContent = '';
+    var ok = true, v = email.value.trim();
+    if (!v) { emailErr.textContent = '이메일 주소를 입력해 주세요.'; ok = false; }
+    else if (!EMAIL_RE.test(v)) { emailErr.textContent = '이메일 주소 형식을 확인해 주세요.'; ok = false; }
+    if (!policy.checked) { policyErr.textContent = '동의해야 자료실을 열어드릴 수 있어요.'; ok = false; }
+    if (!ok) { (emailErr.textContent ? email : policy).focus(); return; }
+
+    email.value = v;
+    var nameInput = document.getElementById('stb_name');
+    nameInput.value = nameInput.value.trim();
+    btn.disabled = true; btn.classList.add('is-loading');
+
+    fetch(form.action, { method:'POST', body:new FormData(form), mode:'no-cors' })
+      .then(function(){
+        try { localStorage.setItem('gal_sub', '1'); } catch(e){}
+        try { window.va('event', { name: '구독 신청' }); } catch(e){}
+        done.classList.add('show');
+        setTimeout(function(){ window.location.href = ARCHIVE_URL; }, 1500);
+      })
+      .catch(function(){
+        btn.disabled = false; btn.classList.remove('is-loading');
+        result.textContent = '전송 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.';
+      });
+  });
+})();
+</script>
+</body>
+</html>
