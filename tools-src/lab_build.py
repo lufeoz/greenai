@@ -235,7 +235,18 @@ LS = [
  ("말로 만드는 웹 시제품","build","고급","Lovable·v0·Claude로 랜딩페이지 시제품",["문제·해결·기능 3개 정리","프롬프트로 화면 생성","폼·링크 연결","지인 5명 테스트"],[["프롬프트: 코딩 없이 웹 시제품","/prompts#시제품"]]),
 ]
 LS += M.LS
-ln_items = [dict(t=t, d=d, cat=c, level=lv, how=st, rel=rel, alias=c) for t,c,lv,d,st,rel in LS]
+import lessons as LES
+_full = {x["t"]: x for x in LES.L}
+_alias = {"좋은 프롬프트의 4요소":"좋은 프롬프트의 4요소","예시를 주는 프롬프트 (퓨샷)":"예시를 주는 프롬프트 (퓨샷)","피그마 오토 레이아웃":"피그마 오토 레이아웃 기초","Make 첫 시나리오":"Make 첫 자동화 만들기"}
+ln_items = []
+for t,c,lv,d,st,rel in LS:
+    f = _full.get(_alias.get(t, t))
+    if f and f["t"] in [x["t"] for x in ln_items]: continue
+    if f:
+        ln_items.append(dict(t=f["t"], d=f["sum"], cat=f["cat"], level=f["lv"], what=f["why"], how=[s_[0] for s_ in f["steps"]], rel=rel, alias=c, url="/lessons/"+f["slug"], urlLabel=f"레슨 읽기 · 약 {f['min']}분", full=1, price="📖 상세 레슨"))
+    else:
+        ln_items.append(dict(t=t, d=d, cat=c, level=lv, how=st, rel=rel, alias=c))
+ln_items.sort(key=lambda x: (0 if x.get("full") else 1, ["초급","중급","고급"].index(x["level"])))
 page("learn", "LEARNING LAB", "초급·중급·고급으로 나눈 AI 활용 가이드와 실습 튜토리얼.",
      "06 · LEARNING LAB", "단계별로 익히는<br><em>AI 실무 학습</em>", "초급부터 고급까지, 짧게 읽고 바로 실습해요.<br>각 레슨은 관련 자료·도구로 이어져요.",
      lab=dict(items=ln_items, facets=[dict(key="level",label="난이도",values={v:v for v in LV}),dict(key="cat",label="주제",values=LCAT)], howLabel="실습 순서", src="그린 AI Lab 자체 제작"),
